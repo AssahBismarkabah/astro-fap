@@ -15,7 +15,7 @@ const groupedDocs = docs.reduce((acc, doc) => {
 <nav class="fixed w-64 h-full bg-gray-100 dark:bg-gray-900 p-4 border-r border-gray-200 dark:border-gray-800 flex flex-col">
   <div class="mb-8 flex items-center gap-4">
     <img
-      src="/image.png"
+    src={`${import.meta.env.BASE_URL}image.png`}
       alt="Profile"
       class="w-12 h-12 rounded-full border-2 border-green-300"
     />
