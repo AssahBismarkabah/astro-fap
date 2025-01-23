@@ -1,0 +1,23 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Software Engineering Documentation">
+  <h1 class="text-4xl font-bold mb-6">Welcome to My Documentation</h1>
+  <p class="text-xl text-gray-300 mb-8">
+    This is where I document everything I learn about software engineering.
+  </p>
+  
+  <div class="bg-gray-800 p-6 rounded-lg">
+    <h2 class="text-2xl font-semibold mb-4">Getting Started</h2>
+    <p class="text-gray-300">
+      To add new documentation:
+    </p>
+    <ol class="list-decimal list-inside mt-4 space-y-2 text-gray-300">
+      <li>Create a new .md file in the <code class="bg-gray-700 px-2 py-1 rounded">src/pages/docs</code> directory</li>
+      <li>Add frontmatter with a title at the top of your markdown file</li>
+      <li>Write your documentation using Markdown syntax</li>
+      <li>The page will automatically appear in the navigation</li>
+    </ol>
+  </div>
+</DocsLayout>
