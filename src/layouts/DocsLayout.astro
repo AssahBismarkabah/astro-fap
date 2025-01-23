@@ -42,7 +42,7 @@ const nextDoc = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
             <nav class="border-t dark:border-gray-800 py-8">
               <div class="flex justify-between items-center">
                 {prevDoc && (
-                  <a href={prevDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400">
+                  <a href={prevDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-300">
                     <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
@@ -53,7 +53,7 @@ const nextDoc = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
                   </a>
                 )}
                 {nextDoc && (
-                  <a href={nextDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 ml-auto">
+                  <a href={nextDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-300 ml-auto">
                     <div class="text-right">
                       <div class="text-sm font-medium">Next</div>
                       <div class="text-lg">{nextDoc.frontmatter.title}</div>
