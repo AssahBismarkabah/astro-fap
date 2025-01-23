@@ -9,6 +9,6 @@ export default defineConfig({
       wrap: true
     }
   },
-  // Remove the base path if you're deploying to the root domain
-  site: 'https://yourusername.github.io'
+  site: 'https://AssahBismarkabah.github.io',
+  base: '/astro-fap',  
 });
