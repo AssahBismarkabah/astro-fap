@@ -1,5 +1,5 @@
 ---
-title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
+title:  Turning on Jinja autoescaping when using Template() directly
 layout: ../../../layouts/DocsLayout.astro
 ---
 

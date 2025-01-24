@@ -1,5 +1,5 @@
 ---
-title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
+title: Intercepting fetch in a service worker
 layout: ../../../layouts/DocsLayout.astro
 ---
 

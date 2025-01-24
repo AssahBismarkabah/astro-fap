@@ -1,5 +1,5 @@
 ---
-title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
+title: Turning an array of arrays into objects with jq
 layout: ../../../layouts/DocsLayout.astro
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
+title: Converting Airtable JSON for use with sqlite-utils using jq
 layout: ../../../layouts/DocsLayout.astro
 ---
 
