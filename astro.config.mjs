@@ -9,6 +9,6 @@ export default defineConfig({
       wrap: true
     }
   },
-  site: 'https://AssahBismarkabah.github.io',
+  site: 'https://til.assahbismark.com',
   base: '/astro-fap',  
 });
