@@ -254,7 +254,7 @@ target/release/mandelbrot  mandel.png 4000x3000 -1.20,0.35 -1,0.20  3.42s user 0
 ```
 
 Running this command will generate a file named `mandel.png`.
-You can view it using your system’s image viewer or a web browser. If everything works, it should look like: (image)[https://ibb.co/bdNqF2y]
+You can view it using your system’s image viewer or a web browser. If everything works, it should look like: [image](https://ibb.co/bdNqF2y)
 
 The crossbeam crate provides a number of valuable concurrency facilities, including a scoped thread facility that does exactly what we need here. To use it, we must add the following line to our Cargo.toml file
 
