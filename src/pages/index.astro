@@ -145,7 +145,12 @@ const profile = {
       </div>
       <div class="socials">
         {profile.socials.map(social => (
-          <a href={social.url} class="social-btn" target="_blank" rel="noopener noreferrer">
+          <a
+            href={social.url}
+            class="social-btn"
+            target={social.url.startsWith('/') ? '_self' : '_blank'}
+            rel={social.url.startsWith('/') ? '' : 'noopener noreferrer'}
+          >
             {social.icon ? (
               <svg class="email-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M22 7.5l-10 7-10-7"/></svg>
             ) : null}
