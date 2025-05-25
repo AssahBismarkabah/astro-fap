@@ -1,6 +1,6 @@
 ---
 title: How to Read Hacker News Threads with Most Recent Comments First
-date: 2023-10-01
+date: 2025-03-20
 layout: ../../../layouts/DocsLayout.astro
 ---
 

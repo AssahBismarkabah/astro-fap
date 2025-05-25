@@ -1,6 +1,6 @@
 ---
 title: Deploying Python web apps as AWS Lambda functions
-date: 2023-10-01
+date: 2024-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

@@ -19,6 +19,17 @@ function selectPost(post) {
 function goBack() {
   selectedPost = null;
 }
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  });
+}
 ---
 
 <html lang="en">
@@ -60,6 +71,25 @@ function goBack() {
         flex-direction: column;
         align-items: flex-start;
       }
+
+      .blog-container.selected-post-active {
+        position: fixed; /* Take over viewport */
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* Use height for fixed */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Keep flex for centering */
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.6);
+        transform-origin: center center;
+        background-color: #030d13; /* Match global background */
+        z-index: 1000; /* Ensure it's on top */
+        overflow: hidden; 
+      }
+
       .blog-title {
         font-size: 2rem;
         font-weight: bold;
@@ -71,7 +101,7 @@ function goBack() {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 2.2rem;
+        gap: 0.9rem;
       }
       .blog-article-link {
         text-decoration: none;
@@ -108,6 +138,14 @@ function goBack() {
       .back-link:hover {
         color: #fff;
       }
+      .post-content-wrapper {
+        width: 100%;
+        max-width: 1000px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
       .post-content {
         margin-top: 2rem;
         width: 100%;
@@ -117,11 +155,11 @@ function goBack() {
     </style>
   </head>
   <body>
-    <div class="blog-container">
+    <div class={`blog-container ${selectedPost ? 'selected-post-active' : ''}`}>
       {selectedPost ? (
-        <div>
+        <div class="post-content-wrapper">
           <div class="back-link" onclick="goBack()">&larr; Blog</div>
-          <div class="blog-article-date">{selectedPost.frontmatter.date || ''}</div>
+          <div class="blog-article-date">{formatDate(selectedPost.frontmatter.date)}</div>
           <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">{selectedPost.frontmatter.title || ''}</div>
           <div class="post-content">
             {selectedPost.content}
@@ -129,6 +167,7 @@ function goBack() {
         </div>
       ) : (
         <>
+          <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
           <div class="blog-title">Blog</div>
           {posts.length === 0 ? (
             <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
@@ -137,7 +176,7 @@ function goBack() {
             <div class="blog-list">
               {posts.map(post => (
                 <div class="blog-article-link" onclick="selectPost(post)">
-                  <div class="blog-article-date">{post.frontmatter.date || ''}</div>
+                  <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
                   <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop().replace('.md', '')}</div>
                 </div>
               ))}

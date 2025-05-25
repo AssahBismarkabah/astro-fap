@@ -1,6 +1,6 @@
 ---
 title: Running GraphQL Queries with curl
-date: 2023-10-01
+date: 2024-05-20
 layout: ../../../layouts/DocsLayout.astro
 ---
 
