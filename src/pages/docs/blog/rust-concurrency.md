@@ -1,5 +1,6 @@
 ---
 title: Rust concurrency with Mandelbrot Set
+date: 2023-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

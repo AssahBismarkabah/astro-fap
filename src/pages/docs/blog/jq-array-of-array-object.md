@@ -1,5 +1,6 @@
 ---
 title: Turning an array of arrays into objects with jq
+date: 2023-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

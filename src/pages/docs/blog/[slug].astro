@@ -1,0 +1,28 @@
+---
+const { slug } = Astro.params;
+const post = await Astro.glob(`../docs/blog/${slug}.md`);
+const article = post[0];
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{article ? article.frontmatter.title : 'Blog Article'} | Assah Bismark</title>
+    <style>
+      body { font-family: system-ui, sans-serif; }
+    </style>
+  </head>
+  <body class="bg-[#13151a] text-white min-h-screen flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center justify-center mt-24 w-full">
+      {article ? (
+        <article class="prose dark:prose-invert max-w-xl mx-auto text-center">
+          <h1 class="text-2xl font-bold mb-4">{article.frontmatter.title}</h1>
+          <div class="text-gray-400 mb-8">{article.frontmatter.date}</div>
+          <article set:html={article.compiledContent()} />
+        </article>
+      ) : (
+        <div class="text-gray-400">Article not found.</div>
+      )}
+    </div>
+  </body>
+</html>

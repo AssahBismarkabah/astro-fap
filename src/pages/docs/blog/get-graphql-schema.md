@@ -1,5 +1,6 @@
 ---
 title: get-graphql-schema
+date: 2023-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

@@ -1,7 +1,4 @@
 ---
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-
 interface Props {
   title: string;
 }
@@ -25,68 +22,20 @@ const nextDoc = currentIndex < docs.length - 1 ? docs[currentIndex + 1] : null;
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`}  />
     <title>{title}</title>
   </head>
-  <body>
-    <div class="flex min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-      <Navigation />
-      <div class="flex-1 ml-64 flex flex-col min-h-screen">
-        <main class="flex-grow">
-          <div class="max-w-4xl mx-auto px-8 py-12">
-            <article class="prose dark:prose-invert max-w-none">
-              <slot />
-            </article>
-          </div>
-        </main>
-        
-        {(prevDoc || nextDoc) && (
-          <div class="max-w-4xl mx-auto px-8 w-full">
-            <nav class="border-t dark:border-gray-800 py-8">
-              <div class="flex justify-between items-center">
-                {prevDoc && (
-                  <a href={prevDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-300">
-                    <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                    <div>
-                      <div class="text-sm font-medium">Previous</div>
-                      <div class="text-lg">{prevDoc.frontmatter.title}</div>
-                    </div>
-                  </a>
-                )}
-                {nextDoc && (
-                  <a href={nextDoc.url} class="group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-300 ml-auto">
-                    <div class="text-right">
-                      <div class="text-sm font-medium">Next</div>
-                      <div class="text-lg">{nextDoc.frontmatter.title}</div>
-                    </div>
-                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-            </nav>
-          </div>
-        )}
-        
-        <Footer />
+  <body class="bg-[#13151a] text-white min-h-screen flex flex-col items-center justify-center">
+    <main class="flex flex-col items-center justify-center w-full min-h-screen">
+      <div class="w-full max-w-3xl mx-auto px-8 py-12">
+        <article class="prose dark:prose-invert max-w-none text-center">
+          <slot />
+        </article>
       </div>
-    </div>
+    </main>
   </body>
 </html>
 
 <style is:global>
-  :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-  }
-
-  .dark {
-    color-scheme: dark;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-    }
+  html {
+    font-family: system-ui, sans-serif;
+    background: #030d13;
   }
 </style>

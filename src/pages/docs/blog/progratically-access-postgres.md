@@ -1,5 +1,6 @@
 ---
 title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
+date: 2023-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

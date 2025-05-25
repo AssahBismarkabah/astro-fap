@@ -1,5 +1,6 @@
 ---
 title: Intercepting fetch in a service worker
+date: 2023-10-01
 layout: ../../../layouts/DocsLayout.astro
 ---
 

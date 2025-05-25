@@ -1,0 +1,150 @@
+---
+const postImports = import.meta.glob('./docs/blog/*.md');
+const posts = await Promise.all(
+  Object.entries(postImports).map(async ([path, resolver]) => {
+    const mod = await resolver();
+    const fm = (mod as any).frontmatter || {};
+    return {
+      url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
+      frontmatter: fm,
+      content: (mod as any).default,
+    };
+  })
+);
+posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
+let selectedPost = null;
+function selectPost(post) {
+  selectedPost = post;
+}
+function goBack() {
+  selectedPost = null;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Blog | Assah Bismark</title>
+    <style is:global>
+      :root {
+        color-scheme: dark;
+      }
+      
+      html {
+        background: #030d13;  
+      }
+      
+      html, body {
+        font-family: system-ui, sans-serif;
+        background: #030d13;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+    <style>
+      .blog-container {
+        margin-top: 4rem;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .blog-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 2.5rem;
+        text-align: left;
+        width: 100%;
+      }
+      .blog-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2.2rem;
+      }
+      .blog-article-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+      .blog-article-link:hover {
+        opacity: 0.8;
+      }
+      .blog-article-date {
+        font-size: 1rem;
+        color: #b0b8c1;
+        margin-bottom: 0.2rem;
+      }
+      .blog-article-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #fff;
+      }
+      .back-link {
+        color: #b0b8c1;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s ease;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
+      .post-content {
+        margin-top: 2rem;
+        width: 100%;
+        color: #fff;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blog-container">
+      {selectedPost ? (
+        <div>
+          <div class="back-link" onclick="goBack()">&larr; Blog</div>
+          <div class="blog-article-date">{selectedPost.frontmatter.date || ''}</div>
+          <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">{selectedPost.frontmatter.title || ''}</div>
+          <div class="post-content">
+            {selectedPost.content}
+          </div>
+        </div>
+      ) : (
+        <>
+          <div class="blog-title">Blog</div>
+          {posts.length === 0 ? (
+            <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
+          ) : null}
+          {posts.length > 0 ? (
+            <div class="blog-list">
+              {posts.map(post => (
+                <div class="blog-article-link" onclick="selectPost(post)">
+                  <div class="blog-article-date">{post.frontmatter.date || ''}</div>
+                  <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop().replace('.md', '')}</div>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </>
+      )}
+    </div>
+  </body>
+</html>
