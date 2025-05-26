@@ -21,7 +21,7 @@ function formatDate(dateString) {
       body {
         background: #030d13;
         color: #fff;
-        font-family: system-ui, sans-serif;
+        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
         margin: 0;
         padding: 0;
         min-height: 100vh;
@@ -123,10 +123,47 @@ function formatDate(dateString) {
         color: #60a5fa;
         text-decoration: underline;
       }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+      }
+      .loading-emoji {
+        position: absolute;
+        top: 1.2rem;
+        right: 2.2rem;
+        font-size: 2.1rem;
+        z-index: 20;
+        animation: bounce 1.2s infinite;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <div id="loading-indicator" class="loading-emoji">💭</div>
       <a href="/blog" class="back-link sticky-header">&larr; Blog</a>
       <div class="post-date">{formatDate(frontmatter.date)}</div>
       <div class="post-title">{frontmatter.title}</div>
@@ -135,6 +172,13 @@ function formatDate(dateString) {
       <div class="prose prose-invert">
         <slot />
       </div>
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            document.getElementById('loading-indicator').style.display = 'none';
+          }, 600); // Simulate loading, hide after 600ms
+        });
+      </script>
     </div>
   </body>
 </html> 
