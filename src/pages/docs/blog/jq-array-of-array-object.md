@@ -1,10 +1,10 @@
 ---
-title: Turning an array of arrays into objects with jq
-date: 2023-10-01
-layout: ../../../layouts/DocsLayout.astro
+layout: ../../../layouts/BlogPostLayout.astro
+title: jq Array of Array Object
+date: 2023-01-01
+description: Example of handling arrays of array objects in jq.
 ---
 
-# Turning an array of arrays into objects with jq
 
 Input:
 ```json

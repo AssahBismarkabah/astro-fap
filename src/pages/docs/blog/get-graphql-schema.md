@@ -1,10 +1,10 @@
 ---
-title: get-graphql-schema
-date: 2024-05-20
-layout: ../../../layouts/DocsLayout.astro
+layout: ../../../layouts/BlogPostLayout.astro
+title: How to retrieve a GraphQL schema from an endpoint.
+date: 2023-01-04
+description: How to retrieve a GraphQL schema from an endpoint.
 ---
 
-# get-graphql-schema
 
 The GraphQL schema language is a concise way to represent the available schema provided by a GraphQL endpoint. It looks something like this:
 

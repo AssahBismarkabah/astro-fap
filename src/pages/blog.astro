@@ -1,24 +1,10 @@
 ---
-const postImports = import.meta.glob('./docs/blog/*.md');
-const posts = await Promise.all(
-  Object.entries(postImports).map(async ([path, resolver]) => {
-    const mod = await resolver();
-    const fm = (mod as any).frontmatter || {};
-    return {
-      url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
-      frontmatter: fm,
-      content: (mod as any).default,
-    };
-  })
-);
+const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, { frontmatter: any }>;
+const posts = Object.entries(postImports).map(([path, mod]) => ({
+  url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
+  frontmatter: mod.frontmatter,
+}));
 posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
-let selectedPost = null;
-function selectPost(post) {
-  selectedPost = post;
-}
-function goBack() {
-  selectedPost = null;
-}
 
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -73,20 +59,20 @@ function formatDate(dateString) {
       }
 
       .blog-container.selected-post-active {
-        position: fixed; /* Take over viewport */
+        position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100vh; /* Use height for fixed */
+        height: 100vh;
         margin: 0;
         padding: 0;
-        display: flex; /* Keep flex for centering */
+        display: flex;
         align-items: center;
         justify-content: center;
         transform: scale(0.6);
         transform-origin: center center;
-        background-color: #030d13; /* Match global background */
-        z-index: 1000; /* Ensure it's on top */
+        background-color: #030d13;
+        z-index: 1000;
         overflow: hidden; 
       }
 
@@ -140,11 +126,12 @@ function formatDate(dateString) {
       }
       .post-content-wrapper {
         width: 100%;
-        max-width: 1000px;
+        max-width: 800px;
         padding: 2rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin: 0 auto;
       }
       .post-content {
         margin-top: 2rem;
@@ -152,38 +139,147 @@ function formatDate(dateString) {
         color: #fff;
         line-height: 1.6;
       }
+      .post-content :global(h1),
+      .post-content :global(h2),
+      .post-content :global(h3),
+      .post-content :global(h4),
+      .post-content :global(h5),
+      .post-content :global(h6) {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      .post-content :global(p) {
+        margin-bottom: 1rem;
+      }
+      .post-content :global(ul),
+      .post-content :global(ol) {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+      }
+      .post-content :global(li) {
+        margin-bottom: 0.5rem;
+      }
+      .post-content :global(a) {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .post-content :global(a:hover) {
+        text-decoration: underline;
+      }
+      .post-content :global(code) {
+        background: #1a1a1a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+      }
+      .post-content :global(pre) {
+        background: #1a1a1a;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+      .post-content :global(blockquote) {
+        border-left: 4px solid #60a5fa;
+        margin: 1rem 0;
+        padding-left: 1rem;
+        color: #b0b8c1;
+      }
     </style>
   </head>
   <body>
-    <div class={`blog-container ${selectedPost ? 'selected-post-active' : ''}`}>
-      {selectedPost ? (
-        <div class="post-content-wrapper">
-          <div class="back-link" onclick="goBack()">&larr; Blog</div>
-          <div class="blog-article-date">{formatDate(selectedPost.frontmatter.date)}</div>
-          <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">{selectedPost.frontmatter.title || ''}</div>
-          <div class="post-content">
-            {selectedPost.content}
+    <div id="blog-container" class="blog-container">
+      <div id="blog-list">
+        <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
+        <div class="blog-title">Blog</div>
+        {posts.length === 0 ? (
+          <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
+        ) : null}
+        {posts.length > 0 ? (
+          <div class="blog-list">
+            {posts.map(post => (
+              <a class="blog-article-link" href={post.url}>
+                <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
+                <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</div>
+              </a>
+            ))}
           </div>
-        </div>
-      ) : (
-        <>
+        ) : null}
+      </div>
+    </div>
+
+    <script define:vars={{ posts }}>
+      let selectedPost = null;
+      const blogContainer = document.getElementById('blog-container');
+      const blogList = document.getElementById('blog-list');
+
+      function selectPost(post) {
+        selectedPost = post;
+        blogContainer.classList.add('selected-post-active');
+        
+        // Create a temporary div to render the Content component
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = `
+          <div class="post-content-wrapper">
+            <div class="back-link" onclick="goBack()">&larr; Blog</div>
+            <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
+            <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">${post.frontmatter.title || ''}</div>
+            <div class="post-content">
+              ${post.content}
+            </div>
+          </div>
+        `;
+        
+        blogList.innerHTML = '';
+        blogList.appendChild(tempDiv.firstElementChild);
+      }
+
+      function goBack() {
+        selectedPost = null;
+        blogContainer.classList.remove('selected-post-active');
+        blogList.innerHTML = `
           <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
           <div class="blog-title">Blog</div>
-          {posts.length === 0 ? (
-            <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
-          ) : null}
-          {posts.length > 0 ? (
+          ${posts.length === 0 ? '<div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>' : ''}
+          ${posts.length > 0 ? `
             <div class="blog-list">
-              {posts.map(post => (
-                <div class="blog-article-link" onclick="selectPost(post)">
-                  <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
-                  <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop().replace('.md', '')}</div>
-                </div>
-              ))}
+              ${posts.map(post => `
+                <a class="blog-article-link" href="${post.url}">
+                  <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
+                  <div class="blog-article-title">${post.frontmatter.title || post.url.split('/').pop()}</div>
+                </a>
+              `).join('')}
             </div>
-          ) : null}
-        </>
-      )}
-    </div>
+          ` : ''}
+        `;
+        attachEventListeners();
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZone: 'UTC'
+        });
+      }
+
+      function attachEventListeners() {
+        document.querySelectorAll('.blog-article-link').forEach(link => {
+          link.addEventListener('click', () => {
+            const postUrl = link.getAttribute('href');
+            const post = posts.find(p => p.url === postUrl);
+            if (post) {
+              selectPost(post);
+            }
+          });
+        });
+      }
+
+      // Initial event listener attachment
+      attachEventListeners();
+    </script>
   </body>
 </html>

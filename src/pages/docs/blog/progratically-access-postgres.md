@@ -1,10 +1,10 @@
 ---
-title: Programmatically Accessing Heroku PostgreSQL from GitHub Actions
-date: 2023-10-01
-layout: ../../../layouts/DocsLayout.astro
+layout: ../../../layouts/BlogPostLayout.astro
+title: Programmatically Access Postgres
+date: 2023-01-02
+description: How to access Postgres programmatically from your application.
 ---
 
-# Programmatically Accessing Heroku PostgreSQL from GitHub Actions
 
 The [db-to-sqlite](https://github.com/simonw/db-to-sqlite) tool can connect to a PostgreSQL database, export all of the content, and write it to a SQLite database file on disk. This guide demonstrates how to integrate this process into a GitHub Actions workflow, allowing programmatic access to a Heroku PostgreSQL database.
 

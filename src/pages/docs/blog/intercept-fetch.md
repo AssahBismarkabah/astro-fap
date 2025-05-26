@@ -1,12 +1,11 @@
 ---
-title: Intercepting fetch in a service worker
-date: 2023-10-01
-layout: ../../../layouts/DocsLayout.astro
+layout: ../../../layouts/BlogPostLayout.astro
+title: intercept fetch requests in JavaScript
+date: 2023-01-06
+description: How to intercept fetch requests in JavaScript.
 ---
 
 
-
-# Intercepting fetch in a service worker
 
 I'm learning service workers. I wanted to start with one that intercepts calls to a `/path` and returns "Hello World".
 

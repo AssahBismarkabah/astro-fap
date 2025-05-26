@@ -1,10 +1,10 @@
 ---
+layout: ../../../layouts/BlogPostLayout.astro
 title: How to Read Hacker News Threads with Most Recent Comments First
 date: 2025-03-20
-layout: ../../../layouts/DocsLayout.astro
+description: Learn how to read HN threads in reverse chronological order.
 ---
 
-# How to Read Hacker News Threads with Most Recent Comments First
 
 [Hacker News](https://news.ycombinator.com/) displays comments in a tree structure, which can make it difficult to track the latest updates in a conversation. To address this, I explored three different methods to sort and read Hacker News comments by most recent first. Here's how you can do it, starting from the simplest approach.
 
@@ -46,7 +46,7 @@ Datasette Lite converts the JSON data into a table, allowing you to browse and f
 
 Datasette Lite supports plugins to improve data visualization. For example, you can use `datasette-simple-html` and `datasette-json-html` to render HTML and create links for easier navigation.
 
-Here’s an example SQL query to enhance readability:
+Here's an example SQL query to enhance readability:
 
 ```sql
 select
@@ -72,15 +72,15 @@ This query includes clickable links to comments on Hacker News.
 
 ## 3. Advanced Solution: Flattening Nested JSON with `json_tree()`
 
-Algolia’s `items` API returns a nested JSON object representing the entire thread:
+Algolia's `items` API returns a nested JSON object representing the entire thread:
 
 ```
 https://hn.algolia.com/api/v1/items/35111646
 ```
 
-Datasette Lite can parse nested JSON arrays into a table. You can further flatten this data using SQLite’s `json_tree()` function.
+Datasette Lite can parse nested JSON arrays into a table. You can further flatten this data using SQLite's `json_tree()` function.
 
-Here’s an example query to extract and organize the nested comments:
+Here's an example query to extract and organize the nested comments:
 
 ```sql
 with items as (select * from [35111646]),

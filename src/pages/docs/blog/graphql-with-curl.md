@@ -1,10 +1,10 @@
 ---
-title: Running GraphQL Queries with curl
-date: 2024-05-20
-layout: ../../../layouts/DocsLayout.astro
+layout: ../../../layouts/BlogPostLayout.astro
+title: How to use cURL to interact with GraphQL APIs.
+date: 2023-01-05
+description: How to use cURL to interact with GraphQL APIs.
 ---
 
-# Using curl to Run GraphQL Queries from the Command Line
 
 Running GraphQL queries from the command line using `curl` can be made simple and readable. Here's an example of how to query the GitHub GraphQL API using `curl`, tested in both `bash` and `zsh`. Replace `TOKEN` with your GitHub API personal access token.
 

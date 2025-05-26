@@ -1,10 +1,10 @@
 ---
+layout: ../../../layouts/BlogPostLayout.astro
 title: Deploying Python web apps as AWS Lambda functions
-date: 2024-10-01
-layout: ../../../layouts/DocsLayout.astro
+date: 2023-01-03
+description: Guide to deploying Python web applications.
 ---
 
-# Deploying Python web apps as AWS Lambda functions
 
 
 [AWS Lambda](https://aws.amazon.com/lambda/) can host functions written in Python. These are "scale to zero" - my favourite definition of serverless! - which means you only pay for the traffic that they serve. A project with no traffic costs nothing to run.
