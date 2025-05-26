@@ -1,5 +1,13 @@
 ---
 const allPosts = import.meta.glob('./*.md', { eager: true });
+
+export function getStaticPaths() {
+  return Object.keys(allPosts).map((path) => {
+    const slug = path.split('/').pop().replace('.md', '');
+    return { params: { slug } };
+  });
+}
+
 const slug = Astro.params.slug;
 const postEntry = Object.entries(allPosts).find(([path]) =>
   path.endsWith(`/${slug}.md`)
