@@ -5,15 +5,12 @@ date: 2025-03-20
 description: Learn how to read HN threads in reverse chronological order.
 ---
 
-
 [Hacker News](https://news.ycombinator.com/) displays comments in a tree structure, which can make it difficult to track the latest updates in a conversation. To address this, I explored three different methods to sort and read Hacker News comments by most recent first. Here's how you can do it, starting from the simplest approach.
 
 ## 1. The Easiest Way: Algolia Search
 
 Hacker News uses Algolia for its search functionality, which has a continuously updated index. You can use this to display comments for a specific story in reverse chronological order.
-
 For example, to view comments for the story with ID `35111646`, you can use the following URL:
-
 [https://hn.algolia.com/?dateRange=all&page=0&prefix=false&query=story:35111646&sort=byDate&type=comment](https://hn.algolia.com/?dateRange=all&page=0&prefix=false&query=story:35111646&sort=byDate&type=comment)
 
 You can replace `35111646` with the story ID of your choice. This method provides a straightforward way to browse comments by date.
@@ -23,13 +20,10 @@ You can replace `35111646` with the story ID of your choice. This method provide
 ## 2. Using the Algolia `search_by_date` API
 
 For a programmatic solution, you can use the Algolia Hacker News API, which is separate from the official Hacker News API. This API provides a `search_by_date` endpoint for retrieving comments sorted by date in JSON format.
-
 For example:
-
-```
+```json
 https://hn.algolia.com/api/v1/search_by_date?tags=comment,story_35111646&hitsPerPage=1000
 ```
-
 The `tags` parameter specifies the story ID and filters for comments. Adding `&hitsPerPage=1000` retrieves up to 1,000 comments in one request.
 
 ### Viewing JSON Data in Datasette Lite
@@ -45,7 +39,6 @@ Datasette Lite converts the JSON data into a table, allowing you to browse and f
 ### Enhancing Readability with Plugins and SQL
 
 Datasette Lite supports plugins to improve data visualization. For example, you can use `datasette-simple-html` and `datasette-json-html` to render HTML and create links for easier navigation.
-
 Here's an example SQL query to enhance readability:
 
 ```sql
@@ -105,5 +98,4 @@ This query flattens the nested JSON and sorts the comments by creation date.
 ## Conclusion
 
 Each method provides a different level of control and complexity for reading Hacker News threads with the most recent comments first. Whether you prefer a simple URL, an API integration, or advanced JSON manipulation, these solutions can help you navigate and stay updated on conversations more efficiently.
-
 This post was originally written by [Simon](https://github.com/simonw). Iliked the post and wanted to add it here for future reference.
