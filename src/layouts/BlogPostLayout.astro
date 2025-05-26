@@ -1,0 +1,185 @@
+---
+const { frontmatter } = Astro.props;
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  });
+}
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{frontmatter.title}</title>
+    <meta name="description" content={frontmatter.description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      body {
+        background: #030d13;
+        color: #fff;
+        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        font-size: 1.18rem;
+      }
+      .container {
+        max-width: 850px;
+        margin: 3.5rem auto 0 auto;
+        padding: 2.5rem 1.5rem 5rem 1.5rem;
+      }
+      .back-link {
+        color: #b0b8c1;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s ease;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
+      .post-date {
+        color: #b0b8c1;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+      .post-title {
+        font-size: 2.7rem;
+        font-weight: bold;
+        margin-bottom: 0.2rem;
+        text-align: left;
+        line-height: 1.15;
+      }
+      .post-author {
+        color: #b0b8c1;
+        font-size: 1.05rem;
+        font-style: italic;
+        margin-bottom: 0.7rem;
+        text-align: left;
+      }
+      .post-description {
+        color: #b0b8c1;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+      .prose {
+        color: #fff;
+        line-height: 1.7;
+        text-align: left;
+        font-size: 1.22rem;
+        max-width: 100%;
+      }
+      .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+        color: #fff;
+        font-weight: bold;
+        margin-top: 2.2em;
+        margin-bottom: 0.7em;
+        line-height: 1.2;
+      }
+      .prose h1 { font-size: 2.1rem; }
+      .prose h2 { font-size: 1.5rem; }
+      .prose h3 { font-size: 1.2rem; }
+      .prose p, .prose ul, .prose ol, .prose pre, .prose blockquote {
+        margin-bottom: 1.3em;
+      }
+      .prose ul, .prose ol {
+        padding-left: 1.5em;
+      }
+      .prose code {
+        background: #222;
+        padding: 0.2em 0.4em;
+        border-radius: 0.3em;
+        font-size: 0.95em;
+      }
+      .prose pre {
+        background: #18181b;
+        padding: 1em;
+        border-radius: 0.5em;
+        overflow-x: auto;
+      }
+      .prose blockquote {
+        border-left: 4px solid #60a5fa;
+        margin: 1em 0;
+        padding-left: 1em;
+        color: #b0b8c1;
+        font-style: italic;
+      }
+      .prose img {
+        max-width: 100%;
+        border-radius: 0.5em;
+        margin: 1em 0;
+      }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: underline;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+      }
+      .loading-emoji {
+        position: absolute;
+        top: 1.2rem;
+        right: 2.2rem;
+        font-size: 2.1rem;
+        z-index: 20;
+        animation: bounce 1.2s infinite;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="loading-indicator" class="loading-emoji">💭</div>
+      <a href="/blog" class="back-link sticky-header">&larr; Blog</a>
+      <div class="post-date">{formatDate(frontmatter.date)}</div>
+      <div class="post-title">{frontmatter.title}</div>
+      {frontmatter.author && <div class="post-author">By <i>{frontmatter.author}</i></div>}
+      {frontmatter.description && <div class="post-description">{frontmatter.description}</div>}
+      <div class="prose prose-invert">
+        <slot />
+      </div>
+      <script>
+        window.addEventListener('DOMContentLoaded', () => {
+          setTimeout(() => {
+            document.getElementById('loading-indicator').style.display = 'none';
+          }, 600); // Simulate loading, hide after 600ms
+        });
+      </script>
+    </div>
+  </body>
+</html> 

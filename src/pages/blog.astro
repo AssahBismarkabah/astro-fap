@@ -1,0 +1,285 @@
+---
+const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, { frontmatter: any }>;
+const posts = Object.entries(postImports).map(([path, mod]) => ({
+  url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
+  frontmatter: mod.frontmatter,
+}));
+posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
+
+function formatDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC'
+  });
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Blog | Assah Bismark</title>
+    <style is:global>
+      :root {
+        color-scheme: dark;
+      }
+      
+      html {
+        background: #030d13;  
+      }
+      
+      html, body {
+        font-family: system-ui, sans-serif;
+        background: #030d13;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+    <style>
+      .blog-container {
+        margin-top: 4rem;
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .blog-container.selected-post-active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.6);
+        transform-origin: center center;
+        background-color: #030d13;
+        z-index: 1000;
+        overflow: hidden; 
+      }
+
+      .blog-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 2.5rem;
+        text-align: left;
+        width: 100%;
+      }
+      .blog-list {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+      .blog-article-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        width: 100%;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+      .blog-article-link:hover {
+        opacity: 0.8;
+      }
+      .blog-article-date {
+        font-size: 1rem;
+        color: #b0b8c1;
+        margin-bottom: 0.2rem;
+      }
+      .blog-article-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #fff;
+      }
+      .back-link {
+        color: #b0b8c1;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s ease;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
+      .post-content-wrapper {
+        width: 100%;
+        max-width: 800px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 auto;
+      }
+      .post-content {
+        margin-top: 2rem;
+        width: 100%;
+        color: #fff;
+        line-height: 1.6;
+      }
+      .post-content :global(h1),
+      .post-content :global(h2),
+      .post-content :global(h3),
+      .post-content :global(h4),
+      .post-content :global(h5),
+      .post-content :global(h6) {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+      .post-content :global(p) {
+        margin-bottom: 1rem;
+      }
+      .post-content :global(ul),
+      .post-content :global(ol) {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+      }
+      .post-content :global(li) {
+        margin-bottom: 0.5rem;
+      }
+      .post-content :global(a) {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+      .post-content :global(a:hover) {
+        text-decoration: underline;
+      }
+      .post-content :global(code) {
+        background: #1a1a1a;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+      }
+      .post-content :global(pre) {
+        background: #1a1a1a;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+      .post-content :global(blockquote) {
+        border-left: 4px solid #60a5fa;
+        margin: 1rem 0;
+        padding-left: 1rem;
+        color: #b0b8c1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="blog-container" class="blog-container">
+      <div id="blog-list">
+        <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
+        <div class="blog-title">Blog</div>
+        {posts.length === 0 ? (
+          <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
+        ) : null}
+        {posts.length > 0 ? (
+          <div class="blog-list">
+            {posts.map(post => (
+              <a class="blog-article-link" href={post.url}>
+                <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
+                <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</div>
+              </a>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </div>
+
+    <script define:vars={{ posts }}>
+      let selectedPost = null;
+      const blogContainer = document.getElementById('blog-container');
+      const blogList = document.getElementById('blog-list');
+
+      function selectPost(post) {
+        selectedPost = post;
+        blogContainer.classList.add('selected-post-active');
+        
+        // Create a temporary div to render the Content component
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = `
+          <div class="post-content-wrapper">
+            <div class="back-link" onclick="goBack()">&larr; Blog</div>
+            <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
+            <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">${post.frontmatter.title || ''}</div>
+            <div class="post-content">
+              ${post.content}
+            </div>
+          </div>
+        `;
+        
+        blogList.innerHTML = '';
+        blogList.appendChild(tempDiv.firstElementChild);
+      }
+
+      function goBack() {
+        selectedPost = null;
+        blogContainer.classList.remove('selected-post-active');
+        blogList.innerHTML = `
+          <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
+          <div class="blog-title">Blog</div>
+          ${posts.length === 0 ? '<div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>' : ''}
+          ${posts.length > 0 ? `
+            <div class="blog-list">
+              ${posts.map(post => `
+                <a class="blog-article-link" href="${post.url}">
+                  <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
+                  <div class="blog-article-title">${post.frontmatter.title || post.url.split('/').pop()}</div>
+                </a>
+              `).join('')}
+            </div>
+          ` : ''}
+        `;
+        attachEventListeners();
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          timeZone: 'UTC'
+        });
+      }
+
+      function attachEventListeners() {
+        document.querySelectorAll('.blog-article-link').forEach(link => {
+          link.addEventListener('click', () => {
+            const postUrl = link.getAttribute('href');
+            const post = posts.find(p => p.url === postUrl);
+            if (post) {
+              selectPost(post);
+            }
+          });
+        });
+      }
+
+      // Initial event listener attachment
+      attachEventListeners();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+---
+const allPosts = import.meta.glob('./*.md', { eager: true });
+const slug = Astro.params.slug;
+const postEntry = Object.entries(allPosts).find(([path]) =>
+  path.endsWith(`/${slug}.md`)
+);
+if (!postEntry) throw new Error('Post not found');
+const post = postEntry[1] as { frontmatter: any; Content: any };
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{post ? post.frontmatter.title : 'Blog Article'} | Assah Bismark</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        background: #13151a;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 700px;
+        margin: 3rem auto 0 auto;
+        padding: 2rem 1rem 4rem 1rem;
+        background: none;
+      }
+      .back-link {
+        color: #b0b8c1;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s ease;
+      }
+      .back-link:hover {
+        color: #fff;
+      }
+      .post-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+      .post-date {
+        color: #b0b8c1;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+      .prose {
+        color: #fff;
+        line-height: 1.7;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="/blog" class="back-link">&larr; Blog</a>
+      <div class="post-date">{post.frontmatter.date}</div>
+      <div class="post-title">{post.frontmatter.title}</div>
+      <article class="prose dark:prose-invert">
+        <post.Content />
+      </article>
+    </div>
+  </body>
+</html>

@@ -1,23 +1,190 @@
 ---
-import DocsLayout from '../layouts/DocsLayout.astro';
+const profile = {
+  name: 'Assah Bismark',
+  location: 'Cameroon',
+  socials: [
+    { label: 'Google', url: 'https://www.google.com/search?q=Assah+Bismark' },
+    { label: 'ChatGPT', url: 'https://chat.openai.com/?q=who+is+assah+bismark' },
+    { label: 'Email', url: 'mailto:abahbismarkassah@gmail.com', icon: true },
+    { label: 'Blog', url: '/blog' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/assah-bismark-608a6a251/' },
+    { label: 'GitHub', url: 'https://github.com/AssahBismarkabah' },
+  ],
+};
 ---
-
-<DocsLayout title="writing">
-  <div class="mt-40"> <!-- Adds margin-top to push content lower -->
-    <h1 class="text-2xl font-bold mb-20">Assah Bismark</h1>
-    <div class="text-white-300 space-y-4">
-      <p>
-        I'm a software engineer based in Cameroon, currently working at <a href="https://adorsys.com" class="text-green-300 hover:underline">adorsys GmbH & Co. KG</a> as a FullStack Software Engineer.
-      </p>
-      <p>
-        Today, I spend most of my time working on <a href="https://github.com/adorsys/datasafe" class="text-green-300 hover:underline">Datasafe</a>, an advanced data protection solution, and <a href="https://github.com/adorsys/keycloak-config-cli" class="text-green-300 hover:underline">Keycloak-config-cli</a>, a tool for managing Keycloak configurations.
-      </p>
-      <p>
-        My work includes writing code, implementing security algorithms, and deploying solutions in cloud environments like <a href="https://aws.amazon.com/" class="text-green-300 hover:underline">AWS</a> and <a href="https://www.openshift.com/" class="text-green-300 hover:underline">OpenShift</a>.
-      </p>
-      <p>
-        I specialize in <a href="https://www.java.com/" class="text-green-300 hover:underline">Java</a>, <a href="https://spring.io/projects/spring-boot" class="text-green-300 hover:underline">Spring Boot</a>, <a href="https://www.docker.com/" class="text-green-300 hover:underline">Docker</a>, and <a href="https://kubernetes.io/" class="text-green-300 hover:underline">Kubernetes</a>, as well as security protocols like <a href="https://oauth.net/2/" class="text-green-300 hover:underline">OAuth2</a> and <a href="https://openid.net/connect/" class="text-green-300 hover:underline">OpenID Connect</a>.
-      </p>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{profile.name}</title>
+    <style>
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+      }
+      html {
+        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
+      }
+      body {
+        background: #030d13;
+        min-height: 100vh;
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      .center-content {
+        min-height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: scale(0.6);
+      }
+      .profile-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 2.2rem;
+        margin-bottom: 1.2rem;
+      }
+      .profile-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 24px; /* rounded square */
+        object-fit: cover;
+        margin-bottom: 0;
+        border: none;
+        filter: grayscale(100%);
+        display: block;
+      }
+      .text-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
+      .name-row {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+        margin-bottom: 0.1rem;
+        justify-content: flex-start;
+      }
+      .name {
+        font-size: 2.3rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 0.01em;
+        line-height: 1.2;
+        text-align: left;
+      }
+      .secondary {
+        font-size: 1.2rem;
+        color: #b0b8c1;
+        font-weight: 500;
+        line-height: 1.2;
+        text-align: left;
+      }
+      .location {
+        color: #b0b8c1;
+        font-size: 1.25rem;
+        margin-bottom: 0.2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-weight: 400;
+        justify-content: flex-start;
+      }
+      .socials {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem 1.1rem;
+        justify-content: center;
+        margin-top: 1.2rem;
+        width: 100%;
+        max-width: 600px;
+      }
+      .social-btn {
+        background: transparent;
+        color: #e0e6ed;
+        border: 2px solid #232b32;
+        border-radius: 1.6rem;
+        padding: 0.55rem 2.1rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.18s, color 0.18s, border 0.18s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        margin-bottom: 0.3rem;
+      }
+      .social-btn:hover {
+        background: #232b32;
+        color: #7fffd4;
+        border-color: #030d13;
+      }
+      .email-icon {
+        display: inline-block;
+        width: 1.1em;
+        height: 1.1em;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-content">
+      <div class="profile-row">
+        <img src="/134822946.jpeg" alt="Profile" class="profile-img" />
+        <div class="text-block">
+          <div class="name-row">
+            <div class="name">{profile.name}</div>
+          </div>
+          <div class="secondary">アサー・ビスマーク</div>
+          <div class="location">
+            <svg width="24" height="24" fill="none" stroke="#b0b8c1" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M9 21V9h6v12"/></svg>
+            {profile.location}
+          </div>
+        </div>
+      </div>
+      <div class="socials">
+        {profile.socials.map(social => (
+          <a
+            href={social.url}
+            class="social-btn"
+            target={social.url.startsWith('/') ? '_self' : '_blank'}
+            rel={social.url.startsWith('/') ? '' : 'noopener noreferrer'}
+          >
+            {social.icon ? (
+              <svg class="email-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M22 7.5l-10 7-10-7"/></svg>
+            ) : null}
+            {social.label}
+          </a>
+        ))}
+      </div>
     </div>
-  </div>
-</DocsLayout>
+  </body>
+</html>
