@@ -18,6 +18,33 @@ const profile = {
     <meta name="viewport" content="width=device-width" />
     <title>{profile.name}</title>
     <style>
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro.ttf') format('truetype');
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'SF Pro';
+        src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
+        font-weight: 500;
+        font-style: normal;
+      }
+      html {
+        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
+      }
       body {
         background: #030d13;
         min-height: 100vh;
