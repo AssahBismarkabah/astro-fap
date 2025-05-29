@@ -19,7 +19,7 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>{post ? post.frontmatter.title : 'Blog Article'} | Assah Bismark</title>
     <style>
       body {
@@ -35,6 +35,27 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
         margin: 3rem auto 0 auto;
         padding: 2rem 1rem 4rem 1rem;
         background: none;
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        left: 0;
+        right: 0;
+      }
+      
+      @media (max-width: 768px) {
+        .container {
+          margin: 2rem auto 0 auto;
+          padding: 1.5rem 1rem 3rem 1rem;
+          max-width: 100%;
+        }
+        
+        .post-title {
+          font-size: 1.8rem !important;
+        }
+        
+        .prose {
+          font-size: 1.1rem !important;
+        }
       }
       .back-link {
         color: #b0b8c1;
@@ -66,6 +87,9 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
         color: #fff;
         line-height: 1.7;
         text-align: left;
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
     </style>
   </head>
