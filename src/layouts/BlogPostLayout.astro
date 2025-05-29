@@ -160,6 +160,29 @@ function formatDate(dateString) {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-8px); }
       }
+      .content-hidden {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .content-visible {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .loading-state {
+        color: #b0b8c1;
+        font-style: italic;
+        margin: 2rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      /* Hide empty elements */
+      .prose p:empty,
+      .prose div:empty {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -167,17 +190,74 @@ function formatDate(dateString) {
       <div id="loading-indicator" class="loading-emoji">💭</div>
       <a href="/blog" class="back-link sticky-header">&larr; Blog</a>
       <div class="post-date">{formatDate(frontmatter.date)}</div>
-      <div class="post-title">{frontmatter.title}</div>
-      {frontmatter.author && <div class="post-author">By <i>{frontmatter.author}</i></div>}
-      {frontmatter.description && <div class="post-description">{frontmatter.description}</div>}
-      <div class="prose prose-invert">
-        <slot />
+      <div class="post-title">{frontmatter?.title || 'Loading...'}</div>
+      {frontmatter?.author && <div class="post-author">By <i>{frontmatter.author}</i></div>}
+      {frontmatter?.description && <div class="post-description">{frontmatter.description}</div>}
+      <div id="loading-state" class="loading-state">
+        <span>Loading content...</span>
+        <span>☁️</span>
+      </div>
+      <div id="article-content" class="prose prose-invert content-hidden">
+        {typeof Astro.slots.default !== 'undefined' ? <slot /> : <div>Content loading...</div>}
       </div>
       <script>
         window.addEventListener('DOMContentLoaded', () => {
-          setTimeout(() => {
-            document.getElementById('loading-indicator').style.display = 'none';
-          }, 600); // Simulate loading, hide after 600ms
+          const content = document.getElementById('article-content');
+          const loadingState = document.getElementById('loading-state');
+          const loadingIndicator = document.getElementById('loading-indicator');
+          
+          const cleanContent = () => {
+            if (content) {
+              const walker = document.createTreeWalker(
+                content,
+                NodeFilter.SHOW_TEXT,
+                null
+              );
+              
+              let node;
+              const nodesToRemove = [];
+              
+              while (node = walker.nextNode()) {
+                if (node.textContent && node.textContent.includes('undefined')) {
+                  nodesToRemove.push(node);
+                }
+              }
+              
+              nodesToRemove.forEach(node => node.remove());
+            }
+          };
+          
+          // Check if content has loaded
+          const checkContentLoaded = () => {
+            const hasContent = content && content.textContent && content.textContent.trim().length > 0;
+            const hasRealContent = content.textContent.trim() !== 'Content loading...';
+            return hasContent && hasRealContent;
+          };
+          
+          // Show content when loaded
+          const showContent = () => {
+            cleanContent(); // Clean any undefined text first
+            if (loadingState) loadingState.style.display = 'none';
+            if (content) {
+              content.classList.remove('content-hidden');
+              content.classList.add('content-visible');
+            }
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+          };
+          
+          if (checkContentLoaded()) {
+            setTimeout(showContent, 200);
+          } else {
+            let attempts = 0;
+            const maxAttempts = 30; // 3 seconds max
+            const checkInterval = setInterval(() => {
+              attempts++;
+              if (checkContentLoaded() || attempts >= maxAttempts) {
+                clearInterval(checkInterval);
+                showContent();
+              }
+            }, 100);
+          }
         });
       </script>
     </div>
