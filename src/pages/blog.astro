@@ -1,9 +1,42 @@
 ---
-const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, { frontmatter: any }>;
-const posts = Object.entries(postImports).map(([path, mod]) => ({
-  url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
-  frontmatter: mod.frontmatter,
-}));
+interface MarkdownInstance {
+  frontmatter: any;
+  rawContent: () => string;
+  url?: string;
+}
+
+const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
+const posts = Object.entries(postImports).map(([path, mod]) => {
+  // Get the raw markdown content
+  let preview = '';
+  
+  if (mod.rawContent) {
+    // Get raw markdown content
+    const rawText = mod.rawContent();
+    const contentWithoutFrontmatter = rawText.replace(/^---[\s\S]*?---\n\n?/, '');
+    // Remove markdown syntax but keep more content for longer previews
+    const cleanText = contentWithoutFrontmatter
+      .replace(/#{1,6}\s+/g, '') // Remove headers
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Remove links but keep text
+      .replace(/```[\s\S]*?```/g, '') // Remove code blocks
+      .replace(/`[^`]+`/g, '') // Remove inline code
+      .replace(/\*\*([^\*]+)\*\*/g, '$1') // Remove bold
+      .replace(/\*([^\*]+)\*/g, '$1') // Remove italic
+      .replace(/\n+/g, ' ') // Replace newlines with spaces
+      .trim();
+    // Increase preview length to ~500 characters to show more content
+    preview = cleanText.substring(0, 500) + (cleanText.length > 500 ? '...' : '');
+  } else if (mod.frontmatter?.description) {
+    // Fallback to description if rawContent not available
+    preview = mod.frontmatter.description;
+  }
+  
+  return {
+    url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
+    frontmatter: mod.frontmatter,
+    preview: preview,
+  };
+});
 posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
 
 function formatDate(dateString) {
@@ -49,13 +82,34 @@ function formatDate(dateString) {
       .blog-container {
         margin-top: 4rem;
         width: 100%;
-        max-width: 600px;
+        max-width: 1200px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 1rem;
+        padding: 0 3rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+      }
+      
+      @media (max-width: 1400px) {
+        .blog-container {
+          max-width: 1000px;
+          padding: 0 2.5rem;
+        }
+      }
+      
+      @media (max-width: 1200px) {
+        .blog-container {
+          max-width: 900px;
+          padding: 0 2rem;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .blog-container {
+          max-width: 100%;
+          padding: 0 1.5rem;
+        }
       }
 
       .blog-container.selected-post-active {
@@ -87,28 +141,50 @@ function formatDate(dateString) {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 0.9rem;
+        gap: 4rem;
       }
-      .blog-article-link {
+      .blog-article {
         text-decoration: none;
         color: inherit;
         display: block;
         width: 100%;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-      }
-      .blog-article-link:hover {
-        opacity: 0.8;
-      }
-      .blog-article-date {
-        font-size: 1rem;
-        color: #b0b8c1;
-        margin-bottom: 0.2rem;
       }
       .blog-article-title {
-        font-size: 1.25rem;
-        font-weight: 600;
+        font-size: 1.875rem;
+        font-weight: 700;
         color: #fff;
+        margin-bottom: 1.25rem;
+        line-height: 1.2;
+      }
+      .blog-article-preview {
+        font-size: 1.125rem;
+        color: #9ca3af;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+        max-width: 100%;
+      }
+      .blog-article-more {
+        font-size: 1rem;
+        color: #9ca3af;
+        margin-bottom: 1.25rem;
+        cursor: pointer;
+        display: inline-block;
+        text-decoration: none;
+      }
+      .blog-article-more:hover {
+        color: #fff;
+      }
+      .blog-article-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        font-size: 0.95rem;
+        color: #6b7280;
+      }
+      .blog-article-date {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
       .back-link {
         color: #b0b8c1;
@@ -198,10 +274,16 @@ function formatDate(dateString) {
         {posts.length > 0 ? (
           <div class="blog-list">
             {posts.map(post => (
-              <a class="blog-article-link" href={post.url}>
-                <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
-                <div class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</div>
-              </a>
+              <article class="blog-article">
+                <a href={post.url} style="text-decoration: none; color: inherit;">
+                  <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
+                </a>
+                <p class="blog-article-preview">{post.preview}</p>
+                <a href={post.url} class="blog-article-more">More ›</a>
+                <div class="blog-article-meta">
+                  <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
+                </div>
+              </article>
             ))}
           </div>
         ) : null}
@@ -244,10 +326,16 @@ function formatDate(dateString) {
           ${posts.length > 0 ? `
             <div class="blog-list">
               ${posts.map(post => `
-                <a class="blog-article-link" href="${post.url}">
-                  <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
-                  <div class="blog-article-title">${post.frontmatter.title || post.url.split('/').pop()}</div>
-                </a>
+                <article class="blog-article">
+                  <a href="${post.url}" style="text-decoration: none; color: inherit;">
+                    <h2 class="blog-article-title">${post.frontmatter.title || post.url.split('/').pop()}</h2>
+                  </a>
+                  <p class="blog-article-preview">${post.preview}</p>
+                  <a href="${post.url}" class="blog-article-more">More ›</a>
+                  <div class="blog-article-meta">
+                    <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
+                  </div>
+                </article>
               `).join('')}
             </div>
           ` : ''}
