@@ -2,7 +2,7 @@
 layout: ../../../layouts/BlogPostLayout.astro
 title: Solving the Context Problem - A Local RAG System for Code
 date: 2025-11-01
-description: Solving the Context Problem - A Local RAG System for Code
+description: Building Local Semantic Code Search - 11ms Queries Across 7,620 Files
 ---
 
 
