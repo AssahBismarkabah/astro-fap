@@ -1,4 +1,5 @@
 ---
+import Giscus from '../components/Giscus.astro';
 const { frontmatter } = Astro.props;
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -249,6 +250,9 @@ const hasValidContent = frontmatter?.title && frontmatter?.title !== 'undefined'
       <div id="article-content" class="prose prose-invert" class:list={[hasValidContent ? 'content-visible' : 'content-hidden']}>
         <slot />
       </div>
+
+      <Giscus />
+
       <script define:vars={{ hasValidContent }}>
         // Hide content initially and show loading
         const style = document.createElement('style');
