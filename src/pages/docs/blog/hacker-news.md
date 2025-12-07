@@ -3,6 +3,7 @@ layout: ../../../layouts/BlogPostLayout.astro
 title: How to Read Hacker News Threads with Most Recent Comments First
 date: 2025-03-20
 description: Learn how to read HN threads in reverse chronological order.
+category: technical
 ---
 
 [Hacker News](https://news.ycombinator.com/) displays comments in a tree structure, which can make it difficult to track the latest updates in a conversation. To address this, I explored three different methods to sort and read Hacker News comments by most recent first. Here's how you can do it, starting from the simplest approach.

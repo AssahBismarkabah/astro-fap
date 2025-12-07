@@ -3,6 +3,7 @@ layout: ../../../layouts/BlogPostLayout.astro
 title: Deploying Python web apps as AWS Lambda functions
 date: 2023-01-03
 description: Guide to deploying Python web applications.
+category: technical
 ---
 
 

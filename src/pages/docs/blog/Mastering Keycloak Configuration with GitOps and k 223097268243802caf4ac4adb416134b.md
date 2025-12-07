@@ -3,10 +3,10 @@ layout: ../../../layouts/BlogPostLayout.astro
 title: Mastering Keycloak Configuration with GitOps and keycloak-config-cli
 date: 2025-06-03
 description: Automated IAM Configuration with Git and keycloak-config-cli
-
+category: technical
 ---
 
-![current image in my mind.](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/image.png)
+![current image in my mind.](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_image.png)
 
 current image in my mind.
 
@@ -25,7 +25,7 @@ By leveraging a GitOps workflow, every configuration change is version-controlle
 - **Environment Inconsistency:** Replicating a configuration exactly from a development environment to a production environment is nearly impossible, leading to the dreaded "it works on my machine" syndrome.
 - **Scalability Issues:** Manually onboarding new tenants or services is a time-consuming, repetitive task that doesn't scale.
 
-![*Keycloak's Admin Console with a tedious, multi-step process of manually creating and configuring realms.* ](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-01_at_16.29.21.png)
+![*Keycloak's Admin Console with a tedious, multi-step process of manually creating and configuring realms.* ](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-01_at_16.29.21.png)
 
 *Keycloak's Admin Console with a tedious, multi-step process of manually creating and configuring realms.* 
 
@@ -81,13 +81,13 @@ The **Keycloak Tenant Accelerator (KTA)** project demonstrates exactly how a rea
     This entire process takes minutes, not hours or days of manual configuration.
     
 
-![Screenshot 2025-07-01 at 18.24.11.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-01_at_18.24.11.png)
+![Screenshot 2025-07-01 at 18.24.11.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-01_at_18.24.11.png)
 
 ### 4. The Template-Driven Approach: Configuration as Code at Scale
 
 The power of the KTA system lies in its template-driven approach to generating tenant configurations. Instead of manually creating each tenant's setup, everything starts with a master blueprint. The master template (`_templates/tenant-template.yaml`) defines the complete structure of a Keycloak realm using placeholder variables.
 
-![Screenshot 2025-07-02 at 01.24.49.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-02_at_01.24.49.png)
+![Screenshot 2025-07-02 at 01.24.49.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-02_at_01.24.49.png)
 
 ```yaml
 # Tenant Realm Template
@@ -160,7 +160,7 @@ protocolMappers:
 
 This level of isolation ensures that each tenant's users, applications, and data remain completely separate from other tenants on the same Keycloak server.
 
-![Screenshot 2025-07-01 at 18.39.26.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-01_at_18.39.26.png)
+![Screenshot 2025-07-01 at 18.39.26.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-01_at_18.39.26.png)
 
 ### 5. CI/CD Pipeline: From Configuration to Deployment
 
@@ -194,7 +194,7 @@ flowchart TD
 
 This automation yields powerful results, enabling seamless tenant management:
 
-![*tool logs demonstrating successful realm creation and updates*](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-01_at_18.05.56.png)
+![*tool logs demonstrating successful realm creation and updates*](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-01_at_18.05.56.png)
 
 *tool logs demonstrating successful realm creation and updates*
 
@@ -330,7 +330,7 @@ The KTA system manage Keycloak Organizations using a **fully declarative, GitOps
 
 This new architecture is simpler and more robust. The backend's only role is to render a complete configuration file from a template and commit it to Git. The CI/CD pipeline handles the deployment declaratively.
 
-![kta organization: Declarative GitOps Flow](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/image%201.png)
+![kta organization: Declarative GitOps Flow](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_image%201.png)
 
 kta organization: Declarative GitOps Flow
 
@@ -461,9 +461,9 @@ organizations:
         enabled: true 
 ```
 
-![Screenshot 2025-07-02 at 12.42.46.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-02_at_12.42.46.png)
+![Screenshot 2025-07-02 at 12.42.46.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-02_at_12.42.46.png)
 
-![Screenshot 2025-07-02 at 12.43.02.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-02_at_12.43.02.png)
+![Screenshot 2025-07-02 at 12.43.02.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-02_at_12.43.02.png)
 
 **3. CI/CD Pipeline  (`.github/workflows/apply-organizations-config.ym**l`**)**
 
@@ -500,7 +500,7 @@ apply_all_org_configs() {
 }
 ```
 
-![Screenshot 2025-07-02 at 12.48.04.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/Screenshot_2025-07-02_at_12.48.04.png)
+![Screenshot 2025-07-02 at 12.48.04.png](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_Screenshot_2025-07-02_at_12.48.04.png)
 
 **4. Summary of new approach** 
 
@@ -524,7 +524,7 @@ apply_all_org_configs() {
 
 The KTA project demonstrates how organizations can gradually migrate from realm-per-tenant to Organizations:
 
-![from Realms to Organizations.](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/image%202.png)
+![from Realms to Organizations.](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_image%202.png)
 
 from Realms to Organizations.
 

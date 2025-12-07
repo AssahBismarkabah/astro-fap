@@ -3,6 +3,7 @@ layout: ../../../layouts/BlogPostLayout.astro
 title: Programmatically Access Postgres
 date: 2023-01-02
 description: How to access Postgres programmatically from your application.
+category: technical
 ---
 
 

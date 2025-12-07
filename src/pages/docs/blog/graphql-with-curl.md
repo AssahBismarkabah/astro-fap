@@ -3,6 +3,7 @@ layout: ../../../layouts/BlogPostLayout.astro
 title: How to use cURL to interact with GraphQL APIs.
 date: 2023-01-05
 description: How to use cURL to interact with GraphQL APIs.
+category: technical
 ---
 
 

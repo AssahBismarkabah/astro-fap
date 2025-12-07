@@ -9,7 +9,7 @@ const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Rec
 const posts = Object.entries(postImports).map(([path, mod]) => {
   // Get the raw markdown content
   let preview = '';
-  
+
   if (mod.rawContent) {
     // Get raw markdown content
     const rawText = mod.rawContent();
@@ -30,14 +30,19 @@ const posts = Object.entries(postImports).map(([path, mod]) => {
     // Fallback to description if rawContent not available
     preview = mod.frontmatter.description;
   }
-  
+
   return {
     url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
     frontmatter: mod.frontmatter,
     preview: preview,
+    category: mod.frontmatter?.category || 'technical',
   };
 });
 posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
+
+// Separate posts by category
+const technicalPosts = posts.filter(p => p.category === 'technical');
+const reflectionPosts = posts.filter(p => p.category === 'reflections');
 
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -80,35 +85,28 @@ function formatDate(dateString) {
     </style>
     <style>
       .blog-container {
-        margin-top: 4rem;
+        margin-top: 6rem;
         width: 100%;
-        max-width: 1200px;
+        max-width: 800px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0 3rem;
+        padding: 0 4rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
       }
-      
-      @media (max-width: 1400px) {
-        .blog-container {
-          max-width: 1000px;
-          padding: 0 2.5rem;
-        }
-      }
-      
+
       @media (max-width: 1200px) {
         .blog-container {
-          max-width: 900px;
-          padding: 0 2rem;
+          max-width: 700px;
+          padding: 0 3rem;
         }
       }
-      
+
       @media (max-width: 768px) {
         .blog-container {
           max-width: 100%;
-          padding: 0 1.5rem;
+          padding: 0 2rem;
         }
       }
 
@@ -148,6 +146,13 @@ function formatDate(dateString) {
         color: inherit;
         display: block;
         width: 100%;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+      .blog-article.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
       .blog-article-title {
         font-size: 1.875rem;
@@ -199,6 +204,47 @@ function formatDate(dateString) {
       }
       .back-link:hover {
         color: #fff;
+      }
+      .tabs-container {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+        width: 100%;
+        border-bottom: 1px solid #1f2937;
+        padding-bottom: 0;
+      }
+      .tab-btn {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.75rem 0.25rem;
+        margin-bottom: -1px;
+        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', system-ui, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .tab-btn:hover {
+        color: #e5e7eb;
+      }
+      .tab-btn.active {
+        color: #fff;
+        border-bottom-color: #fff;
+      }
+      .tab-content {
+        display: none;
+        width: 100%;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .empty-state {
+        color: #6b7280;
+        font-size: 1.1rem;
+        text-align: center;
+        padding: 3rem 1rem;
       }
       .post-content-wrapper {
         width: 100%;
@@ -268,25 +314,53 @@ function formatDate(dateString) {
       <div id="blog-list">
         <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
         <div class="blog-title">Blog</div>
-        {posts.length === 0 ? (
-          <div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>
-        ) : null}
-        {posts.length > 0 ? (
-          <div class="blog-list">
-            {posts.map(post => (
-              <article class="blog-article">
-                <a href={post.url} style="text-decoration: none; color: inherit;">
-                  <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
-                </a>
-                <p class="blog-article-preview">{post.preview}</p>
-                <a href={post.url} class="blog-article-more">More ›</a>
-                <div class="blog-article-meta">
-                  <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
-                </div>
-              </article>
-            ))}
-          </div>
-        ) : null}
+
+        <div class="tabs-container">
+          <button class="tab-btn active" data-tab="technical">Technical Writeups</button>
+          <button class="tab-btn" data-tab="reflections">Reflections</button>
+        </div>
+
+        <div id="technical-content" class="tab-content active">
+          {technicalPosts.length === 0 ? (
+            <div class="empty-state">No technical writeups yet. Check back soon!</div>
+          ) : (
+            <div class="blog-list">
+              {technicalPosts.map(post => (
+                <article class="blog-article">
+                  <a href={post.url} style="text-decoration: none; color: inherit;">
+                    <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
+                  </a>
+                  <p class="blog-article-preview">{post.preview}</p>
+                  <a href={post.url} class="blog-article-more">More ›</a>
+                  <div class="blog-article-meta">
+                    <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div id="reflections-content" class="tab-content">
+          {reflectionPosts.length === 0 ? (
+            <div class="empty-state">No reflections yet. Check back soon!</div>
+          ) : (
+            <div class="blog-list">
+              {reflectionPosts.map(post => (
+                <article class="blog-article">
+                  <a href={post.url} style="text-decoration: none; color: inherit;">
+                    <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
+                  </a>
+                  <p class="blog-article-preview">{post.preview}</p>
+                  <a href={post.url} class="blog-article-more">More ›</a>
+                  <div class="blog-article-meta">
+                    <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
 
@@ -366,8 +440,72 @@ function formatDate(dateString) {
         });
       }
 
+      // Tab switching functionality
+      function initTabs() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const technicalContent = document.getElementById('technical-content');
+        const reflectionsContent = document.getElementById('reflections-content');
+
+        function switchTab(tab) {
+          tabBtns.forEach(b => {
+            if (b.getAttribute('data-tab') === tab) {
+              b.classList.add('active');
+            } else {
+              b.classList.remove('active');
+            }
+          });
+
+          if (tab === 'technical') {
+            technicalContent.classList.add('active');
+            reflectionsContent.classList.remove('active');
+          } else {
+            technicalContent.classList.remove('active');
+            reflectionsContent.classList.add('active');
+          }
+        }
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const tab = btn.getAttribute('data-tab');
+            switchTab(tab);
+            // Update URL hash without scrolling
+            history.replaceState(null, '', '#' + tab);
+          });
+        });
+
+        // Handle initial hash from URL
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'reflections') {
+          switchTab('reflections');
+        }
+      }
+
+      // Scroll reveal animation
+      function initScrollReveal() {
+        const articles = document.querySelectorAll('.blog-article');
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              // Add a small delay for each article for staggered effect
+              setTimeout(() => {
+                entry.target.classList.add('visible');
+              }, index * 100);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        articles.forEach(article => observer.observe(article));
+      }
+
       // Initial event listener attachment
       attachEventListeners();
+      initTabs();
+      initScrollReveal();
     </script>
   </body>
 </html>
