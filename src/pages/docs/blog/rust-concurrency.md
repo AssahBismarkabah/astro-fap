@@ -1,10 +1,4 @@
----
-layout: ../../../layouts/BlogPostLayout.astro
-title: Rust concurrency with Mandelbrot Set
-date: 2023-01-07
-description: Exploring concurrency in Rust programming.
-category: technical
----
+c
 
 
 Rust excels in concurrent programming by enforcing rules that prevent memory errors and data races. For example:
