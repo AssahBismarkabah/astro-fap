@@ -45,7 +45,7 @@ const profile = {
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{profile.name}</title>
         <style>
             @font-face {
@@ -143,14 +143,6 @@ const profile = {
                 display: flex;
                 flex-direction: row;
                 align-items: flex-start;
-                gap: 2rem;
-            }
-            .profile-img {
-                width: 100px;
-                height: 100px;
-                border-radius: 20px;
-                object-fit: cover;
-                filter: grayscale(100%);
             }
             .text-block {
                 display: flex;
@@ -223,57 +215,127 @@ const profile = {
                 width: 20px;
                 height: 20px;
             }
+            /* Mobile Navigation - hidden on desktop */
+            .mobile-nav {
+                display: none;
+            }
             /* Responsive */
             @media (max-width: 1100px) {
                 .sidebar {
                     left: 2rem;
+                }
+                .main-content {
+                    padding-left: 180px;
                 }
                 .footer {
                     left: 2rem;
                     right: 2rem;
                 }
             }
-            @media (max-width: 768px) {
-                .sidebar {
-                    position: relative;
-                    left: auto;
-                    width: 100%;
-                    height: auto;
-                    flex-direction: row;
-                    justify-content: center;
-                    padding: 1.5rem;
-                }
-                .nav-list {
-                    flex-direction: row;
-                    gap: 2rem;
-                }
+            @media (max-width: 900px) {
                 .main-content {
-                    padding-top: 1rem;
+                    padding-left: 160px;
+                }
+            }
+            @media (max-width: 768px) {
+                body {
+                    display: flex;
+                    flex-direction: column;
+                    min-height: 100vh;
                 }
                 .page-wrapper {
                     flex-direction: column;
+                    flex: 1;
+                    min-height: auto;
+                }
+                /* Hide desktop sidebar, show mobile nav */
+                .sidebar.desktop-only {
+                    display: none;
+                }
+                .mobile-nav {
+                    display: block;
+                    margin-top: 0.25rem;
+                }
+                .mobile-nav .nav-list {
+                    flex-direction: row;
+                    gap: 1rem;
+                    flex-wrap: wrap;
+                    justify-content: flex-start;
+                }
+                .nav-link {
+                    font-size: 1.1rem;
+                }
+                .main-content {
+                    padding: 1.5rem;
+                    padding-top: 2.5rem;
+                    justify-content: flex-start;
+                    flex: 1;
                 }
                 .profile-container {
                     flex-direction: column;
-                    text-align: center;
+                    text-align: left;
+                    align-items: flex-start;
+                    width: 100%;
+                    gap: 0.5rem;
+                }
+                .profile-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
                 }
                 .text-block {
-                    align-items: center;
+                    align-items: flex-start;
+                }
+                .name {
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    margin-bottom: 0.25rem;
+                }
+                .secondary,
+                .location {
+                    display: none;
+                }
+                .bio {
+                    text-align: left;
+                    max-width: 100%;
+                    padding: 0;
+                    margin-top: 1.5rem;
+                    font-size: 1.1rem;
+                    line-height: 1.8;
                 }
                 .footer {
                     position: relative;
                     bottom: auto;
                     left: auto;
                     right: auto;
-                    padding: 1.5rem;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 2rem 1.5rem;
+                    padding-bottom: 2.5rem;
+                    margin-top: auto;
+                }
+                .copyright {
+                    font-size: 0.9rem;
+                }
+                .social-links {
+                    justify-content: flex-end;
+                    flex-wrap: wrap;
+                    gap: 0.75rem;
+                }
+                .social-icon {
+                    width: 22px;
+                    height: 22px;
                 }
             }
         </style>
     </head>
     <body>
         <div class="page-wrapper">
-            <!-- Sidebar Navigation -->
-            <nav class="sidebar">
+            <!-- Sidebar Navigation (Desktop) -->
+            <nav class="sidebar desktop-only">
                 <ul class="nav-list">
                     {profile.navigation.map((item) => (
                         <li>
@@ -287,7 +349,6 @@ const profile = {
             <main class="main-content">
                 <div class="profile-container">
                     <div class="profile-header">
-                        <img src="/134822946.jpeg" alt="Profile" class="profile-img" />
                         <div class="text-block">
                             <div class="name">{profile.name}</div>
                             <div class="secondary">Software Engineer</div>
@@ -300,6 +361,16 @@ const profile = {
                             </div>
                         </div>
                     </div>
+                    <!-- Mobile Navigation -->
+                    <nav class="mobile-nav">
+                        <ul class="nav-list">
+                            {profile.navigation.map((item) => (
+                                <li>
+                                    <a href={item.url} class="nav-link">{item.label}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
                     <div class="bio">
                         I am a Software Engineer from Cameroon specializing in <strong>System Architecture, Identity Security, and Integration</strong>. My work sits at the intersection of AI, DevOps, and Security, where I focus on building robust systems that bridge complex technologies.
                         <br /><br />
