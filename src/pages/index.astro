@@ -82,7 +82,7 @@ const profile = {
                     system-ui, sans-serif;
             }
             body {
-                background: #030d13;
+                background: #00030d;
                 min-height: 100vh;
                 margin: 0;
                 padding: 0;
@@ -142,7 +142,16 @@ const profile = {
             .profile-header {
                 display: flex;
                 flex-direction: row;
-                align-items: flex-start;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .profile-img {
+                width: 100px;
+                height: 100px;
+                border-radius: 30%;
+                object-fit: cover;
+                filter: grayscale(100%);
+                flex-shrink: 0;
             }
             .text-block {
                 display: flex;
@@ -279,9 +288,14 @@ const profile = {
                     gap: 0.5rem;
                 }
                 .profile-header {
-                    flex-direction: column;
-                    align-items: flex-start;
+                    flex-direction: row;
+                    align-items: center;
                     width: 100%;
+                    gap: 1rem;
+                }
+                .profile-img {
+                    width: 70px;
+                    height: 70px;
                 }
                 .text-block {
                     align-items: flex-start;
@@ -349,13 +363,14 @@ const profile = {
             <main class="main-content">
                 <div class="profile-container">
                     <div class="profile-header">
+                        <img src="/profile-image.png" alt="Profile" class="profile-img" />
                         <div class="text-block">
                             <div class="name">{profile.name}</div>
-                            <div class="secondary">Software Engineer</div>
                             <div class="location">
-                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M2 12h20"></path>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                                 </svg>
                                 {profile.location}
                             </div>
