@@ -93,6 +93,48 @@ const profile = {
                 display: flex;
                 flex: 1;
                 min-height: 100vh;
+                position: relative;
+            }
+            /* World Map Background */
+            .world-map {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 60%;
+                max-width: 700px;
+                max-height: 45vh;
+                overflow: hidden;
+                opacity: 0.6;
+                pointer-events: none;
+                z-index: 0;
+                mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+                -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+            }
+            .world-map img {
+                width: 100%;
+                height: auto;
+                filter: brightness(0) invert(1);
+            }
+            .cameroon-marker {
+                position: absolute;
+                top: 48%;
+                left: 50%;
+                width: 10px;
+                height: 10px;
+                background: #3b82f6;
+                border-radius: 50%;
+                box-shadow: 0 0 10px 4px rgba(59, 130, 246, 0.7);
+                animation: pulse 2s ease-in-out infinite;
+            }
+            @keyframes pulse {
+                0%, 100% {
+                    transform: scale(1);
+                    box-shadow: 0 0 10px 4px rgba(59, 130, 246, 0.7);
+                }
+                50% {
+                    transform: scale(1.3);
+                    box-shadow: 0 0 20px 8px rgba(59, 130, 246, 0.9);
+                }
             }
             /* Sidebar Navigation */
             .sidebar {
@@ -170,11 +212,14 @@ const profile = {
                 margin-bottom: 0.5rem;
             }
             .location {
-                color: #6b7280;
-                font-size: 0.95rem;
+                color: #9ca3af;
+                font-size: 1rem;
+                font-weight: 400;
+                letter-spacing: 0.02em;
                 display: flex;
                 align-items: center;
-                gap: 0.4rem;
+                gap: 0.5rem;
+                margin-top: 0.25rem;
             }
             .bio {
                 margin-top: 0.5rem;
@@ -261,6 +306,13 @@ const profile = {
                 .sidebar.desktop-only {
                     display: none;
                 }
+                .world-map {
+                    width: 100%;
+                    max-height: 30vh;
+                    top: 0;
+                    right: 0;
+                    opacity: 0.3;
+                }
                 .mobile-nav {
                     display: block;
                     margin-top: 0.25rem;
@@ -303,8 +355,6 @@ const profile = {
                 .name {
                     font-size: 1.75rem;
                     font-weight: 700;
-                    text-transform: uppercase;
-                    letter-spacing: 0.08em;
                     margin-bottom: 0.25rem;
                 }
                 .secondary,
@@ -348,6 +398,12 @@ const profile = {
     </head>
     <body>
         <div class="page-wrapper">
+            <!-- World Map Background -->
+            <div class="world-map">
+                <img src="/World-Map-Dots.svg" alt="" />
+                <div class="cameroon-marker"></div>
+            </div>
+
             <!-- Sidebar Navigation (Desktop) -->
             <nav class="sidebar desktop-only">
                 <ul class="nav-list">
@@ -368,9 +424,9 @@ const profile = {
                             <div class="name">{profile.name}</div>
                             <div class="location">
                                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M2 12h20"></path>
-                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    <path d="M8 21l4-10 4 10"></path>
+                                    <path d="M12 11l5 10"></path>
+                                    <path d="M2 21h20"></path>
                                 </svg>
                                 {profile.location}
                             </div>
