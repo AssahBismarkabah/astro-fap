@@ -4,6 +4,7 @@ title: How to retrieve a GraphQL schema from an endpoint.
 date: 2023-01-04
 description: How to retrieve a GraphQL schema from an endpoint.
 category: technical
+tags: ["graphql", "api"]
 ---
 
 

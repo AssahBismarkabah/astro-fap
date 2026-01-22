@@ -4,6 +4,7 @@ title: jq Array of Array Object
 date: 2023-01-01
 description: Example of handling arrays of array objects in jq.
 category: technical
+tags: ["jq", "json", "cli"]
 ---
 
 

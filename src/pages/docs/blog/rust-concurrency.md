@@ -4,6 +4,7 @@ title: Rust concurrency with Mandelbrot Set
 date: 2023-01-07
 description: Exploring concurrency in Rust programming.
 category: technical
+tags: ["rust", "concurrency", "programming"]
 ---
 
 

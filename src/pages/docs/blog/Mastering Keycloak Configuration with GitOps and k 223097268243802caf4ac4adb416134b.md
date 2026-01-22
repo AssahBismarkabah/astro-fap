@@ -4,6 +4,7 @@ title: Mastering Keycloak Configuration with GitOps and keycloak-config-cli
 date: 2025-06-03
 description: Automated IAM Configuration with Git and keycloak-config-cli
 category: technical
+tags: ["keycloak", "security", "devops", "gitops"]
 ---
 
 ![current image in my mind.](Mastering%20Keycloak%20Configuration%20with%20GitOps%20and%20k%20223097268243802caf4ac4adb416134b/_image.png)

@@ -4,6 +4,7 @@ title: Streams, Parallelism, and the Quest for Speed
 date: 2025-12-16
 description: A pragmatic exploration of Java streams and parallelism.
 category: technical
+tags: ["java", "concurrency", "performance"]
 ---
 
 I've always been fascinated by the relentless pursuit of performance in software. It's a game of optimization, a constant dance between elegance and efficiency. Lately, I've been diving deep into two concepts that feel like they're at the heart of this pursuit: **streams** and **parallelism**. They're not new, but their convergence is creating a new paradigm for building fast, scalable applications. This is my attempt to untangle the threads of these two powerful ideas and share what I've learned.

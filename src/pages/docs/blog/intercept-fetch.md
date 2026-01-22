@@ -4,6 +4,7 @@ title: intercept fetch requests in JavaScript
 date: 2023-01-06
 description: How to intercept fetch requests in JavaScript.
 category: technical
+tags: ["javascript", "web", "service-workers"]
 ---
 
 

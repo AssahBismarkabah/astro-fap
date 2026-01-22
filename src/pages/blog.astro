@@ -36,6 +36,7 @@ const posts = Object.entries(postImports).map(([path, mod]) => {
     frontmatter: mod.frontmatter,
     preview: preview,
     category: mod.frontmatter?.category || 'technical',
+    tags: mod.frontmatter?.tags || [],
   };
 });
 posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
@@ -43,6 +44,9 @@ posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date
 // Separate posts by category
 const technicalPosts = posts.filter(p => p.category === 'technical');
 const reflectionPosts = posts.filter(p => p.category === 'reflections');
+
+// Extract all unique tags
+const allTags = [...new Set(posts.flatMap(p => p.tags))].sort();
 
 function formatDate(dateString) {
   if (!dateString) return '';
@@ -246,6 +250,47 @@ function formatDate(dateString) {
         text-align: center;
         padding: 3rem 1rem;
       }
+      .tags-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        width: 100%;
+      }
+      .tag-chip {
+        background: transparent;
+        border: 1px solid #374151;
+        border-radius: 9999px;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.85rem;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+      .tag-chip:hover {
+        border-color: #6b7280;
+        color: #e5e7eb;
+      }
+      .tag-chip.active {
+        background: #fff;
+        border-color: #fff;
+        color: #000;
+      }
+      .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+      }
+      .article-tag {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        border-radius: 4px;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+        color: #60a5fa;
+      }
       .post-content-wrapper {
         width: 100%;
         max-width: 800px;
@@ -320,13 +365,22 @@ function formatDate(dateString) {
           <button class="tab-btn" data-tab="reflections">Reflections</button>
         </div>
 
+        {allTags.length > 0 && (
+          <div class="tags-filter" id="tags-filter">
+            <button class="tag-chip active" data-tag="all">All</button>
+            {allTags.map(tag => (
+              <button class="tag-chip" data-tag={tag}>{tag}</button>
+            ))}
+          </div>
+        )}
+
         <div id="technical-content" class="tab-content active">
           {technicalPosts.length === 0 ? (
             <div class="empty-state">No technical writeups yet. Check back soon!</div>
           ) : (
             <div class="blog-list">
               {technicalPosts.map(post => (
-                <article class="blog-article">
+                <article class="blog-article" data-tags={JSON.stringify(post.tags)}>
                   <a href={post.url} style="text-decoration: none; color: inherit;">
                     <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
                   </a>
@@ -335,6 +389,13 @@ function formatDate(dateString) {
                   <div class="blog-article-meta">
                     <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
                   </div>
+                  {post.tags.length > 0 && (
+                    <div class="article-tags">
+                      {post.tags.map(tag => (
+                        <span class="article-tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
@@ -347,7 +408,7 @@ function formatDate(dateString) {
           ) : (
             <div class="blog-list">
               {reflectionPosts.map(post => (
-                <article class="blog-article">
+                <article class="blog-article" data-tags={JSON.stringify(post.tags)}>
                   <a href={post.url} style="text-decoration: none; color: inherit;">
                     <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
                   </a>
@@ -356,6 +417,13 @@ function formatDate(dateString) {
                   <div class="blog-article-meta">
                     <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
                   </div>
+                  {post.tags.length > 0 && (
+                    <div class="article-tags">
+                      {post.tags.map(tag => (
+                        <span class="article-tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
@@ -480,6 +548,51 @@ function formatDate(dateString) {
         }
       }
 
+      // Tag filtering functionality
+      function initTagFilter() {
+        const tagChips = document.querySelectorAll('.tag-chip');
+        const articles = document.querySelectorAll('.blog-article');
+        let activeTag = 'all';
+
+        function filterByTag(tag) {
+          activeTag = tag;
+
+          // Update active chip
+          tagChips.forEach(chip => {
+            if (chip.getAttribute('data-tag') === tag) {
+              chip.classList.add('active');
+            } else {
+              chip.classList.remove('active');
+            }
+          });
+
+          // Filter articles
+          articles.forEach(article => {
+            if (tag === 'all') {
+              article.style.display = '';
+              return;
+            }
+
+            const articleTags = JSON.parse(article.getAttribute('data-tags') || '[]');
+            if (articleTags.includes(tag)) {
+              article.style.display = '';
+            } else {
+              article.style.display = 'none';
+            }
+          });
+
+          // Re-run scroll reveal for visible articles
+          initScrollReveal();
+        }
+
+        tagChips.forEach(chip => {
+          chip.addEventListener('click', () => {
+            const tag = chip.getAttribute('data-tag');
+            filterByTag(tag);
+          });
+        });
+      }
+
       // Scroll reveal animation
       function initScrollReveal() {
         const articles = document.querySelectorAll('.blog-article');
@@ -505,6 +618,7 @@ function formatDate(dateString) {
       // Initial event listener attachment
       attachEventListeners();
       initTabs();
+      initTagFilter();
       initScrollReveal();
     </script>
   </body>

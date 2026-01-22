@@ -80,8 +80,22 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
       .post-date {
         color: #b0b8c1;
         font-size: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0.75rem;
         text-align: left;
+      }
+      .post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 1.5rem;
+      }
+      .post-tag {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        border-radius: 4px;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.8rem;
+        color: #60a5fa;
       }
       .prose {
         color: #fff;
@@ -91,6 +105,15 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
         word-wrap: break-word;
         overflow-wrap: break-word;
       }
+      .prose a {
+        color: #60a5fa;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.2s ease;
+      }
+      .prose a:hover {
+        color: #93c5fd;
+      }
     </style>
   </head>
   <body>
@@ -98,6 +121,13 @@ const post = postEntry[1] as { frontmatter: any; Content: any };
       <a href="/blog" class="back-link">&larr; Blog</a>
       <div class="post-date">{post.frontmatter.date}</div>
       <div class="post-title">{post.frontmatter.title}</div>
+      {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+        <div class="post-tags">
+          {post.frontmatter.tags.map(tag => (
+            <span class="post-tag">{tag}</span>
+          ))}
+        </div>
+      )}
       <article class="prose dark:prose-invert">
         <post.Content />
       </article>
