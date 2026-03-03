@@ -18,7 +18,7 @@ Input:
 ```
 I want an array of objects. Here's what I came up with, using [jqplay.org](https://jqplay.org/):
 
-```jq
+```bash
 [.[] | {id: .[0], name: .[1], category: .[2], latitude: .[3], longitude: .[4]}]
 ```
 This outputs:
