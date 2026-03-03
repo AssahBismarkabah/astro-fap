@@ -1,17 +1,10 @@
 ---
+import Header from '../components/Header.astro';
+
 interface MarkdownInstance {
   frontmatter: any;
   url?: string;
 }
-
-const socials = [
-    { label: "GitHub", url: "https://github.com/AssahBismarkabah" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/assah-bismark-608a6a251/" },
-    { label: "Medium", url: "https://medium.com/@assahbismarkabah" },
-    { label: "X", url: "https://x.com/Assah_Bismark" },
-    { label: "Instagram", url: "https://www.instagram.com/assah_bismark/" },
-    { label: "Email", url: "mailto:abahbismarkassah@gmail.com" },
-];
 
 const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
 const posts = Object.entries(postImports).map(([path, mod]) => {
@@ -81,46 +74,6 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         min-height: 100vh;
       }
 
-      .site-header {
-        position: absolute;
-        width: 100%;
-        padding: 43px 0 35px;
-        z-index: 10;
-      }
-      .header-inner {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 0 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-      }
-      .brand {
-        font-size: 22px;
-        font-weight: 700;
-        color: #db0042;
-        text-decoration: none;
-        line-height: 22px;
-      }
-      .brand:hover { color: #ff1a5e; }
-      .header-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.25rem;
-        align-items: baseline;
-      }
-      .nav-link {
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 22px;
-        text-transform: capitalize;
-        transition: color 0.2s ease;
-      }
-      .nav-link:hover { color: #b2b2b2; }
-
-      /* Archive section — padding: 165px 0 100px */
       .archive-section {
         padding: 165px 0 100px;
       }
@@ -130,7 +83,6 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         padding: 0 60px;
       }
 
-      /* Page title — 32px, 700, margin-bottom: 23px */
       .archive-title {
         font-size: 32px;
         font-weight: 700;
@@ -139,7 +91,6 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         margin: 0 0 23px;
       }
 
-      /* Search block — margin-bottom: 50px */
       .search-block {
         margin: 0 0 50px;
         position: relative;
@@ -184,12 +135,10 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         color: #999999;
       }
 
-      /* List block — shared margin for top posts and year blocks */
       .list-block {
         margin: 0 0 50px;
       }
 
-      /* Block title — 17px, 700, opacity: 0.4, margin-bottom: 15px */
       .block-title {
         font-size: 17px;
         font-weight: 700;
@@ -199,7 +148,6 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         opacity: 0.4;
       }
 
-      /* Year heading — same as block-title */
       .year-title {
         font-size: 17px;
         font-weight: 700;
@@ -209,20 +157,17 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         opacity: 0.4;
       }
 
-      /* Link list — no bullets, no padding */
       .link-list {
         list-style: none;
         margin: 0;
         padding: 0;
       }
 
-      /* List item — margin-bottom: 5px */
       .link-list li {
         margin: 0 0 5px;
         list-style: none;
       }
 
-      /* Post link — 20px, 700, #fff, line-height: 40px, no underline */
       .post-link {
         font-size: 20px;
         font-weight: 700;
@@ -233,7 +178,6 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       }
       .post-link:hover { color: #b2b2b2; }
 
-      /* Hide items that don't match search */
       .link-list li.hidden { display: none; }
       .list-block.hidden { display: none; }
 
@@ -242,23 +186,16 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       .copyright { color: #4b5563; font-size: 0.875rem; }
 
       @media (max-width: 960px) {
-        .header-inner, .container { padding: 0 30px; }
+        .container { padding: 0 30px; }
       }
       @media (max-width: 768px) {
-        .site-header { position: relative; padding: 32px 0 24px; }
-        .header-inner {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
-        }
-        .header-inner, .container { padding: 0 24px; }
+        .container { padding: 0 24px; }
         .archive-section { padding: 40px 0 60px; }
         .archive-title { font-size: 26px; line-height: 36px; }
         .post-link { font-size: 18px; line-height: 36px; }
       }
       @media (max-width: 480px) {
-        .header-inner, .container { padding: 0 16px; }
-        .header-nav { gap: 0.5rem 0.75rem; }
+        .container { padding: 0 16px; }
         .archive-section { padding: 32px 0 40px; }
         .archive-title { font-size: 24px; }
         .post-link { font-size: 17px; line-height: 32px; }
@@ -266,18 +203,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <a href="/" class="brand">Assah Bismark</a>
-        <nav class="header-nav">
-          <a href="/blog" class="nav-link">Archive</a>
-          <a href="/categories" class="nav-link">Categories</a>
-          {socials.map((social) => (
-            <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
-          ))}
-        </nav>
-      </div>
-    </header>
+    <Header />
 
     <section class="archive-section">
       <div class="container">

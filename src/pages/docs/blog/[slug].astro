@@ -1,12 +1,5 @@
 ---
-const socials = [
-    { label: "GitHub", url: "https://github.com/AssahBismarkabah" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/assah-bismark-608a6a251/" },
-    { label: "Medium", url: "https://medium.com/@assahbismarkabah" },
-    { label: "X", url: "https://x.com/Assah_Bismark" },
-    { label: "Instagram", url: "https://www.instagram.com/assah_bismark/" },
-    { label: "Email", url: "mailto:abahbismarkassah@gmail.com" },
-];
+import Header from '../../../components/Header.astro';
 
 export function getStaticPaths() {
   const allPosts = import.meta.glob('./*.md', { eager: true });
@@ -80,45 +73,6 @@ function formatDate(dateString: string): string {
         line-height: 28px;
         min-height: 100vh;
       }
-
-      .site-header {
-        position: absolute;
-        width: 100%;
-        padding: 43px 0 35px;
-        z-index: 10;
-      }
-      .header-inner {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 0 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-      }
-      .brand {
-        font-size: 22px;
-        font-weight: 700;
-        color: #db0042;
-        text-decoration: none;
-        line-height: 22px;
-      }
-      .brand:hover { color: #ff1a5e; }
-      .header-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.25rem;
-        align-items: baseline;
-      }
-      .nav-link {
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 17px;
-        font-weight: 500;
-        line-height: 22px;
-        text-transform: capitalize;
-        transition: color 0.2s ease;
-      }
-      .nav-link:hover { color: #b2b2b2; }
 
       .post-section { padding: 0 0 100px; }
       .container {
@@ -208,39 +162,21 @@ function formatDate(dateString: string): string {
       .copyright { color: #4b5563; font-size: 0.875rem; }
 
       @media (max-width: 960px) {
-        .header-inner, .container { padding: 0 30px; }
+        .container { padding: 0 30px; }
       }
       @media (max-width: 768px) {
-        .site-header { position: relative; padding: 32px 0 24px; }
-        .header-inner {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
-        }
-        .header-inner, .container { padding: 0 24px; }
+        .container { padding: 0 24px; }
         .post-header { padding-top: 40px; }
         .post-title { font-size: 28px; line-height: 38px; }
       }
       @media (max-width: 480px) {
-        .header-inner, .container { padding: 0 16px; }
-        .header-nav { gap: 0.5rem 0.75rem; }
+        .container { padding: 0 16px; }
         .post-title { font-size: 24px; line-height: 34px; }
       }
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <a href="/" class="brand">Assah Bismark</a>
-        <nav class="header-nav">
-          <a href="/blog" class="nav-link">Archive</a>
-          <a href="/categories" class="nav-link">Categories</a>
-          {socials.map((social) => (
-            <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
-          ))}
-        </nav>
-      </div>
-    </header>
+    <Header />
 
     <section class="post-section">
       <div class="container">

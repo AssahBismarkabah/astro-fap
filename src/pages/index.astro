@@ -1,18 +1,11 @@
 ---
+import Header from '../components/Header.astro';
+
 interface MarkdownInstance {
     frontmatter: any;
     rawContent: () => string;
     url?: string;
 }
-
-const socials = [
-    { label: "GitHub", url: "https://github.com/AssahBismarkabah" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/assah-bismark-608a6a251/" },
-    { label: "Medium", url: "https://medium.com/@assahbismarkabah" },
-    { label: "X", url: "https://x.com/Assah_Bismark" },
-    { label: "Instagram", url: "https://www.instagram.com/assah_bismark/" },
-    { label: "Email", url: "mailto:abahbismarkassah@gmail.com" },
-];
 
 const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
 const posts = Object.entries(postImports).map(([path, mod]) => {
@@ -58,7 +51,7 @@ function formatDate(dateString: string): string {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Assah Bismark</title>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.png" />
         <style>
             @font-face {
                 font-family: "SF Pro";
@@ -99,51 +92,6 @@ function formatDate(dateString: string): string {
                 min-height: 100vh;
             }
 
-            /* Header — position: absolute, full width, padding: 43px 0 35px */
-            .site-header {
-                position: absolute;
-                width: 100%;
-                padding: 43px 0 35px;
-                z-index: 10;
-            }
-            .header-inner {
-                max-width: 900px;
-                margin: 0 auto;
-                padding: 0 60px;
-                display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-            }
-            .brand {
-                font-size: 22px;
-                font-weight: 700;
-                color: #db0042;
-                text-decoration: none;
-                line-height: 22px;
-            }
-            .brand:hover {
-                color: #ff1a5e;
-            }
-            .header-nav {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1.25rem;
-                align-items: baseline;
-            }
-            .nav-link {
-                color: #ffffff;
-                text-decoration: none;
-                font-size: 17px;
-                font-weight: 500;
-                line-height: 22px;
-                text-transform: capitalize;
-                transition: color 0.2s ease;
-            }
-            .nav-link:hover {
-                color: #b2b2b2;
-            }
-
-            /* Blog section — padding: 177px 0 100px */
             .blog-section {
                 padding: 177px 0 100px;
             }
@@ -153,7 +101,6 @@ function formatDate(dateString: string): string {
                 padding: 0 60px;
             }
 
-            /* Article — padding-top: 73px */
             .post-entry {
                 padding: 73px 0 0;
             }
@@ -161,7 +108,6 @@ function formatDate(dateString: string): string {
                 padding-top: 0;
             }
 
-            /* Title — 22px, 700, margin-bottom: 13px */
             .post-title-link {
                 text-decoration: none;
                 color: inherit;
@@ -177,7 +123,6 @@ function formatDate(dateString: string): string {
                 color: #e5e7eb;
             }
 
-            /* Subtitle — 18px, 500, #fff, line-height: 29px, margin-bottom: 11px */
             .post-description {
                 font-size: 18px;
                 font-weight: 500;
@@ -186,7 +131,6 @@ function formatDate(dateString: string): string {
                 margin-bottom: 11px;
             }
 
-            /* Preview content — 17px, 500, #b2b2b2, line-height: 30.5px */
             .post-preview {
                 font-size: 17px;
                 font-weight: 500;
@@ -194,7 +138,6 @@ function formatDate(dateString: string): string {
                 line-height: 30.5px;
             }
 
-            /* "More ›" — 13px, 500, #aaaaaa, inline */
             .post-more {
                 font-size: 13px;
                 font-weight: 500;
@@ -213,7 +156,6 @@ function formatDate(dateString: string): string {
                 width: 8px;
             }
 
-            /* Post meta (date) — 18px, 500, #fff, appears above title */
             .post-meta {
                 font-size: 18px;
                 font-weight: 500;
@@ -221,7 +163,6 @@ function formatDate(dateString: string): string {
                 line-height: 28px;
             }
 
-            /* Site footer */
             .site-footer {
                 border-top: 1px solid #2d2f30;
             }
@@ -234,24 +175,12 @@ function formatDate(dateString: string): string {
                 font-size: 0.875rem;
             }
 
-            /* Responsive */
             @media (max-width: 960px) {
-                .header-inner,
                 .container {
                     padding: 0 30px;
                 }
             }
             @media (max-width: 768px) {
-                .site-header {
-                    position: relative;
-                    padding: 32px 0 24px;
-                }
-                .header-inner {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 1rem;
-                }
-                .header-inner,
                 .container {
                     padding: 0 24px;
                 }
@@ -266,12 +195,8 @@ function formatDate(dateString: string): string {
                 }
             }
             @media (max-width: 480px) {
-                .header-inner,
                 .container {
                     padding: 0 16px;
-                }
-                .header-nav {
-                    gap: 0.5rem 0.75rem;
                 }
                 .blog-section {
                     padding: 32px 0 40px;
@@ -283,18 +208,7 @@ function formatDate(dateString: string): string {
         </style>
     </head>
     <body>
-        <header class="site-header">
-            <div class="header-inner">
-                <a href="/" class="brand">Assah Bismark</a>
-                <nav class="header-nav">
-                    <a href="/blog" class="nav-link">Archive</a>
-                    <a href="/categories" class="nav-link">Categories</a>
-                    {socials.map((social) => (
-                        <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
-                    ))}
-                </nav>
-            </div>
-        </header>
+        <Header />
 
         <section class="blog-section">
             <div class="container">
