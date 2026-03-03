@@ -17,6 +17,7 @@ const categoryMap: Record<string, { label: string; tags: string[] }> = {
   'python': { label: 'Python', tags: ['python'] },
   'java': { label: 'Java', tags: ['java'] },
   'tooling': { label: 'Tooling', tags: ['tooling', 'cli'] },
+  'life': { label: 'Life', tags: ['life-identity', 'purpose', 'spirituality'] },
 };
 
 const postImports = import.meta.glob('../docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
