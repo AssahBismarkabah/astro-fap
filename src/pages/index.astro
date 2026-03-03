@@ -120,7 +120,7 @@ function formatDate(dateString: string): string {
                 margin-bottom: 13px;
             }
             .post-title-link:hover .post-title {
-                color: #e5e7eb;
+                color: #db0042;
             }
 
             .post-description {
@@ -154,6 +154,31 @@ function formatDate(dateString: string): string {
             .post-more-spacer {
                 display: inline-block;
                 width: 8px;
+            }
+
+            .post-entry.hidden-post {
+                display: none;
+            }
+
+            .read-more-btn {
+                display: inline-block;
+                margin-top: 73px;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 28px;
+                color: #db0042;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-family: inherit;
+                padding: 0;
+                transition: color 0.2s ease;
+            }
+            .read-more-btn:hover {
+                color: #ff1a5e;
+            }
+            .read-more-btn.hidden {
+                display: none;
             }
 
             .post-meta {
@@ -212,8 +237,8 @@ function formatDate(dateString: string): string {
 
         <section class="blog-section">
             <div class="container">
-                {posts.map((post) => (
-                    <article class="post-entry">
+                {posts.map((post, i) => (
+                    <article class={`post-entry${i >= 5 ? ' hidden-post' : ''}`}>
                         <div class="post-meta">{formatDate(post.frontmatter.date)}</div>
                         <a href={post.url} class="post-title-link">
                             <h2 class="post-title">{post.frontmatter.title}</h2>
@@ -226,8 +251,21 @@ function formatDate(dateString: string): string {
                         </div>
                     </article>
                 ))}
+                {posts.length > 5 && (
+                    <button class="read-more-btn" id="read-more-btn">Read More</button>
+                )}
             </div>
         </section>
+
+        <script>
+            const btn = document.getElementById('read-more-btn');
+            btn?.addEventListener('click', () => {
+                document.querySelectorAll('.hidden-post').forEach(el => {
+                    el.classList.remove('hidden-post');
+                });
+                btn.classList.add('hidden');
+            });
+        </script>
 
         <footer class="site-footer">
             <div class="container">

@@ -34,7 +34,7 @@ Here's what I've learned the hard way: when you chase `easy` without also chasin
 
 The AI doesn't know your system. It doesn't know why that weird pattern is in your auth layer. It just sees patterns and replicates them - including all the mistakes.
 
-![Simple vs Easy](infinite-software-crisis/simple-vs-easy.png)
+![Simple vs Easy](infinite-software-crisis/_simple-vs-easy.png)
 
 *The path of least resistance (Easy) leads to entangled systems. Deliberate design (Simple) takes more effort upfront but you can actually maintain the thing.*
 
@@ -62,7 +62,7 @@ But the AI looks at your tangled mess and generates more tangled code that fits 
 
 I've been experimenting with what I'm calling "context compression" - basically front-loading all the human thinking before I let AI generate anything substantial. This is similar to what others call ["spec-driven development"](https://www.youtube.com/watch?v=eIoohUmYpGI) - the idea that thinking and planning should be the majority of the work, not the code generation.
 
-![Human-AI Collaboration](infinite-software-crisis/human-ai-collaboration.png)
+![Human-AI Collaboration](infinite-software-crisis/_human-ai-collaboration.png)
 
 *The majority of intellectual effort happens before code generation, not after.*
 
@@ -118,7 +118,7 @@ I think the answer can be yes. But only if we're deliberate about it. AI as ampl
 
 Simple over easy. Even when easy is very, very easy.
 
-![Software Crisis Timeline](infinite-software-crisis/software-crisis-timeline.png)
+![Software Crisis Timeline](infinite-software-crisis/_software-crisis-timeline.png)
 
 *We've been here before. The patterns repeat. Maybe this time we learn something.*
 
