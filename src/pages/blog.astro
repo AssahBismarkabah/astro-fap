@@ -139,18 +139,74 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         margin: 0 0 23px;
       }
 
-      /* Year block — margin-bottom: 50px */
-      .year-block {
+      /* Search block — margin-bottom: 50px */
+      .search-block {
+        margin: 0 0 50px;
+        position: relative;
+      }
+      .search-form {
+        display: flex;
+        position: relative;
+        width: 100%;
+        height: 31px;
+      }
+      .search-icon {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 13px;
+        height: 13px;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .search-icon svg {
+        width: 13px;
+        height: 13px;
+        fill: #4c4c4c;
+      }
+      .search-input {
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 400;
+        color: #ffffff;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #ffffff;
+        border-radius: 0;
+        width: 100%;
+        height: 31px;
+        padding: 0 0 0 21px;
+        line-height: 22.5px;
+        outline: none;
+      }
+      .search-input::placeholder {
+        color: #999999;
+      }
+
+      /* List block — shared margin for top posts and year blocks */
+      .list-block {
         margin: 0 0 50px;
       }
 
-      /* Year heading — 17px, 700, margin-bottom: 15px */
+      /* Block title — 17px, 700, opacity: 0.4, margin-bottom: 15px */
+      .block-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 30px;
+        margin: 0 0 15px;
+        opacity: 0.4;
+      }
+
+      /* Year heading — same as block-title */
       .year-title {
         font-size: 17px;
         font-weight: 700;
         color: #ffffff;
         line-height: 30px;
         margin: 0 0 15px;
+        opacity: 0.4;
       }
 
       /* Link list — no bullets, no padding */
@@ -176,6 +232,10 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         transition: color 0.2s ease;
       }
       .post-link:hover { color: #b2b2b2; }
+
+      /* Hide items that don't match search */
+      .link-list li.hidden { display: none; }
+      .list-block.hidden { display: none; }
 
       .site-footer { border-top: 1px solid #2d2f30; }
       .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
@@ -211,6 +271,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         <a href="/" class="brand">Assah Bismark</a>
         <nav class="header-nav">
           <a href="/blog" class="nav-link">Archive</a>
+          <a href="/categories" class="nav-link">Categories</a>
           {socials.map((social) => (
             <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
           ))}
@@ -222,12 +283,32 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       <div class="container">
         <h1 class="archive-title">Archive</h1>
 
+        <div class="search-block">
+          <div class="search-form">
+            <div class="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+            </div>
+            <input type="search" class="search-input" id="archive-search" placeholder="Search..." autocomplete="off" />
+          </div>
+        </div>
+
+        <div class="list-block" id="top-posts-block">
+          <h2 class="block-title">Top Posts</h2>
+          <ul class="link-list">
+            {posts.slice(0, 5).map((post) => (
+              <li>
+                <a href={post.url} class="post-link">{post.title}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {sortedYears.map((year) => (
-          <div class="year-block">
+          <div class="list-block year-section">
             <h2 class="year-title">{year}</h2>
             <ul class="link-list">
               {years[year].map((post) => (
-                <li>
+                <li data-title={post.title.toLowerCase()}>
                   <a href={post.url} class="post-link">{post.title}</a>
                 </li>
               ))}
@@ -242,5 +323,40 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         <span class="copyright">&copy; 2026 Assah Bismark</span>
       </div>
     </footer>
+    <script>
+      const searchInput = document.getElementById('archive-search');
+      const topPostsBlock = document.getElementById('top-posts-block');
+      const yearSections = document.querySelectorAll('.year-section');
+
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+
+        if (query === '') {
+          topPostsBlock.classList.remove('hidden');
+          yearSections.forEach(section => {
+            section.classList.remove('hidden');
+            section.querySelectorAll('li').forEach(li => li.classList.remove('hidden'));
+          });
+          return;
+        }
+
+        topPostsBlock.classList.add('hidden');
+
+        yearSections.forEach(section => {
+          const items = section.querySelectorAll('li');
+          let visibleCount = 0;
+          items.forEach(li => {
+            const title = li.getAttribute('data-title') || '';
+            if (title.includes(query)) {
+              li.classList.remove('hidden');
+              visibleCount++;
+            } else {
+              li.classList.add('hidden');
+            }
+          });
+          section.classList.toggle('hidden', visibleCount === 0);
+        });
+      });
+    </script>
   </body>
 </html>

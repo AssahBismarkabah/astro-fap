@@ -238,6 +238,9 @@ const safeFrontmatter = {
       .prose :global(div:empty) {
         display: none;
       }
+      .prose :global(h1:first-child) {
+        display: none;
+      }
 
       /* Footer */
       .site-footer {
@@ -283,6 +286,7 @@ const safeFrontmatter = {
         <a href="/" class="brand">Assah Bismark</a>
         <nav class="header-nav">
           <a href="/blog" class="nav-link">Archive</a>
+          <a href="/categories" class="nav-link">Categories</a>
           {socials.map((social) => (
             <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
           ))}

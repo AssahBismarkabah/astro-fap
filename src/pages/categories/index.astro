@@ -1,0 +1,239 @@
+---
+interface MarkdownInstance {
+  frontmatter: any;
+  url?: string;
+}
+
+const socials = [
+    { label: "GitHub", url: "https://github.com/AssahBismarkabah" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/assah-bismark-608a6a251/" },
+    { label: "Medium", url: "https://medium.com/@assahbismarkabah" },
+    { label: "X", url: "https://x.com/Assah_Bismark" },
+    { label: "Instagram", url: "https://www.instagram.com/assah_bismark/" },
+    { label: "Email", url: "mailto:abahbismarkassah@gmail.com" },
+];
+
+// Category definitions: broader groups mapped from tags
+const categoryMap: Record<string, { label: string; tags: string[] }> = {
+  'ai': { label: 'AI', tags: ['ai', 'rag', 'mcp', 'llm'] },
+  'rust': { label: 'Rust', tags: ['rust'] },
+  'devops': { label: 'DevOps', tags: ['devops', 'gitops', 'ci', 'deployment', 'github-actions', 'serverless', 'aws'] },
+  'apis-and-data': { label: 'APIs & Data', tags: ['graphql', 'api', 'jq', 'json', 'sql', 'postgres', 'database'] },
+  'web': { label: 'Web', tags: ['javascript', 'web', 'service-workers'] },
+  'security': { label: 'Security', tags: ['keycloak', 'security'] },
+  'software-engineering': { label: 'Software Engineering', tags: ['software-engineering', 'architecture', 'complexity', 'concurrency', 'performance', 'programming'] },
+  'python': { label: 'Python', tags: ['python'] },
+  'java': { label: 'Java', tags: ['java'] },
+  'tooling': { label: 'Tooling', tags: ['tooling', 'cli'] },
+};
+
+const postImports = import.meta.glob('../docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
+const posts = Object.entries(postImports).map(([path, mod]) => ({
+  tags: (mod.frontmatter?.tags || []) as string[],
+}));
+
+// Count posts per category
+const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, tags }]) => {
+  const count = posts.filter(p => p.tags.some(t => tags.includes(t))).length;
+  return { slug, label, count };
+}).filter(c => c.count > 0).sort((a, b) => b.count - a.count);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Categories | Assah Bismark</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Italic.ttf") format("truetype");
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Text-Regular.otf") format("opentype");
+        font-weight: 500;
+        font-style: normal;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html {
+        font-family: "SF Pro", "SF Pro Display", "SF Pro Text", "San Francisco",
+          "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans",
+          system-ui, sans-serif;
+      }
+      body {
+        background: #1e1f21;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28px;
+        min-height: 100vh;
+      }
+
+      .site-header {
+        position: absolute;
+        width: 100%;
+        padding: 43px 0 35px;
+        z-index: 10;
+      }
+      .header-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .brand {
+        font-size: 22px;
+        font-weight: 700;
+        color: #db0042;
+        text-decoration: none;
+        line-height: 22px;
+      }
+      .brand:hover { color: #ff1a5e; }
+      .header-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        align-items: baseline;
+      }
+      .nav-link {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 22px;
+        text-transform: capitalize;
+        transition: color 0.2s ease;
+      }
+      .nav-link:hover { color: #b2b2b2; }
+
+      .categories-section {
+        padding: 165px 0 100px;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 60px;
+      }
+
+      .page-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 45px;
+        margin: 0 0 23px;
+      }
+
+      .list-block {
+        margin: 0 0 50px;
+      }
+
+      .link-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .link-list li {
+        margin: 0 0 5px;
+        list-style: none;
+      }
+      .category-link {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 40px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      .category-link:hover { color: #b2b2b2; }
+      .category-count {
+        font-size: 15px;
+        font-weight: 400;
+        color: #ffffff;
+        opacity: 0.4;
+        margin-left: 8px;
+      }
+
+      .site-footer { border-top: 1px solid #2d2f30; }
+      .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
+      .copyright { color: #4b5563; font-size: 0.875rem; }
+
+      @media (max-width: 960px) {
+        .header-inner, .container { padding: 0 30px; }
+      }
+      @media (max-width: 768px) {
+        .site-header { position: relative; padding: 32px 0 24px; }
+        .header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .header-inner, .container { padding: 0 24px; }
+        .categories-section { padding: 40px 0 60px; }
+        .page-title { font-size: 26px; line-height: 36px; }
+        .category-link { font-size: 18px; line-height: 36px; }
+      }
+      @media (max-width: 480px) {
+        .header-inner, .container { padding: 0 16px; }
+        .header-nav { gap: 0.5rem 0.75rem; }
+        .categories-section { padding: 32px 0 40px; }
+        .page-title { font-size: 24px; }
+        .category-link { font-size: 17px; line-height: 32px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="/" class="brand">Assah Bismark</a>
+        <nav class="header-nav">
+          <a href="/blog" class="nav-link">Archive</a>
+          <a href="/categories" class="nav-link">Categories</a>
+          {socials.map((social) => (
+            <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <section class="categories-section">
+      <div class="container">
+        <h1 class="page-title">Categories</h1>
+
+        <div class="list-block">
+          <ul class="link-list">
+            {categoriesWithCounts.map((cat) => (
+              <li>
+                <a href={`/categories/${cat.slug}`} class="category-link">{cat.label}</a>
+                <span class="category-count">({cat.count})</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span class="copyright">&copy; 2026 Assah Bismark</span>
+      </div>
+    </footer>
+  </body>
+</html>

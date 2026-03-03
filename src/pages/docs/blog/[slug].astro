@@ -201,6 +201,7 @@ function formatDate(dateString: string): string {
         transition: color 0.2s ease;
       }
       .prose a:hover { color: #93c5fd; }
+      .prose h1:first-child { display: none; }
 
       .site-footer { border-top: 1px solid #2d2f30; }
       .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
@@ -233,6 +234,7 @@ function formatDate(dateString: string): string {
         <a href="/" class="brand">Assah Bismark</a>
         <nav class="header-nav">
           <a href="/blog" class="nav-link">Archive</a>
+          <a href="/categories" class="nav-link">Categories</a>
           {socials.map((social) => (
             <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
           ))}
