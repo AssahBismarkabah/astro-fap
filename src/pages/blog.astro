@@ -1,625 +1,246 @@
 ---
 interface MarkdownInstance {
   frontmatter: any;
-  rawContent: () => string;
   url?: string;
 }
 
+const socials = [
+    { label: "GitHub", url: "https://github.com/AssahBismarkabah" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/assah-bismark-608a6a251/" },
+    { label: "Medium", url: "https://medium.com/@assahbismarkabah" },
+    { label: "X", url: "https://x.com/Assah_Bismark" },
+    { label: "Instagram", url: "https://www.instagram.com/assah_bismark/" },
+    { label: "Email", url: "mailto:abahbismarkassah@gmail.com" },
+];
+
 const postImports = import.meta.glob('./docs/blog/*.md', { eager: true }) as Record<string, MarkdownInstance>;
 const posts = Object.entries(postImports).map(([path, mod]) => {
-  // Get the raw markdown content
-  let preview = '';
-
-  if (mod.rawContent) {
-    // Get raw markdown content
-    const rawText = mod.rawContent();
-    const contentWithoutFrontmatter = rawText.replace(/^---[\s\S]*?---\n\n?/, '');
-    // Remove markdown syntax but keep more content for longer previews
-    const cleanText = contentWithoutFrontmatter
-      .replace(/#{1,6}\s+/g, '') // Remove headers
-      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Remove links but keep text
-      .replace(/```[\s\S]*?```/g, '') // Remove code blocks
-      .replace(/`[^`]+`/g, '') // Remove inline code
-      .replace(/\*\*([^\*]+)\*\*/g, '$1') // Remove bold
-      .replace(/\*([^\*]+)\*/g, '$1') // Remove italic
-      .replace(/\n+/g, ' ') // Replace newlines with spaces
-      .trim();
-    // Increase preview length to ~500 characters to show more content
-    preview = cleanText.substring(0, 500) + (cleanText.length > 500 ? '...' : '');
-  } else if (mod.frontmatter?.description) {
-    // Fallback to description if rawContent not available
-    preview = mod.frontmatter.description;
-  }
-
+  const date = mod.frontmatter?.date || '';
+  const year = date ? new Date(date).getUTCFullYear().toString() : 'Undated';
   return {
     url: path.replace('./docs/blog/', '/docs/blog/').replace('.md', ''),
-    frontmatter: mod.frontmatter,
-    preview: preview,
-    category: mod.frontmatter?.category || 'technical',
-    tags: mod.frontmatter?.tags || [],
+    title: mod.frontmatter?.title || path.split('/').pop()?.replace('.md', '') || '',
+    date,
+    year,
   };
 });
-posts.sort((a, b) => (b.frontmatter.date || '').localeCompare(a.frontmatter.date || ''));
+posts.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-// Separate posts by category
-const technicalPosts = posts.filter(p => p.category === 'technical');
-const reflectionPosts = posts.filter(p => p.category === 'reflections');
-
-// Extract all unique tags
-const allTags = [...new Set(posts.flatMap(p => p.tags))].sort();
-
-function formatDate(dateString) {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC'
-  });
-}
+// Group by year
+const years: Record<string, typeof posts> = {};
+posts.forEach(post => {
+  if (!years[post.year]) years[post.year] = [];
+  years[post.year].push(post);
+});
+const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Blog | Assah Bismark</title>
-    <style is:global>
-      :root {
-        color-scheme: dark;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive | Assah Bismark</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
       }
-      
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Display-Bold.otf") format("opentype");
+        font-weight: 700;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Italic.ttf") format("truetype");
+        font-weight: 400;
+        font-style: italic;
+      }
+      @font-face {
+        font-family: "SF Pro";
+        src: url("/fonts/SF-Pro-Text-Regular.otf") format("opentype");
+        font-weight: 500;
+        font-style: normal;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
       html {
-        background: #00030d;  
+        font-family: "SF Pro", "SF Pro Display", "SF Pro Text", "San Francisco",
+          "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans",
+          system-ui, sans-serif;
       }
-      
-      html, body {
-        font-family: system-ui, sans-serif;
-        background: #00030d;
-        color: #fff;
-        margin: 0;
-        padding: 0;
+      body {
+        background: #1e1f21;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 28px;
         min-height: 100vh;
       }
-      
-      * {
-        box-sizing: border-box;
-      }
-    </style>
-    <style>
-      .blog-container {
-        margin-top: 6rem;
+
+      .site-header {
+        position: absolute;
         width: 100%;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 4rem;
+        padding: 43px 0 35px;
+        z-index: 10;
+      }
+      .header-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 60px;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        justify-content: space-between;
+        align-items: baseline;
       }
-
-      @media (max-width: 1200px) {
-        .blog-container {
-          max-width: 700px;
-          padding: 0 3rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .blog-container {
-          max-width: 100%;
-          padding: 0 2rem;
-        }
-      }
-
-      .blog-container.selected-post-active {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transform: scale(0.6);
-        transform-origin: center center;
-        background-color: #00030d;
-        z-index: 1000;
-        overflow: hidden; 
-      }
-
-      .blog-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 2.5rem;
-        text-align: left;
-        width: 100%;
-      }
-      .blog-list {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 4rem;
-      }
-      .blog-article {
-        text-decoration: none;
-        color: inherit;
-        display: block;
-        width: 100%;
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-      }
-      .blog-article.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .blog-article-title {
-        font-size: 1.875rem;
+      .brand {
+        font-size: 22px;
         font-weight: 700;
-        color: #fff;
-        margin-bottom: 1.25rem;
-        line-height: 1.2;
-      }
-      .blog-article-preview {
-        font-size: 1.125rem;
-        color: #9ca3af;
-        line-height: 1.7;
-        margin-bottom: 1rem;
-        max-width: 100%;
-      }
-      .blog-article-more {
-        font-size: 1rem;
-        color: #9ca3af;
-        margin-bottom: 1.25rem;
-        cursor: pointer;
-        display: inline-block;
+        color: #db0042;
         text-decoration: none;
+        line-height: 22px;
       }
-      .blog-article-more:hover {
-        color: #fff;
-      }
-      .blog-article-meta {
+      .brand:hover { color: #ff1a5e; }
+      .header-nav {
         display: flex;
-        align-items: center;
-        gap: 1.5rem;
-        font-size: 0.95rem;
-        color: #6b7280;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        align-items: baseline;
       }
-      .blog-article-date {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .back-link {
-        color: #b0b8c1;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        cursor: pointer;
+      .nav-link {
+        color: #ffffff;
         text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        font-size: 17px;
+        font-weight: 500;
+        line-height: 22px;
+        text-transform: capitalize;
         transition: color 0.2s ease;
       }
-      .back-link:hover {
-        color: #fff;
+      .nav-link:hover { color: #b2b2b2; }
+
+      /* Archive section — padding: 165px 0 100px */
+      .archive-section {
+        padding: 165px 0 100px;
       }
-      .tabs-container {
-        display: flex;
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-        width: 100%;
-        border-bottom: 1px solid #1f2937;
-        padding-bottom: 0;
-      }
-      .tab-btn {
-        background: transparent;
-        border: none;
-        border-bottom: 2px solid transparent;
-        padding: 0.75rem 0.25rem;
-        margin-bottom: -1px;
-        font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', system-ui, sans-serif;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #6b7280;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .tab-btn:hover {
-        color: #e5e7eb;
-      }
-      .tab-btn.active {
-        color: #fff;
-        border-bottom-color: #fff;
-      }
-      .tab-content {
-        display: none;
-        width: 100%;
-      }
-      .tab-content.active {
-        display: block;
-      }
-      .empty-state {
-        color: #6b7280;
-        font-size: 1.1rem;
-        text-align: center;
-        padding: 3rem 1rem;
-      }
-      .tags-filter {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-        width: 100%;
-      }
-      .tag-chip {
-        background: transparent;
-        border: 1px solid #374151;
-        border-radius: 9999px;
-        padding: 0.35rem 0.85rem;
-        font-size: 0.85rem;
-        color: #9ca3af;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        font-family: inherit;
-      }
-      .tag-chip:hover {
-        border-color: #6b7280;
-        color: #e5e7eb;
-      }
-      .tag-chip.active {
-        background: #fff;
-        border-color: #fff;
-        color: #000;
-      }
-      .article-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-top: 0.75rem;
-      }
-      .article-tag {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.25);
-        border-radius: 4px;
-        padding: 0.2rem 0.5rem;
-        font-size: 0.75rem;
-        color: #60a5fa;
-      }
-      .post-content-wrapper {
-        width: 100%;
-        max-width: 800px;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      .container {
+        max-width: 900px;
         margin: 0 auto;
+        padding: 0 60px;
       }
-      .post-content {
-        margin-top: 2rem;
-        width: 100%;
-        color: #fff;
-        line-height: 1.6;
+
+      /* Page title — 32px, 700, margin-bottom: 23px */
+      .archive-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 45px;
+        margin: 0 0 23px;
       }
-      .post-content :global(h1),
-      .post-content :global(h2),
-      .post-content :global(h3),
-      .post-content :global(h4),
-      .post-content :global(h5),
-      .post-content :global(h6) {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
+
+      /* Year block — margin-bottom: 50px */
+      .year-block {
+        margin: 0 0 50px;
       }
-      .post-content :global(p) {
-        margin-bottom: 1rem;
+
+      /* Year heading — 17px, 700, margin-bottom: 15px */
+      .year-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 30px;
+        margin: 0 0 15px;
       }
-      .post-content :global(ul),
-      .post-content :global(ol) {
-        margin-bottom: 1rem;
-        padding-left: 2rem;
+
+      /* Link list — no bullets, no padding */
+      .link-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
       }
-      .post-content :global(li) {
-        margin-bottom: 0.5rem;
+
+      /* List item — margin-bottom: 5px */
+      .link-list li {
+        margin: 0 0 5px;
+        list-style: none;
       }
-      .post-content :global(a) {
-        color: #60a5fa;
+
+      /* Post link — 20px, 700, #fff, line-height: 40px, no underline */
+      .post-link {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+        line-height: 40px;
         text-decoration: none;
+        transition: color 0.2s ease;
       }
-      .post-content :global(a:hover) {
-        text-decoration: underline;
+      .post-link:hover { color: #b2b2b2; }
+
+      .site-footer { border-top: 1px solid #2d2f30; }
+      .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
+      .copyright { color: #4b5563; font-size: 0.875rem; }
+
+      @media (max-width: 960px) {
+        .header-inner, .container { padding: 0 30px; }
       }
-      .post-content :global(code) {
-        background: #1a1a1a;
-        padding: 0.2rem 0.4rem;
-        border-radius: 0.25rem;
-        font-family: monospace;
+      @media (max-width: 768px) {
+        .site-header { position: relative; padding: 32px 0 24px; }
+        .header-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .header-inner, .container { padding: 0 24px; }
+        .archive-section { padding: 40px 0 60px; }
+        .archive-title { font-size: 26px; line-height: 36px; }
+        .post-link { font-size: 18px; line-height: 36px; }
       }
-      .post-content :global(pre) {
-        background: #1a1a1a;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        overflow-x: auto;
-        margin: 1rem 0;
-      }
-      .post-content :global(blockquote) {
-        border-left: 4px solid #60a5fa;
-        margin: 1rem 0;
-        padding-left: 1rem;
-        color: #b0b8c1;
+      @media (max-width: 480px) {
+        .header-inner, .container { padding: 0 16px; }
+        .header-nav { gap: 0.5rem 0.75rem; }
+        .archive-section { padding: 32px 0 40px; }
+        .archive-title { font-size: 24px; }
+        .post-link { font-size: 17px; line-height: 32px; }
       }
     </style>
   </head>
   <body>
-    <div id="blog-container" class="blog-container">
-      <div id="blog-list">
-        <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
-        <div class="blog-title">Blog</div>
-
-        <div class="tabs-container">
-          <button class="tab-btn active" data-tab="technical">Technical Writeups</button>
-          <button class="tab-btn" data-tab="reflections">Reflections</button>
-        </div>
-
-        {allTags.length > 0 && (
-          <div class="tags-filter" id="tags-filter">
-            <button class="tag-chip active" data-tag="all">All</button>
-            {allTags.map(tag => (
-              <button class="tag-chip" data-tag={tag}>{tag}</button>
-            ))}
-          </div>
-        )}
-
-        <div id="technical-content" class="tab-content active">
-          {technicalPosts.length === 0 ? (
-            <div class="empty-state">No technical writeups yet. Check back soon!</div>
-          ) : (
-            <div class="blog-list">
-              {technicalPosts.map(post => (
-                <article class="blog-article" data-tags={JSON.stringify(post.tags)}>
-                  <a href={post.url} style="text-decoration: none; color: inherit;">
-                    <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
-                  </a>
-                  <p class="blog-article-preview">{post.preview}</p>
-                  <a href={post.url} class="blog-article-more">More ›</a>
-                  <div class="blog-article-meta">
-                    <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
-                  </div>
-                  {post.tags.length > 0 && (
-                    <div class="article-tags">
-                      {post.tags.map(tag => (
-                        <span class="article-tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div id="reflections-content" class="tab-content">
-          {reflectionPosts.length === 0 ? (
-            <div class="empty-state">No reflections yet. Check back soon!</div>
-          ) : (
-            <div class="blog-list">
-              {reflectionPosts.map(post => (
-                <article class="blog-article" data-tags={JSON.stringify(post.tags)}>
-                  <a href={post.url} style="text-decoration: none; color: inherit;">
-                    <h2 class="blog-article-title">{post.frontmatter.title || post.url.split('/').pop()}</h2>
-                  </a>
-                  <p class="blog-article-preview">{post.preview}</p>
-                  <a href={post.url} class="blog-article-more">More ›</a>
-                  <div class="blog-article-meta">
-                    <div class="blog-article-date">{formatDate(post.frontmatter.date)}</div>
-                  </div>
-                  {post.tags.length > 0 && (
-                    <div class="article-tags">
-                      {post.tags.map(tag => (
-                        <span class="article-tag">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="/" class="brand">Assah Bismark</a>
+        <nav class="header-nav">
+          <a href="/blog" class="nav-link">Archive</a>
+          {socials.map((social) => (
+            <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
+          ))}
+        </nav>
       </div>
-    </div>
+    </header>
 
-    <script define:vars={{ posts }}>
-      let selectedPost = null;
-      const blogContainer = document.getElementById('blog-container');
-      const blogList = document.getElementById('blog-list');
+    <section class="archive-section">
+      <div class="container">
+        <h1 class="archive-title">Archive</h1>
 
-      function selectPost(post) {
-        selectedPost = post;
-        blogContainer.classList.add('selected-post-active');
-        
-        // Create a temporary div to render the Content component
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = `
-          <div class="post-content-wrapper">
-            <div class="back-link" onclick="goBack()">&larr; Blog</div>
-            <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
-            <div class="blog-article-title" style="font-size:2rem; margin-bottom:1.5rem;">${post.frontmatter.title || ''}</div>
-            <div class="post-content">
-              ${post.content}
-            </div>
+        {sortedYears.map((year) => (
+          <div class="year-block">
+            <h2 class="year-title">{year}</h2>
+            <ul class="link-list">
+              {years[year].map((post) => (
+                <li>
+                  <a href={post.url} class="post-link">{post.title}</a>
+                </li>
+              ))}
+            </ul>
           </div>
-        `;
-        
-        blogList.innerHTML = '';
-        blogList.appendChild(tempDiv.firstElementChild);
-      }
+        ))}
+      </div>
+    </section>
 
-      function goBack() {
-        selectedPost = null;
-        blogContainer.classList.remove('selected-post-active');
-        blogList.innerHTML = `
-          <a href="/" class="back-link" style="margin-bottom: 1rem;">&larr; Go to Home</a>
-          <div class="blog-title">Blog</div>
-          ${posts.length === 0 ? '<div class="mb-8 animate-pulse" style="color:#b0b8c1">Loading articles...</div>' : ''}
-          ${posts.length > 0 ? `
-            <div class="blog-list">
-              ${posts.map(post => `
-                <article class="blog-article">
-                  <a href="${post.url}" style="text-decoration: none; color: inherit;">
-                    <h2 class="blog-article-title">${post.frontmatter.title || post.url.split('/').pop()}</h2>
-                  </a>
-                  <p class="blog-article-preview">${post.preview}</p>
-                  <a href="${post.url}" class="blog-article-more">More ›</a>
-                  <div class="blog-article-meta">
-                    <div class="blog-article-date">${formatDate(post.frontmatter.date)}</div>
-                  </div>
-                </article>
-              `).join('')}
-            </div>
-          ` : ''}
-        `;
-        attachEventListeners();
-      }
-
-      function formatDate(dateString) {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          timeZone: 'UTC'
-        });
-      }
-
-      function attachEventListeners() {
-        document.querySelectorAll('.blog-article-link').forEach(link => {
-          link.addEventListener('click', () => {
-            const postUrl = link.getAttribute('href');
-            const post = posts.find(p => p.url === postUrl);
-            if (post) {
-              selectPost(post);
-            }
-          });
-        });
-      }
-
-      // Tab switching functionality
-      function initTabs() {
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        const technicalContent = document.getElementById('technical-content');
-        const reflectionsContent = document.getElementById('reflections-content');
-
-        function switchTab(tab) {
-          tabBtns.forEach(b => {
-            if (b.getAttribute('data-tab') === tab) {
-              b.classList.add('active');
-            } else {
-              b.classList.remove('active');
-            }
-          });
-
-          if (tab === 'technical') {
-            technicalContent.classList.add('active');
-            reflectionsContent.classList.remove('active');
-          } else {
-            technicalContent.classList.remove('active');
-            reflectionsContent.classList.add('active');
-          }
-        }
-
-        tabBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            const tab = btn.getAttribute('data-tab');
-            switchTab(tab);
-            // Update URL hash without scrolling
-            history.replaceState(null, '', '#' + tab);
-          });
-        });
-
-        // Handle initial hash from URL
-        const hash = window.location.hash.replace('#', '');
-        if (hash === 'reflections') {
-          switchTab('reflections');
-        }
-      }
-
-      // Tag filtering functionality
-      function initTagFilter() {
-        const tagChips = document.querySelectorAll('.tag-chip');
-        const articles = document.querySelectorAll('.blog-article');
-        let activeTag = 'all';
-
-        function filterByTag(tag) {
-          activeTag = tag;
-
-          // Update active chip
-          tagChips.forEach(chip => {
-            if (chip.getAttribute('data-tag') === tag) {
-              chip.classList.add('active');
-            } else {
-              chip.classList.remove('active');
-            }
-          });
-
-          // Filter articles
-          articles.forEach(article => {
-            if (tag === 'all') {
-              article.style.display = '';
-              return;
-            }
-
-            const articleTags = JSON.parse(article.getAttribute('data-tags') || '[]');
-            if (articleTags.includes(tag)) {
-              article.style.display = '';
-            } else {
-              article.style.display = 'none';
-            }
-          });
-
-          // Re-run scroll reveal for visible articles
-          initScrollReveal();
-        }
-
-        tagChips.forEach(chip => {
-          chip.addEventListener('click', () => {
-            const tag = chip.getAttribute('data-tag');
-            filterByTag(tag);
-          });
-        });
-      }
-
-      // Scroll reveal animation
-      function initScrollReveal() {
-        const articles = document.querySelectorAll('.blog-article');
-
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-              // Add a small delay for each article for staggered effect
-              setTimeout(() => {
-                entry.target.classList.add('visible');
-              }, index * 100);
-              observer.unobserve(entry.target);
-            }
-          });
-        }, {
-          threshold: 0.1,
-          rootMargin: '0px 0px -50px 0px'
-        });
-
-        articles.forEach(article => observer.observe(article));
-      }
-
-      // Initial event listener attachment
-      attachEventListeners();
-      initTabs();
-      initTagFilter();
-      initScrollReveal();
-    </script>
+    <footer class="site-footer">
+      <div class="container">
+        <span class="copyright">&copy; 2026 Assah Bismark</span>
+      </div>
+    </footer>
   </body>
 </html>
