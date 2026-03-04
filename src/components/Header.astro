@@ -12,20 +12,34 @@ const socials = [
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="brand">Assah Bismark</a>
-    <nav class="header-nav">
+
+    <!-- Desktop nav links (hidden when subscribe form is open) -->
+    <nav class="header-nav" id="header-nav">
       <a href="/blog" class="nav-link">Archive</a>
       <a href="/categories" class="nav-link">Categories</a>
       {socials.map((social) => (
         <a href={social.url} class="nav-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
       ))}
+      <button class="nav-link subscribe-toggle" id="subscribe-toggle">Subscribe</button>
     </nav>
+
+    <!-- Desktop subscribe form (hidden by default) -->
+    <div class="subscribe-box" id="subscribe-box">
+      <form class="subscribe-form" id="subscribe-form">
+        <input type="email" placeholder="Email" class="subscribe-input" id="subscribe-email" required />
+        <button type="submit" class="subscribe-btn">Subscribe</button>
+      </form>
+      <button class="cancel-link" id="cancel-subscribe">Cancel</button>
+      <span class="subscribe-success" id="subscribe-success">Subscribed!</span>
+    </div>
+
     <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
       <span class="bar"></span>
     </button>
   </div>
 </header>
 
-<!-- Full-screen mobile menu overlay (outside header, appended to body) -->
+<!-- Full-screen mobile menu overlay -->
 <div class="mobile-overlay" id="mobile-overlay">
   <div class="mobile-overlay-header">
     <a href="/" class="brand">Assah Bismark</a>
@@ -39,6 +53,16 @@ const socials = [
     {socials.map((social) => (
       <a href={social.url} class="mobile-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
     ))}
+
+    <!-- Mobile subscribe form -->
+    <div class="mobile-subscribe">
+      <label class="mobile-subscribe-label">Subscribe</label>
+      <form class="mobile-subscribe-form" id="mobile-subscribe-form">
+        <input type="email" placeholder="Email" class="mobile-subscribe-input" id="mobile-subscribe-email" required />
+        <button type="submit" class="mobile-subscribe-btn">Subscribe</button>
+      </form>
+      <span class="mobile-subscribe-success" id="mobile-subscribe-success">Subscribed!</span>
+    </div>
   </nav>
 </div>
 
@@ -50,8 +74,6 @@ const socials = [
     z-index: 10;
   }
   .header-inner {
-    max-width: 900px;
-    margin: 0 auto;
     padding: 0 60px;
     display: flex;
     justify-content: space-between;
@@ -68,7 +90,7 @@ const socials = [
   .brand:hover { color: #ff1a5e; }
   .header-nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 1rem;
     align-items: baseline;
   }
@@ -83,6 +105,92 @@ const socials = [
     white-space: nowrap;
   }
   .nav-link:hover { color: #db0042; }
+
+  /* Subscribe toggle button (looks like a nav link) */
+  .subscribe-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  /* Desktop subscribe box */
+  .subscribe-box {
+    display: none;
+    align-items: center;
+    gap: 12px;
+  }
+  .subscribe-box.open {
+    display: flex;
+  }
+  .subscribe-form {
+    display: flex;
+  }
+  .subscribe-input {
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 400;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid #555555;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+    padding: 8px 14px;
+    width: 220px;
+    height: 40px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .subscribe-input::placeholder {
+    color: #999999;
+  }
+  .subscribe-input:focus {
+    border-color: #888888;
+  }
+  .subscribe-btn {
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    color: #ffffff;
+    background: #db0042;
+    border: 1px solid #db0042;
+    border-radius: 0 3px 3px 0;
+    padding: 8px 18px;
+    height: 40px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .subscribe-btn:hover {
+    background: #ff1a5e;
+    border-color: #ff1a5e;
+  }
+  .cancel-link {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+  .cancel-link:hover { color: #db0042; }
+
+  /* Success message — hidden by default */
+  .subscribe-success,
+  .mobile-subscribe-success {
+    display: none;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
+  }
+  .mobile-subscribe-success {
+    font-size: 15px;
+    margin-top: 10px;
+  }
 
   /* Hamburger toggle — hidden on desktop */
   .menu-toggle {
@@ -134,7 +242,7 @@ const socials = [
     opacity: 1;
   }
 
-  /* Overlay header — brand + close, site background color */
+  /* Overlay header */
   .mobile-overlay-header {
     display: flex;
     justify-content: space-between;
@@ -196,6 +304,62 @@ const socials = [
   }
   .mobile-link:hover { color: #db0042; }
 
+  /* Mobile subscribe form */
+  .mobile-subscribe {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #333333;
+  }
+  .mobile-subscribe-label {
+    display: block;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+  .mobile-subscribe-form {
+    display: flex;
+  }
+  .mobile-subscribe-input {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid #555555;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+    padding: 8px 12px;
+    flex: 1;
+    height: 38px;
+    outline: none;
+  }
+  .mobile-subscribe-input::placeholder {
+    color: #999999;
+  }
+  .mobile-subscribe-input:focus {
+    border-color: #888888;
+  }
+  .mobile-subscribe-btn {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    color: #ffffff;
+    background: #db0042;
+    border: 1px solid #db0042;
+    border-radius: 0 3px 3px 0;
+    padding: 8px 16px;
+    height: 38px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .mobile-subscribe-btn:hover {
+    background: #ff1a5e;
+    border-color: #ff1a5e;
+  }
+
   /* Responsive */
   @media (max-width: 960px) {
     .header-inner { padding: 0 30px; }
@@ -211,6 +375,7 @@ const socials = [
       align-items: center;
     }
     .header-nav { display: none; }
+    .subscribe-box { display: none !important; }
     .menu-toggle { display: block; }
   }
 
@@ -220,6 +385,68 @@ const socials = [
 </style>
 
 <script>
+  // Desktop subscribe toggle
+  const headerNav = document.getElementById('header-nav');
+  const subscribeBox = document.getElementById('subscribe-box');
+  const subscribeToggle = document.getElementById('subscribe-toggle');
+  const cancelSubscribe = document.getElementById('cancel-subscribe');
+  const subscribeForm = document.getElementById('subscribe-form');
+  const subscribeEmail = document.getElementById('subscribe-email') as HTMLInputElement;
+  const subscribeSuccess = document.getElementById('subscribe-success');
+
+  subscribeToggle?.addEventListener('click', () => {
+    if (headerNav) headerNav.style.display = 'none';
+    subscribeBox?.classList.add('open');
+    subscribeEmail?.focus();
+  });
+
+  cancelSubscribe?.addEventListener('click', () => {
+    subscribeBox?.classList.remove('open');
+    if (headerNav) headerNav.style.display = '';
+  });
+
+  subscribeForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = subscribeEmail?.value;
+    if (email) {
+      if (subscribeForm) subscribeForm.style.display = 'none';
+      if (cancelSubscribe) cancelSubscribe.style.display = 'none';
+      if (subscribeSuccess) subscribeSuccess.style.display = 'inline';
+      setTimeout(() => {
+        if (subscribeSuccess) subscribeSuccess.style.display = 'none';
+        if (subscribeForm) {
+          subscribeForm.style.display = '';
+          subscribeEmail.value = '';
+        }
+        if (cancelSubscribe) cancelSubscribe.style.display = '';
+        subscribeBox?.classList.remove('open');
+        if (headerNav) headerNav.style.display = '';
+      }, 2000);
+    }
+  });
+
+  // Mobile subscribe form
+  const mobileSubscribeForm = document.getElementById('mobile-subscribe-form');
+  const mobileSubscribeEmail = document.getElementById('mobile-subscribe-email') as HTMLInputElement;
+  const mobileSubscribeSuccess = document.getElementById('mobile-subscribe-success');
+
+  mobileSubscribeForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = mobileSubscribeEmail?.value;
+    if (email) {
+      if (mobileSubscribeForm) mobileSubscribeForm.style.display = 'none';
+      if (mobileSubscribeSuccess) mobileSubscribeSuccess.style.display = 'block';
+      setTimeout(() => {
+        if (mobileSubscribeSuccess) mobileSubscribeSuccess.style.display = 'none';
+        if (mobileSubscribeForm) {
+          mobileSubscribeForm.style.display = '';
+          mobileSubscribeEmail.value = '';
+        }
+      }, 2000);
+    }
+  });
+
+  // Mobile menu toggle
   const toggle = document.getElementById('menu-toggle');
   const overlay = document.getElementById('mobile-overlay');
   const closeBtn = document.getElementById('mobile-close');
@@ -237,14 +464,16 @@ const socials = [
   toggle?.addEventListener('click', openMenu);
   closeBtn?.addEventListener('click', closeMenu);
 
-  // Close on escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay?.classList.contains('open')) {
-      closeMenu();
+    if (e.key === 'Escape') {
+      if (overlay?.classList.contains('open')) closeMenu();
+      if (subscribeBox?.classList.contains('open')) {
+        subscribeBox.classList.remove('open');
+        if (headerNav) headerNav.style.display = '';
+      }
     }
   });
 
-  // Auto-close when resizing back to desktop
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768 && overlay?.classList.contains('open')) {
       closeMenu();
