@@ -105,22 +105,28 @@ function formatDate(dateString: string): string {
             .socials-row {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 1rem;
-                align-items: baseline;
-                margin-bottom: 20px;
+                align-items: center;
+                margin-bottom: 34px;
             }
             .socials-label {
                 font-size: 17px;
                 font-weight: 500;
-                color: #ffffff;
-                line-height: 22px;
+                color: #666666;
+                line-height: 29px;
+                margin-right: 7px;
+            }
+            .socials-links {
+                line-height: 29px;
             }
             .socials-link {
                 font-size: 17px;
-                font-weight: 500;
+                font-weight: 600;
                 color: #db0042;
                 text-decoration: none;
-                line-height: 22px;
+                line-height: 29px;
+                display: inline-block;
+                padding: 0 4px;
+                margin-top: 2px;
                 transition: color 0.2s ease;
             }
             .socials-link:hover {
@@ -265,12 +271,14 @@ function formatDate(dateString: string): string {
             <div class="container">
                 <div class="socials-row">
                     <span class="socials-label">Socials</span>
-                    <a href="https://github.com/AssahBismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://www.linkedin.com/in/assah-bismark-608a6a251/" class="socials-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://medium.com/@assahbismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">Medium</a>
-                    <a href="https://x.com/Assah_Bismark" class="socials-link" target="_blank" rel="noopener noreferrer">X</a>
-                    <a href="https://www.instagram.com/assah_bismark/" class="socials-link" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="mailto:abahbismarkassah@gmail.com" class="socials-link">Email</a>
+                    <span class="socials-links">
+                        <a href="https://github.com/AssahBismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://www.linkedin.com/in/assah-bismark-608a6a251/" class="socials-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a href="https://medium.com/@assahbismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">Medium</a>
+                        <a href="https://x.com/Assah_Bismark" class="socials-link" target="_blank" rel="noopener noreferrer">X</a>
+                        <a href="https://www.instagram.com/assah_bismark/" class="socials-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+                        <a href="mailto:abahbismarkassah@gmail.com" class="socials-link">Email</a>
+                    </span>
                 </div>
 
                 {posts.map((post, i) => (
