@@ -102,6 +102,31 @@ function formatDate(dateString: string): string {
                 padding: 0 60px;
             }
 
+            .socials-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: baseline;
+                margin-bottom: 20px;
+            }
+            .socials-label {
+                font-size: 17px;
+                font-weight: 500;
+                color: #ffffff;
+                line-height: 22px;
+            }
+            .socials-link {
+                font-size: 17px;
+                font-weight: 500;
+                color: #db0042;
+                text-decoration: none;
+                line-height: 22px;
+                transition: color 0.2s ease;
+            }
+            .socials-link:hover {
+                color: #ff1a5e;
+            }
+
             .post-entry {
                 padding: 73px 0 0;
             }
@@ -238,6 +263,16 @@ function formatDate(dateString: string): string {
 
         <section class="blog-section">
             <div class="container">
+                <div class="socials-row">
+                    <span class="socials-label">Socials</span>
+                    <a href="https://github.com/AssahBismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/assah-bismark-608a6a251/" class="socials-link" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://medium.com/@assahbismarkabah" class="socials-link" target="_blank" rel="noopener noreferrer">Medium</a>
+                    <a href="https://x.com/Assah_Bismark" class="socials-link" target="_blank" rel="noopener noreferrer">X</a>
+                    <a href="https://www.instagram.com/assah_bismark/" class="socials-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="mailto:abahbismarkassah@gmail.com" class="socials-link">Email</a>
+                </div>
+
                 {posts.map((post, i) => (
                     <article class={`post-entry${i >= 5 ? ' hidden-post' : ''}`}>
                         <div class="post-meta">{formatDate(post.frontmatter.date)}</div>
