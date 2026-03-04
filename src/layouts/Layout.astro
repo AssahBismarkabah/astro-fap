@@ -16,27 +16,16 @@ const { title } = Astro.props;
 		<title>{title}</title>
 		<style>
 			@font-face {
-				font-family: 'SF Pro';
-				src: url('/fonts/SF-Pro.ttf') format('truetype');
-				font-weight: 400;
+				font-family: 'Benton Sans';
+				src: url('/fonts/BentonSans-Regular.ttf') format('truetype');
+				font-weight: 400 500;
 				font-style: normal;
 			}
 			@font-face {
-				font-family: 'SF Pro';
-				src: url('/fonts/SF-Pro-Display-Bold.otf') format('opentype');
-				font-weight: 700;
-				font-style: normal;
-			}
-			@font-face {
-				font-family: 'SF Pro';
-				src: url('/fonts/SF-Pro-Italic.ttf') format('truetype');
-				font-weight: 400;
-				font-style: italic;
-			}
-			@font-face {
-				font-family: 'SF Pro';
-				src: url('/fonts/SF-Pro-Text-Regular.otf') format('opentype');
-				font-weight: 500;
+				font-family: 'Benton Sans';
+				src: url('/fonts/BentonSans Medium.woff') format('woff'),
+				     url('/fonts/BentonSans Medium.otf') format('opentype');
+				font-weight: 600 700;
 				font-style: normal;
 			}
 		</style>
@@ -58,7 +47,7 @@ const { title } = Astro.props;
 		);
 	}
 	html {
-		font-family: 'SF Pro', 'SF Pro Display', 'SF Pro Text', 'San Francisco', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
+		font-family: 'Benton Sans', 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', system-ui, sans-serif;
 		background: #1e2021;
 	}
 	code {
