@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import ScrollAnimations from '../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
   frontmatter: any;
@@ -243,6 +244,8 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         ))}
       </div>
     </section>
+
+    <ScrollAnimations />
 
     <footer class="site-footer">
       <div class="container">

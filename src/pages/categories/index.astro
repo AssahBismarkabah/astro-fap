@@ -1,5 +1,6 @@
 ---
 import Header from '../../components/Header.astro';
+import ScrollAnimations from '../../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
   frontmatter: any;
@@ -164,6 +165,8 @@ const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, ta
         </div>
       </div>
     </section>
+
+    <ScrollAnimations />
 
     <footer class="site-footer">
       <div class="container">

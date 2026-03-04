@@ -1,5 +1,6 @@
 ---
 import Header from '../../components/Header.astro';
+import ScrollAnimations from '../../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
   frontmatter: any;
@@ -267,6 +268,8 @@ function formatDate(dateString: string): string {
         )}
       </div>
     </section>
+
+    <ScrollAnimations />
 
     <script>
       const btn = document.getElementById('read-more-btn');
