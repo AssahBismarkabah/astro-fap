@@ -20,10 +20,11 @@ const categoryMap: Record<string, { label: string; tags: string[] }> = {
   'java': { label: 'Java', tags: ['java'] },
   'tooling': { label: 'Tooling', tags: ['tooling', 'cli'] },
   'life': { label: 'Life', tags: ['life-identity', 'purpose', 'spirituality'] },
+  'science': { label: 'Science', tags: ['biology', 'neuroscience', 'evolution', 'physics', 'consciousness'] },
 };
 
 export function getStaticPaths() {
-  const categories = ['ai', 'rust', 'devops', 'apis-and-data', 'web', 'security', 'software-engineering', 'python', 'java', 'tooling', 'life'];
+  const categories = ['ai', 'rust', 'devops', 'apis-and-data', 'web', 'security', 'software-engineering', 'python', 'java', 'tooling', 'life', 'science'];
   return categories.map(slug => ({ params: { slug } }));
 }
 
