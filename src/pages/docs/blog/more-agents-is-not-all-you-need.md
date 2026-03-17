@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
 title: More Agents Is Not All You Need
-date: 2026-01-11
+date: 2026-03-17
 description: A Google Research paper tested 180 agent configurations and found multi-agent systems average -3.5% performance. I tested it on code generation and got a different result.
 category: ai
 tags: ["agents", "multi-agent-systems", "architecture"]
