@@ -17,7 +17,7 @@ So I was spending close to an hour a day just staying current. Not reading for d
 
 There are good HN clients. [Harmonic](https://github.com/nicklawls/Harmonic), the [Algolia](https://hn.algolia.com/) interface, various iOS and Android readers. Better typography, dark mode, gesture navigation. Some of them are genuinely well built.
 
-But they all solve the wrong problem. They make it easier to read 300 comments. The actual problem is that you shouldn't have to read 300 comments to get the point. A nicer reader doesn't reduce the volume. It just makes the volume more comfortable to sit in. You're still doing all the work.
+But they all solve the wrong problem. They make it easier to read 300 comments. I've [written before](/docs/blog/hacker-news) about using Algolia and SQL tricks to sort HN threads by most recent comments. That helps, but it's still you doing the reading. The actual problem is that you shouldn't have to read 300 comments to get the point. A nicer reader doesn't reduce the volume. It just makes the volume more comfortable to sit in.
 
 ## What I built instead
 
@@ -51,7 +51,7 @@ Semantic filtering works the same way. Story titles and URLs go to the AI with a
 
 ## What I didn't build
 
-No chat feature. When you have 300 comments from domain experts arguing about database internals, the useful thing isn't another voice in the room. It's a map of who said what and where they disagree. Summarization is compression. Chat is more noise.
+No chat feature. When you have 300 comments from domain experts arguing about database internals, the useful thing isn't another voice in the room. It's a map of who said what and where they disagree. That's [taste and judgment](/docs/blog/taste-judgment-ai). Knowing what not to build matters more than what you build. Summarization is compression. Chat is more noise.
 
 No recommendation algorithm. The app doesn't learn what you like and feed you more of it. That's engagement optimization, not information. Decidel shows HN's feed and lets you subtract. You control the filter, not an algorithm.
 
