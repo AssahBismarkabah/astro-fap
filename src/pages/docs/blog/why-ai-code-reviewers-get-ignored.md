@@ -87,7 +87,7 @@ A tool that catches bugs in its own codebase and improves its own security postu
 
 **validate before building.** We ran three technical spikes before writing any product code. SQLite with sqlite-vec for unified storage,benchmarked KNN queries at 100ms for 50k vectors, 87MB database. Tree-sitter for structural parsing,150 lines of adapter code per language, accurate extraction across Rust, TypeScript, and Python. Fastembed for local embeddings,20 summaries embedded in 1.5 seconds, meaningful similarity results. We committed to the architecture only after proving every piece works with real numbers.
 
-This is the engineering equivalent of Naval's principle that specific knowledge cannot be trained. You cannot design a retrieval system by reading about retrieval systems. You have to build it, measure it, and see where the numbers actually land. The spikes were not optional. They were the only way to make informed architecture decisions.
+You cannot design a retrieval system by reading about retrieval systems. You have to build it, measure it, and see where the numbers actually land. The spikes were not optional. They were the only way to make informed architecture decisions.
 
 **fixtures catch fixture bugs, not model bugs.** Our first evaluation run showed 25% precision. The natural assumption was that the model was wrong. It was not. Our "clean" test fixtures had real bugs the model correctly caught. A function that sliced a UTF-8 string by byte index,panics on multi-byte characters. A log statement using `warn!` level for routine request parsing. The model caught issues the fixture author missed.
 
@@ -106,18 +106,6 @@ Zero related files. All 204k tokens came from the three changed files alone. The
 **the model is not the product.** We spent zero time on prompt engineering before the architecture worked end-to-end. The system prompt is 40 lines. The output schema is a JSON array with eight fields. That is the entire prompt layer. The quality comes from what goes into the prompt, what comes out of it, and what happens after. Retrieval, filtering, lifecycle. The model is a replaceable execution layer.
 
 This is the same insight that applies to every AI product right now. The model is a commodity. The system around it is the product. If your entire value proposition depends on which model you use, you have no moat. The moat is in the data pipeline, the evaluation framework, the deployment infrastructure, and the feedback loops.
-
-## the architecture
-
-Snif is a Rust workspace organized as a modular monolith. Each module owns one responsibility,parser, graph, store, retrieval, context assembly, prompts, execution, output filtering, platform adapters, feedback learning, evaluation harness.
-
-The store is SQLite with sqlite-vec for vector embeddings. One local database handles everything. No external services.
-
-The execution layer is a provider-neutral HTTP client. Any OpenAI-compatible endpoint works,OpenAI, Bedrock, Azure, self-hosted models. The model is a configuration value, not a code dependency.
-
-The platform adapters handle GitHub and GitLab. GitHub authenticates as a GitHub App. GitLab uses personal or CI job tokens and supports self-hosted instances with any auth backend. Both handle the full annotation lifecycle.
-
-Everything ships as a single binary. Install it, add a config file, set one environment variable, and it runs in your CI pipeline.
 
 ## try it
 
