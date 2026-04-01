@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
-title: Why every AI code reviewer gets ignored within weeks
+title: Context Is What Makes Code Review Work
 date: 2026-04-01
 description: AI code review is a systems problem, not a prompt problem. Here is how we built Snif to stay useful.
 category: technical
