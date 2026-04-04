@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
 title: The Brain Can't Explain Itself
-date: 2026-03-28
+date: 2026-04-04
 description: Your brain does something during original thought that science can describe but can't explain.
 category: science
 tags: ["neuroscience", "consciousness", "biology"]
