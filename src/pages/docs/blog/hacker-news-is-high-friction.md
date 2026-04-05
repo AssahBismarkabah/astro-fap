@@ -23,17 +23,17 @@ But they all solve the wrong problem. They make it easier to read 300 comments. 
 
 [Decidel](https://decidel.app/) started from one idea: staying updated with what's happening in tech should be frictionless and clear. Not easier reading. Less reading. Not a better HN client. Signal extraction.
 
-![Decidel home feed showing Top stories with time range filters](./hacker-news-is-high-friction/Home-Feed.png)
+![Decidel home feed showing Top stories with time range filters](./hacker-news-is-high-friction/_Home-Feed.png)
 
 In practice that means three things.
 
 First, summarization. You open a thread and get the key points, the counter-arguments, and which comments are actually worth reading. Not a chatbot. A compressed view of what 200 people said, structured so you can absorb it in 30 seconds and decide if you want to go deeper. The AI pulls out the positions, the disagreements, the expert takes, and links each one back to the source comment.
 
-![AI Summary view showing TLDR, key points with sentiment, and counter-arguments](./hacker-news-is-high-friction/AI-Summaries-v2.png)
+![AI Summary view showing TLDR, key points with sentiment, and counter-arguments](./hacker-news-is-high-friction/_AI-Summaries-v2.png)
 
 Second, semantic filtering. Not keyword blocking. AI classification that understands what a thread is actually about and whether it matches topics you don't care about. Crypto speculation, startup funding drama, political debates. You configure what gets filtered and matching threads don't show up. This is different from a recommendation algorithm. It doesn't decide what you should read. It removes what you already know you don't want.
 
-![Mute Topics screen with toggles for crypto, AI hype, funding news, political debates, and more](./hacker-news-is-high-friction/Mute-Topics.png)
+![Mute Topics screen with toggles for crypto, AI hype, funding news, political debates, and more](./hacker-news-is-high-friction/_Mute-Topics.png)
 
 Third, offline bundles. You package stories and their summaries for reading without connectivity. Train, plane, subway. The update happens on your schedule, not your network's.
 
@@ -57,7 +57,7 @@ No recommendation algorithm. The app doesn't learn what you like and feed you mo
 
 No AI-generated content. The app doesn't write comments or produce anything that goes back into HN. It reads and compresses. The whole point is reducing noise, not contributing to it.
 
-![Threaded comments view with depth indicators and nested replies](./hacker-news-is-high-friction/Comments-Thread.png)
+![Threaded comments view with depth indicators and nested replies](./hacker-news-is-high-friction/_Comments-Thread.png)
 
 ## Where it is now
 

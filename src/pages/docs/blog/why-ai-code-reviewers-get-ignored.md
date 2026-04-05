@@ -23,7 +23,7 @@ An AI reviewer that reads only the diff is doing the equivalent of asking a cont
 
 The fix is not a better model. The fix is a better system around the model. Context assembly, output filtering, annotation lifecycle, evaluation. That is the stack that actually matters.
 
-![Review quality vs context depth](ai-code-review/review-quality-context-depth.png)
+![Review quality vs context depth](ai-code-review/_review-quality-context-depth.png)
 
 The relationship is measurable. Diff-only review produces roughly 30% precision with 70% noise on clean code. Each layer of context, structural graph, semantic vectors, output filtering, moves the needle. By the time the full retrieval and filtering pipeline runs, precision reaches 82% and noise drops to zero on clean changes.
 
@@ -73,11 +73,11 @@ The most convincing test of any tool is whether it works on itself.
 
 During development of the content-based fingerprinting feature, Snif reviewed its own PR and caught a real logic bug: the stale resolution code i implemented would incorrectly resolve active findings if they shared a line number with a fixed finding. The model cited the exact code, explained the cross-contamination path, and suggested the fix.
 
-![Snif finding a logic bug in its own fingerprint resolution code](ai-code-review/Github-code-logic.png)
+![Snif finding a logic bug in its own fingerprint resolution code](ai-code-review/_Github-code-logic.png)
 
 On a GitLab , Snif reviewed a merge request and caught an unused translation key that was added to the localization file but never referenced by any component. The finding included the evidence, the impact on translators, and the suggestion to remove it.
 
-![Snif reviewing a GitLab merge request and finding an unused translation key](ai-code-review/Gitlab-code-review.png)
+![Snif reviewing a GitLab merge request and finding an unused translation key](ai-code-review/_Gitlab-code-review.png)
 
 In another review, Snif flagged its own installation docs as a supply chain risk, the CI pipeline downloaded and executed a shell script from GitHub without integrity verification. That finding led me to add Sigstore cosign keyless signing to every release. Each checksum file is now signed with GitHub Actions' OIDC identity and recorded in Sigstore's transparency log.
 

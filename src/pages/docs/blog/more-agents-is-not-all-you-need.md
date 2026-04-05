@@ -41,7 +41,7 @@ So the question for anyone building agent systems for software engineering isn't
 
 The paper tested five architectures: single agent, independent (parallel with no communication), decentralized (peer-to-peer debate), centralized (orchestrator manages sub-agents), and hybrid (orchestrator plus peer communication).
 
-![The five agent architectures tested by the paper, from single agent to hybrid multi-agent](./more-agent-is-not-all-you-need/1multi-agent-architectures.webp)
+![The five agent architectures tested by the paper, from single agent to hybrid multi-agent](./more-agent-is-not-all-you-need/_1multi-agent-architectures.webp)
 
 The results aren't close.
 
@@ -135,7 +135,7 @@ Overhead was 148.8%, roughly half the paper's centralized benchmark of 285%. Coo
 
 A second run confirmed the pattern. The single agent scored higher this time (84% vs 75.4%), but multi-agent still hit 100%. Delta narrowed to +19%, but the direction held. MAS won both times.
 
-![Second run experiment output showing SAS 84% vs MAS 100%, delta +19%, MAS wins](./more-agent-is-not-all-you-need/experiment-output.png)
+![Second run experiment output showing SAS 84% vs MAS 100%, delta +19%, MAS wins](./more-agent-is-not-all-you-need/_experiment-output.png)
 
 ## Why multi-agent won here
 
