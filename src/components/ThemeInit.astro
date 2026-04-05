@@ -1,0 +1,75 @@
+<!--
+  Drop <ThemeInit /> in every page's <head>.
+  It outputs two things:
+    1. Global CSS variables for dark (default) and light themes.
+    2. An inline script that restores the user's preference before first paint
+       so there's no flash of the wrong theme.
+-->
+
+<style is:global>
+  :root {
+    --bg: #1e1f21;
+    --bg-alt: #000000;
+    --bg-card: #1e1f21;
+    --text: #ffffff;
+    --text-secondary: #eeeeee;
+    --text-muted: #b2b2b2;
+    --text-faint: #666666;
+    --text-placeholder: #999999;
+    --accent: #db0042;
+    --accent-hover: #ff1a5e;
+    --link: #60a5fa;
+    --link-hover: #93c5fd;
+    --border: #2d2f30;
+    --border-light: #333333;
+    --border-divider: #e5e5e5;
+    --code-bg: #2a2a2a;
+    --pre-bg: #18181b;
+    --blockquote-text: #b2b2b2;
+    --footer-text: #4b5563;
+    --input-border: #555555;
+    --heading-color: #db0042;
+    --search-icon: #4c4c4c;
+    --more-link: #aaaaaa;
+    --strong: #ffffff;
+    --opacity-faint: 0.4;
+  }
+
+  [data-theme="light"] {
+    --bg: #fafafa;
+    --bg-alt: #ffffff;
+    --bg-card: #f9fafb;
+    --text: #1a1a1a;
+    --text-secondary: #333333;
+    --text-muted: #555555;
+    --text-faint: #888888;
+    --text-placeholder: #aaaaaa;
+    --accent: #db0042;
+    --accent-hover: #b5003a;
+    --link: #2563eb;
+    --link-hover: #1d4ed8;
+    --border: #e5e5e5;
+    --border-light: #d1d5db;
+    --border-divider: #d1d5db;
+    --code-bg: #f3f4f6;
+    --pre-bg: #f0f1f3;
+    --blockquote-text: #666666;
+    --footer-text: #9ca3af;
+    --input-border: #d1d5db;
+    --heading-color: #db0042;
+    --search-icon: #999999;
+    --more-link: #777777;
+    --strong: #1a1a1a;
+    --opacity-faint: 0.5;
+  }
+</style>
+
+<script is:inline>
+  // Runs before paint to prevent flash of wrong theme
+  (function () {
+    var saved = localStorage.getItem('theme');
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>

@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import ThemeInit from '../components/ThemeInit.astro';
 import ScrollAnimations from '../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
@@ -35,6 +36,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Archive | Assah Bismark</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <ThemeInit />
     <style>
       @font-face {
         font-family: "Benton Sans";
@@ -61,14 +63,15 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
           "Liberation Sans", system-ui, sans-serif;
       }
       body {
-        background: #1e1f21;
-        color: #ffffff;
+        background: var(--bg);
+        color: var(--text);
         font-size: 18px;
         font-weight: 500;
         line-height: 28px;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition: background 0.2s ease, color 0.2s ease;
       }
 
       .archive-section {
@@ -83,7 +86,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       .archive-title {
         font-size: 32px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 45px;
         margin: 0 0 23px;
       }
@@ -111,16 +114,16 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       .search-icon svg {
         width: 13px;
         height: 13px;
-        fill: #4c4c4c;
+        fill: var(--search-icon);
       }
       .search-input {
         font-family: inherit;
         font-size: 15px;
         font-weight: 400;
-        color: #ffffff;
+        color: var(--text);
         background: transparent;
         border: none;
-        border-bottom: 1px solid #ffffff;
+        border-bottom: 1px solid var(--text);
         border-radius: 0;
         width: 100%;
         height: 31px;
@@ -129,7 +132,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
         outline: none;
       }
       .search-input::placeholder {
-        color: #999999;
+        color: var(--text-placeholder);
       }
 
       .list-block {
@@ -139,19 +142,19 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       .block-title {
         font-size: 17px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 30px;
         margin: 0 0 15px;
-        opacity: 0.4;
+        opacity: var(--opacity-faint);
       }
 
       .year-title {
         font-size: 17px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 30px;
         margin: 0 0 15px;
-        opacity: 0.4;
+        opacity: var(--opacity-faint);
       }
 
       .link-list {
@@ -168,19 +171,19 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       .post-link {
         font-size: 20px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 40px;
         text-decoration: none;
         transition: color 0.2s ease;
       }
-      .post-link:hover { color: #db0042; }
+      .post-link:hover { color: var(--accent); }
 
       .link-list li.hidden { display: none; }
       .list-block.hidden { display: none; }
 
-      .site-footer { border-top: 1px solid #2d2f30; }
+      .site-footer { border-top: 1px solid var(--border); }
       .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
-      .copyright { color: #4b5563; font-size: 0.875rem; }
+      .copyright { color: var(--footer-text); font-size: 0.875rem; }
 
       @media (max-width: 960px) {
         .container { padding: 0 30px; }
@@ -249,7 +252,7 @@ const sortedYears = Object.keys(years).sort((a, b) => b.localeCompare(a));
       </div>
     </footer>
     <script>
-      const searchInput = document.getElementById('archive-search');
+      const searchInput = document.querySelector<HTMLInputElement>('#archive-search');
       const topPostsBlock = document.getElementById('top-posts-block');
       const yearSections = document.querySelectorAll('.year-section');
 

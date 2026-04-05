@@ -1,5 +1,6 @@
 ---
 import Header from '../../components/Header.astro';
+import ThemeInit from '../../components/ThemeInit.astro';
 import ScrollAnimations from '../../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
@@ -39,6 +40,7 @@ const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, ta
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Categories | Assah Bismark</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <ThemeInit />
     <style>
       @font-face {
         font-family: "Benton Sans";
@@ -65,14 +67,15 @@ const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, ta
           "Liberation Sans", system-ui, sans-serif;
       }
       body {
-        background: #1e1f21;
-        color: #ffffff;
+        background: var(--bg);
+        color: var(--text);
         font-size: 18px;
         font-weight: 500;
         line-height: 28px;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition: background 0.2s ease, color 0.2s ease;
       }
 
       .categories-section {
@@ -87,7 +90,7 @@ const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, ta
       .page-title {
         font-size: 32px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 45px;
         margin: 0 0 23px;
       }
@@ -108,23 +111,23 @@ const categoriesWithCounts = Object.entries(categoryMap).map(([slug, { label, ta
       .category-link {
         font-size: 20px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 40px;
         text-decoration: none;
         transition: color 0.2s ease;
       }
-      .category-link:hover { color: #db0042; }
+      .category-link:hover { color: var(--accent); }
       .category-count {
         font-size: 15px;
         font-weight: 400;
-        color: #ffffff;
-        opacity: 0.4;
+        color: var(--text);
+        opacity: var(--opacity-faint);
         margin-left: 8px;
       }
 
-      .site-footer { border-top: 1px solid #2d2f30; }
+      .site-footer { border-top: 1px solid var(--border); }
       .site-footer .container { padding-top: 2rem; padding-bottom: 2rem; }
-      .copyright { color: #4b5563; font-size: 0.875rem; }
+      .copyright { color: var(--footer-text); font-size: 0.875rem; }
 
       @media (max-width: 960px) {
         .container { padding: 0 30px; }

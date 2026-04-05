@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import ThemeInit from '../components/ThemeInit.astro';
 import ScrollAnimations from '../components/ScrollAnimations.astro';
 
 interface MarkdownInstance {
@@ -53,6 +54,7 @@ function formatDate(dateString: string): string {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Assah Bismark</title>
         <link rel="icon" type="image/png" href="/favicon.png" />
+        <ThemeInit />
         <style>
             @font-face {
                 font-family: "Benton Sans";
@@ -79,14 +81,15 @@ function formatDate(dateString: string): string {
                     "Liberation Sans", system-ui, sans-serif;
             }
             body {
-                background: #1e1f21;
-                color: #ffffff;
+                background: var(--bg);
+                color: var(--text);
                 font-size: 18px;
                 font-weight: 500;
                 line-height: 28px;
                 min-height: 100vh;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
+                transition: background 0.2s ease, color 0.2s ease;
             }
 
             .blog-section {
@@ -107,7 +110,7 @@ function formatDate(dateString: string): string {
             .socials-label {
                 font-size: 17px;
                 font-weight: 500;
-                color: #666666;
+                color: var(--text-faint);
                 line-height: 29px;
                 margin-right: 7px;
             }
@@ -117,7 +120,7 @@ function formatDate(dateString: string): string {
             .socials-link {
                 font-size: 17px;
                 font-weight: 600;
-                color: #db0042;
+                color: var(--accent);
                 text-decoration: none;
                 line-height: 29px;
                 display: inline-block;
@@ -126,7 +129,7 @@ function formatDate(dateString: string): string {
                 transition: color 0.2s ease;
             }
             .socials-link:hover {
-                color: #ffffff;
+                color: var(--text);
                 text-decoration: underline;
             }
 
@@ -144,18 +147,18 @@ function formatDate(dateString: string): string {
             .post-title {
                 font-size: 22px;
                 font-weight: 700;
-                color: #ffffff;
+                color: var(--text);
                 line-height: 28px;
                 margin-bottom: 13px;
             }
             .post-title-link:hover .post-title {
-                color: #db0042;
+                color: var(--accent);
             }
 
             .post-description {
                 font-size: 18px;
                 font-weight: 500;
-                color: #ffffff;
+                color: var(--text);
                 line-height: 29px;
                 margin-bottom: 11px;
             }
@@ -163,14 +166,14 @@ function formatDate(dateString: string): string {
             .post-preview {
                 font-size: 17px;
                 font-weight: 500;
-                color: #b2b2b2;
+                color: var(--text-muted);
                 line-height: 30.5px;
             }
 
             .post-more {
                 font-size: 13px;
                 font-weight: 500;
-                color: #aaaaaa;
+                color: var(--more-link);
                 text-decoration: none;
                 line-height: 30.5px;
                 display: inline;
@@ -178,7 +181,7 @@ function formatDate(dateString: string): string {
                 transition: color 0.2s ease;
             }
             .post-more:hover {
-                color: #ffffff;
+                color: var(--text);
             }
             .post-more-spacer {
                 display: inline-block;
@@ -195,7 +198,7 @@ function formatDate(dateString: string): string {
                 font-size: 18px;
                 font-weight: 600;
                 line-height: 28px;
-                color: #db0042;
+                color: var(--accent);
                 background: none;
                 border: none;
                 cursor: pointer;
@@ -204,7 +207,7 @@ function formatDate(dateString: string): string {
                 transition: color 0.2s ease;
             }
             .read-more-btn:hover {
-                color: #ff1a5e;
+                color: var(--accent-hover);
             }
             .read-more-btn.hidden {
                 display: none;
@@ -213,19 +216,19 @@ function formatDate(dateString: string): string {
             .post-meta {
                 font-size: 18px;
                 font-weight: 500;
-                color: #ffffff;
+                color: var(--text);
                 line-height: 28px;
             }
 
             .site-footer {
-                border-top: 1px solid #2d2f30;
+                border-top: 1px solid var(--border);
             }
             .site-footer .container {
                 padding-top: 2rem;
                 padding-bottom: 2rem;
             }
             .copyright {
-                color: #4b5563;
+                color: var(--footer-text);
                 font-size: 0.875rem;
             }
 

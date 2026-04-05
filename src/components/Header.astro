@@ -18,6 +18,10 @@ const socials = [
       <a href="/blog" class="nav-link">Archive</a>
       <a href="/categories" class="nav-link">Categories</a>
       <button class="nav-link subscribe-toggle" id="subscribe-toggle">Subscribe</button>
+      <button class="nav-link theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </nav>
 
     <!-- Desktop subscribe form (hidden by default) -->
@@ -51,6 +55,12 @@ const socials = [
       <a href={social.url} class="mobile-link" target="_blank" rel="noopener noreferrer">{social.label}</a>
     ))}
 
+    <!-- Mobile theme toggle -->
+    <button class="mobile-link mobile-theme-toggle" id="mobile-theme-toggle">
+      <span class="mobile-theme-label-dark">Light mode</span>
+      <span class="mobile-theme-label-light">Dark mode</span>
+    </button>
+
     <!-- Mobile subscribe form -->
     <div class="mobile-subscribe">
       <label class="mobile-subscribe-label">Subscribe</label>
@@ -79,12 +89,12 @@ const socials = [
   .brand {
     font-size: 22px;
     font-weight: 700;
-    color: #db0042;
+    color: var(--accent);
     text-decoration: none;
     line-height: 22px;
     white-space: nowrap;
   }
-  .brand:hover { color: #ffffff; text-decoration: underline; }
+  .brand:hover { color: var(--text); text-decoration: underline; }
   .header-nav {
     display: flex;
     flex-wrap: nowrap;
@@ -92,7 +102,7 @@ const socials = [
     align-items: baseline;
   }
   .nav-link {
-    color: #ffffff;
+    color: var(--text);
     text-decoration: none;
     font-size: 17px;
     font-weight: 500;
@@ -101,7 +111,42 @@ const socials = [
     transition: color 0.2s ease;
     white-space: nowrap;
   }
-  .nav-link:hover { color: #db0042; }
+  .nav-link:hover { color: var(--accent); }
+
+  /* Theme toggle */
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  .theme-toggle .icon-sun,
+  .theme-toggle .icon-moon {
+    transition: opacity 0.2s ease;
+  }
+  /* Dark mode (default): show sun icon (click to go light) */
+  .theme-toggle .icon-sun { display: block; }
+  .theme-toggle .icon-moon { display: none; }
+  /* Light mode: show moon icon (click to go dark) */
+  :global([data-theme="light"]) .theme-toggle .icon-sun { display: none; }
+  :global([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
+
+  /* Mobile theme toggle */
+  .mobile-theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+    text-align: left;
+  }
+  .mobile-theme-label-dark { display: inline; }
+  .mobile-theme-label-light { display: none; }
+  :global([data-theme="light"]) .mobile-theme-label-dark { display: none; }
+  :global([data-theme="light"]) .mobile-theme-label-light { display: inline; }
 
   /* Subscribe toggle button (looks like a nav link) */
   .subscribe-toggle {
@@ -128,9 +173,9 @@ const socials = [
     font-family: inherit;
     font-size: 17px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--text);
     background: transparent;
-    border: 1px solid #555555;
+    border: 1px solid var(--input-border);
     border-right: none;
     border-radius: 3px 0 0 3px;
     padding: 8px 14px;
@@ -140,18 +185,18 @@ const socials = [
     transition: border-color 0.2s ease;
   }
   .subscribe-input::placeholder {
-    color: #999999;
+    color: var(--text-placeholder);
   }
   .subscribe-input:focus {
-    border-color: #888888;
+    border-color: var(--text-muted);
   }
   .subscribe-btn {
     font-family: inherit;
     font-size: 17px;
     font-weight: 500;
     color: #ffffff;
-    background: #db0042;
-    border: 1px solid #db0042;
+    background: var(--accent);
+    border: 1px solid var(--accent);
     border-radius: 0 3px 3px 0;
     padding: 8px 18px;
     height: 40px;
@@ -160,13 +205,13 @@ const socials = [
     transition: background 0.2s ease;
   }
   .subscribe-btn:hover {
-    background: #ff1a5e;
-    border-color: #ff1a5e;
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
   }
   .cancel-link {
     background: none;
     border: none;
-    color: #ffffff;
+    color: var(--text);
     font-family: inherit;
     font-size: 17px;
     font-weight: 500;
@@ -174,13 +219,13 @@ const socials = [
     padding: 0;
     transition: color 0.2s ease;
   }
-  .cancel-link:hover { color: #db0042; }
+  .cancel-link:hover { color: var(--accent); }
 
   /* Success message — hidden by default */
   .subscribe-success,
   .mobile-subscribe-success {
     display: none;
-    color: #ffffff;
+    color: var(--text);
     font-size: 17px;
     font-weight: 500;
   }
@@ -204,7 +249,7 @@ const socials = [
     display: block;
     width: 18px;
     height: 2px;
-    background: #ffffff;
+    background: var(--text);
     border-radius: 1px;
     transition: transform 0.2s ease;
   }
@@ -227,7 +272,7 @@ const socials = [
     left: 0;
     width: 100%;
     height: 100%;
-    background: #000000;
+    background: var(--bg-alt);
     z-index: 999;
     padding: 0;
     overflow: auto;
@@ -245,8 +290,8 @@ const socials = [
     justify-content: space-between;
     align-items: center;
     padding: 20px 25px;
-    background: #1e1f21;
-    border-bottom: 1px solid #333333;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-light);
   }
 
   /* X close button */
@@ -273,7 +318,7 @@ const socials = [
     display: block;
     width: 18px;
     height: 2px;
-    background: #ffffff;
+    background: var(--text);
     border-radius: 1px;
     top: 0;
   }
@@ -291,7 +336,7 @@ const socials = [
     padding: 20px 25px;
   }
   .mobile-link {
-    color: #ffffff;
+    color: var(--text);
     text-decoration: none;
     font-size: 15px;
     font-weight: 400;
@@ -299,17 +344,17 @@ const socials = [
     margin-bottom: 5px;
     transition: color 0.2s ease;
   }
-  .mobile-link:hover { color: #db0042; }
+  .mobile-link:hover { color: var(--accent); }
 
   /* Mobile subscribe form */
   .mobile-subscribe {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid #333333;
+    border-top: 1px solid var(--border-light);
   }
   .mobile-subscribe-label {
     display: block;
-    color: #ffffff;
+    color: var(--text);
     font-size: 15px;
     font-weight: 400;
     line-height: 30px;
@@ -322,9 +367,9 @@ const socials = [
     font-family: inherit;
     font-size: 15px;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--text);
     background: transparent;
-    border: 1px solid #555555;
+    border: 1px solid var(--input-border);
     border-right: none;
     border-radius: 3px 0 0 3px;
     padding: 8px 12px;
@@ -333,18 +378,18 @@ const socials = [
     outline: none;
   }
   .mobile-subscribe-input::placeholder {
-    color: #999999;
+    color: var(--text-placeholder);
   }
   .mobile-subscribe-input:focus {
-    border-color: #888888;
+    border-color: var(--text-muted);
   }
   .mobile-subscribe-btn {
     font-family: inherit;
     font-size: 15px;
     font-weight: 500;
     color: #ffffff;
-    background: #db0042;
-    border: 1px solid #db0042;
+    background: var(--accent);
+    border: 1px solid var(--accent);
     border-radius: 0 3px 3px 0;
     padding: 8px 16px;
     height: 38px;
@@ -353,8 +398,8 @@ const socials = [
     transition: background 0.2s ease;
   }
   .mobile-subscribe-btn:hover {
-    background: #ff1a5e;
-    border-color: #ff1a5e;
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
   }
 
   /* Responsive */
@@ -366,7 +411,7 @@ const socials = [
     .site-header {
       position: relative;
       padding: 20px 0;
-      border-bottom: 1px solid #333333;
+      border-bottom: 1px solid var(--border-light);
     }
     .header-inner {
       padding: 0 24px;
@@ -389,7 +434,7 @@ const socials = [
   const subscribeToggle = document.getElementById('subscribe-toggle');
   const cancelSubscribe = document.getElementById('cancel-subscribe');
   const subscribeForm = document.getElementById('subscribe-form');
-  const subscribeEmail = document.getElementById('subscribe-email') as HTMLInputElement;
+  const subscribeEmail = document.querySelector<HTMLInputElement>('#subscribe-email');
   const subscribeSuccess = document.getElementById('subscribe-success');
 
   subscribeToggle?.addEventListener('click', () => {
@@ -425,7 +470,7 @@ const socials = [
 
   // Mobile subscribe form
   const mobileSubscribeForm = document.getElementById('mobile-subscribe-form');
-  const mobileSubscribeEmail = document.getElementById('mobile-subscribe-email') as HTMLInputElement;
+  const mobileSubscribeEmail = document.querySelector<HTMLInputElement>('#mobile-subscribe-email');
   const mobileSubscribeSuccess = document.getElementById('mobile-subscribe-success');
 
   mobileSubscribeForm?.addEventListener('submit', (e) => {
@@ -477,4 +522,19 @@ const socials = [
       closeMenu();
     }
   });
+
+  // Theme toggle
+  function toggleTheme() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.removeItem('theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('mobile-theme-toggle')?.addEventListener('click', toggleTheme);
 </script>

@@ -1,5 +1,6 @@
 ---
 import Header from '../components/Header.astro';
+import ThemeInit from '../components/ThemeInit.astro';
 import Giscus from '../components/Giscus.astro';
 import ScrollAnimations from '../components/ScrollAnimations.astro';
 const { frontmatter } = Astro.props;
@@ -29,6 +30,7 @@ const safeFrontmatter = {
     <meta name="description" content={safeFrontmatter.description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <ThemeInit />
     <style>
       @font-face {
         font-family: 'Benton Sans';
@@ -55,14 +57,15 @@ const safeFrontmatter = {
           'Liberation Sans', system-ui, sans-serif;
       }
       body {
-        background: #1e1f21;
-        color: #ffffff;
+        background: var(--bg);
+        color: var(--text);
         font-size: 18px;
         font-weight: 500;
         line-height: 28px;
         min-height: 100vh;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        transition: background 0.2s ease, color 0.2s ease;
       }
 
       .post-section {
@@ -81,7 +84,7 @@ const safeFrontmatter = {
       .post-meta {
         font-size: 18px;
         font-weight: 500;
-        color: #ffffff;
+        color: var(--text);
         line-height: 28px;
         margin-bottom: 31px;
       }
@@ -89,7 +92,7 @@ const safeFrontmatter = {
       .post-title {
         font-size: 40px;
         font-weight: 700;
-        color: #ffffff;
+        color: var(--text);
         line-height: 56px;
         margin-bottom: 18px;
       }
@@ -97,19 +100,19 @@ const safeFrontmatter = {
       .post-description {
         font-size: 18px;
         font-weight: 500;
-        color: #ffffff;
+        color: var(--text);
         line-height: 29px;
         padding-bottom: 29px;
       }
 
       .post-header-divider {
         border: none;
-        border-top: 1px solid #e5e5e5;
+        border-top: 1px solid var(--border-divider);
         margin: 0;
       }
 
       .prose {
-        color: #eeeeee;
+        color: var(--text-secondary);
         font-size: 18px;
         font-weight: 500;
         line-height: 28px;
@@ -124,12 +127,12 @@ const safeFrontmatter = {
       .prose :global(h4),
       .prose :global(h5),
       .prose :global(h6) {
-        color: #db0042;
+        color: var(--heading-color);
         font-weight: 700;
         margin-top: 2em;
         margin-bottom: 0.7em;
         padding-bottom: 0.4em;
-        border-bottom: 1px solid #333333;
+        border-bottom: 1px solid var(--border-light);
         line-height: 1.3;
       }
       .prose :global(h1) { font-size: 32px; }
@@ -137,7 +140,7 @@ const safeFrontmatter = {
       .prose :global(h3) { font-size: 20px; }
       .prose :global(strong) {
         font-weight: 600;
-        color: #ffffff;
+        color: var(--strong);
       }
       .prose :global(ul),
       .prose :global(ol) {
@@ -148,13 +151,13 @@ const safeFrontmatter = {
         margin-bottom: 8px;
       }
       .prose :global(code) {
-        background: #2a2a2a;
+        background: var(--code-bg);
         padding: 0.2em 0.4em;
         border-radius: 0.3em;
         font-size: 0.9em;
       }
       .prose :global(pre) {
-        background: #18181b;
+        background: var(--pre-bg);
         padding: 1em;
         border-radius: 0.5em;
         overflow-x: auto;
@@ -165,10 +168,10 @@ const safeFrontmatter = {
         padding: 0;
       }
       .prose :global(blockquote) {
-        border-left: 4px solid #e5e5e5;
+        border-left: 4px solid var(--border-divider);
         margin: 0 0 24px;
         padding-left: 1em;
-        color: #b2b2b2;
+        color: var(--blockquote-text);
       }
       .prose :global(img) {
         max-width: 70%;
@@ -179,13 +182,13 @@ const safeFrontmatter = {
         display: block;
       }
       .prose :global(a) {
-        color: #60a5fa;
+        color: var(--link);
         text-decoration: underline;
         text-underline-offset: 2px;
         transition: color 0.2s ease;
       }
       .prose :global(a:hover) {
-        color: #93c5fd;
+        color: var(--link-hover);
       }
       .prose :global(p:empty),
       .prose :global(div:empty) {
@@ -196,14 +199,14 @@ const safeFrontmatter = {
       }
 
       .site-footer {
-        border-top: 1px solid #2d2f30;
+        border-top: 1px solid var(--border);
       }
       .site-footer .container {
         padding-top: 2rem;
         padding-bottom: 2rem;
       }
       .copyright {
-        color: #4b5563;
+        color: var(--footer-text);
         font-size: 0.875rem;
       }
 
