@@ -92,15 +92,35 @@ _RESPONSES_API_PROVIDERS = frozenset({"openai"})
 
 Since the provider matches, LiteLLM routes the request to OpenAI's Responses API (`/v1/responses`) instead of Chat Completions (`/v1/chat/completions`). That works fine if your target is actual OpenAI. But if you're pointing at any other OpenAI-compatible endpoint, like a self-hosted model, a third-party provider, or an aggregator, that endpoint almost certainly doesn't implement the Responses API. The request goes to a path that doesn't exist. Some endpoints return a 404, others hang indefinitely.
 
-If you're seeing multi-minute response times or silent failures after setting everything up correctly, this is probably why. The fix is one environment variable:
+If you're seeing multi-minute response times or silent failures after setting everything up correctly, this is probably why. The fix requires two things.
+
+First, the environment variable:
 
 ```
 LITELLM_USE_CHAT_COMPLETIONS_URL_FOR_ANTHROPIC_MESSAGES=True
 ```
 
-Set this in the LiteLLM process environment before starting the proxy. On macOS for example with a Launch Agent, add it to the `EnvironmentVariables` dict in the plist file. After restarting the proxy, responses come back in seconds instead of minutes.
+Set this in the LiteLLM process environment before starting the proxy. On macOS with a Launch Agent, add it to the `EnvironmentVariables` dict in the plist file.
 
-This applies to anyone using LiteLLM to proxy Claude Code requests to non-OpenAI endpoints with the `openai/` prefix. The [LiteLLM documentation for Claude Code](https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models) doesn't mention it because it assumes the target is actual OpenAI or a major cloud provider that implements the Responses API.
+Second, you need LiteLLM 1.83.4 or newer. Earlier versions don't respect this variable consistently when Claude Code sends `?beta=true` in the request URL, which routes through the experimental pass-through handler and hits the Responses API regardless of your settings. The March 2026 security patches also brought routing fixes that make this path work properly for non-OpenAI endpoints. If you're on anything older than 1.83.4, upgrade and restart your proxy.
+
+The [LiteLLM documentation for Claude Code](https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models) doesn't mention any of this because it assumes the target is actual OpenAI or a major cloud provider that implements the Responses API.
+
+## the march 2026 supply chain attack
+
+In March 2026, LiteLLM was hit by a supply chain attack. An attacker called TeamPCP compromised the Trivy CI/CD pipeline, stole the maintainer's PyPI credentials, and published two poisoned versions: 1.82.7 and 1.82.8. Those versions harvested credentials from developer machines. .env files, shell profiles, cached tokens, IDE settings, agent memory stores.
+
+If you ever ran `pip install litellm` between March 19 and March 24, check your version. 1.82.7 and 1.82.8 are the only compromised releases. Both were yanked. 1.82.6 and below are clean. 1.83.0 and above are clean and verified by the LiteLLM team.
+
+The attack matters for this setup because those poisoned versions are exactly when the routing fixes landed in 1.83.x. If you're on 1.82.6 to avoid the attack, you miss the `?beta=true` routing fix. If you upgrade past 1.82.8, you get the routing fix. The gap was narrow.
+
+Verify your version:
+
+```bash
+~/.config/litellm/venv/bin/pip show litellm | grep Version
+```
+
+If you were on a compromised version, rotate every API key, auth token, and credential that passed through that machine during the window. The poisoned packages exfiltrated to `models.litellm.cloud` and `checkmarx.zone`.
 
 ## the max_tokens error
 
