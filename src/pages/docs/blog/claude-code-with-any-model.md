@@ -104,11 +104,21 @@ Set this in the LiteLLM process environment before starting the proxy. On macOS 
 
 Second, you need LiteLLM 1.83.4 or newer. Earlier versions don't respect this variable consistently when Claude Code sends `?beta=true` in the request URL, which routes through the experimental pass-through handler and hits the Responses API regardless of your settings. The March 2026 security patches also brought routing fixes that make this path work properly for non-OpenAI endpoints. If you're on anything older than 1.83.4, upgrade and restart your proxy.
 
+There's one more detail. pip will try to install openai 2.30.0 alongside LiteLLM 1.83.4, but that version breaks internal imports. Pin openai to 2.29.0:
+
+```bash
+pip install 'openai==2.29.0'
+```
+
+2.29.0 is the last version before the `path_template` and `solve_response_format_t` imports moved around. If you hit a 500 with those import errors, this is why.
+
+These specific versions were current in April 2026. By the time you read this, newer releases may have fixed the compatibility gap. Start with `pip install litellm --upgrade`, then test your proxy directly with curl before pointing Claude Code at it. If you still see import errors in the 500 response, pin openai one version below whatever caused the break. The pattern stays the same: LiteLLM depends on `openai` without a tight pin, pip grabs the latest, the latest moves an import, LiteLLM trips until it pins down its own constraint. Curl first, check `/tmp/litellm.log` for the actual Python traceback, then adjust openai accordingly.
+
 The [LiteLLM documentation for Claude Code](https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models) doesn't mention any of this because it assumes the target is actual OpenAI or a major cloud provider that implements the Responses API.
 
 ## the march 2026 supply chain attack
 
-In March 2026, LiteLLM was hit by a supply chain attack. An attacker called TeamPCP compromised the Trivy CI/CD pipeline, stole the maintainer's PyPI credentials, and published two poisoned versions: 1.82.7 and 1.82.8. Those versions harvested credentials from developer machines. .env files, shell profiles, cached tokens, IDE settings, agent memory stores.
+In March 2026, LiteLLM was hit by a supply chain attack. An attacker called TeamPCP compromised the Trivy CI/CD pipeline, stole the maintainer's PyPI credentials, and published two poisoned versions: 1.82.7 and 1.82.8. Those versions harvested credentials from developer machines: .env files, shell profiles, cached tokens, IDE settings, agent memory stores.
 
 If you ever ran `pip install litellm` between March 19 and March 24, check your version. 1.82.7 and 1.82.8 are the only compromised releases. Both were yanked. 1.82.6 and below are clean. 1.83.0 and above are clean and verified by the LiteLLM team.
 
