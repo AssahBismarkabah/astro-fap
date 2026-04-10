@@ -102,6 +102,59 @@ Set this in the LiteLLM process environment before starting the proxy. On macOS 
 
 This applies to anyone using LiteLLM to proxy Claude Code requests to non-OpenAI endpoints with the `openai/` prefix. The [LiteLLM documentation for Claude Code](https://docs.litellm.ai/docs/tutorials/claude_non_anthropic_models) doesn't mention it because it assumes the target is actual OpenAI or a major cloud provider that implements the Responses API.
 
+## the max_tokens error
+
+Fixing the routing gets you another wall. Claude Code is greedy with tokens. It injects `max_tokens: 8192` into every request payload, which is the Anthropic maximum. Many OpenAI-compatible backends reject anything above 4096 unless streaming is perfectly formatted. You'll get a 400 Bad Request saying requests with `max_tokens > 4096` must have `stream: true`.
+
+Setting `max_tokens: 4096` in your LiteLLM config won't help. Claude Code's payload is a deeply nested Anthropic JSON structure, and LiteLLM's standard config parameters get overridden or ignored during translation. The proxy passes Claude's 8192 request straight through to the backend, and the backend rejects it.
+
+Same with `drop_params: true`. It handles the `thinking` parameter fine on the Chat Completions path. But if you're pointing at a strict backend like Fireworks AI, `drop_params` alone doesn't cap the token budget or force streaming. You need to intercept the raw dictionary before translation happens.
+
+## the pre-call hook
+
+The reliable fix is a native Python hook inside LiteLLM. It mutates the request payload before any translation or routing decisions are made.
+
+Create `proxy_server.py` in your LiteLLM config directory:
+
+```python
+from litellm.proxy.proxy_server import ProxyConfig
+
+class CustomProxyConfig(ProxyConfig):
+    async def pre_call_hook(self, user_api_key_dict, data, call_type, **kwargs):
+        # Cap tokens under typical gateway limits
+        data["max_tokens"] = 4096
+
+        # Force streaming for models that require it
+        model_name = data.get("model", "")
+        if "deepseek" in model_name or "qwen" in model_name:
+            data["stream"] = True
+
+        # Drop Anthropic-specific params that confuse OpenAI backends
+        for key in ["top_k", "top_p"]:
+            data.pop(key, None)
+
+        return data
+
+proxy_config = CustomProxyConfig()
+```
+
+Wire it into your `config.yaml`:
+
+```yaml
+litellm_settings:
+  proxy_config: 'proxy_server.proxy_config'
+  drop_params: true
+```
+
+Start LiteLLM with the config directory on the Python path so it can find the module:
+
+```bash
+export PYTHONPATH=$PYTHONPATH:~/.config/litellm
+nohup ~/.config/litellm/venv/bin/litellm --config ~/.config/litellm/config.yaml --port 4000 > /tmp/litellm.log 2>&1 &
+```
+
+The hook handles both problems at once. It caps `max_tokens` below the gateway limit, and forces `stream: True` for models like DeepSeek and Qwen that reject large non-streaming requests. You still want `LITELLM_USE_CHAT_COMPLETIONS_URL_FOR_ANTHROPIC_MESSAGES=True` in your environment. The hook works on either path, but the Chat Completions path is cleaner for proxying Claude Code.
+
 ## the thinking parameter
 
 There's a second issue that compounds the first. Claude Code sends a `thinking` parameter when extended thinking is enabled:
@@ -123,6 +176,20 @@ In the Responses API path (the default for `openai/` models), LiteLLM translates
 
 This means the routing fix from the previous section solves two problems at once: it sends requests to the right API path, and it ensures unsupported parameters actually get stripped instead of translated into something equally unsupported.
 
+## the undefined object crash
+
+Even with the routing fix and pre-call hook, some models still crash the Claude Code UI with `undefined is not an object (evaluating '_.input_tokens')`. This is a different problem. It's in the response, not the request.
+
+Claude Code expects the streaming response to end with a clean JSON block of usage statistics: input tokens, output tokens, total tokens. LiteLLM passes whatever the backend returns. If the backend sends malformed usage data or skips it entirely, LiteLLM passes `null` back for the token counts. Claude Code tries to read a property on `null` and crashes.
+
+Models that claim to be OpenAI-compatible but haven't implemented the usage stats format correctly will trip this. GLM-5 is one example. The fix is either to avoid those models with Claude Code, or add response normalization in your LiteLLM hook to inject fake-but-valid usage stats when the backend omits them.
+
+## the 500 error on model groups
+
+Another error you'll see is a 500 Internal Server Error from LiteLLM itself, usually with a message like `Received Model Group=qwen3p6-plus, Available Model Group Fallbacks=None`. This means LiteLLM can't find a matching backend for the model name you sent. The most common cause is a typo in `model_name` in your config, or the proxy loading with an outdated config while your shell alias points to a model that no longer exists in the list. Restart the proxy after any config change and double-check the model name matches exactly what's in `model_list`.
+
+If the model exists but the upstream provider returns a 500, LiteLLM passes it through as-is. That's a provider-side issue. The upstream gateway is overloaded, misconfigured for that model, or rejecting the modified payload from your hook. Check `/tmp/litellm.log` for the actual upstream error.
+
 ## what works and what doesn't
 
 | Feature | Status |
@@ -134,6 +201,7 @@ This means the routing fix from the previous section solves two problems at once
 | Extended thinking | Dropped, Anthropic-specific |
 | Prompt caching | Lost, Anthropic-specific |
 | Tool use reliability | Depends on model |
+| Usage stats | Breaks with non-standard models |
 
 The toolset is fully functional. Every tool Claude Code exposes, file read, file edit, bash, search, MCP, all of it works through the proxy. The tool layer operates on the response content, not on the API format. So if the model says "edit this file at line 42," Claude Code applies that edit the same way regardless of which model generated it.
 
