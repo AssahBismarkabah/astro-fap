@@ -13,15 +13,9 @@ If you're uncertain about what users want, or whether the problem is worth solvi
 
 If you've already done the thinking, you know the problem, the constraints, the failure modes. You're executing on a clear plan, not guessing. The thinking is the hard part. The building is execution.
 
-## Uncertainty isn't constant
+Uncertainty changes throughout a project. What you're uncertain about at the start isn't what you're uncertain about in the middle. Your approach should change as your information changes.
 
-It changes throughout a project. What you're uncertain about at the start isn't what you're uncertain about in the middle. Your approach should change as your information changes.
-
-The failure mode of starting small is building the wrong thing and iterating forever without converging. You optimize for speed without defining what success looks like.
-
-The failure mode of starting large is building the wrong thing with confidence. You optimize for correctness without validating that what you're building solves an actual problem. You spend a year on something nobody wants.
-
-## Define first, then build small
+The failure mode of starting small is building the wrong thing and iterating forever without converging. You optimize for speed without defining what success looks like. The failure mode of starting large is building the wrong thing with confidence. You optimize for correctness without validating that what you're building solves an actual problem. You spend a year on something nobody wants.
 
 Start with a clear definition of the problem and the constraints. If you can't articulate what you're solving and why, don't build yet.
 
