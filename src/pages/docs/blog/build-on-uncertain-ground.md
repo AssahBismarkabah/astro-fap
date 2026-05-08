@@ -15,7 +15,7 @@ We have neural correlates, brain signatures that track conscious states. We have
 
 Why does anything feel like something? Nobody knows. The gap isn't small. It's the difference between a complete map of the brain and an explanation of why being you feels like anything at all.
 
-That may not be a temporary gap waiting on more research. It may be structural. Third-person science may have a hard limit when the thing being studied is first-person experience itself.
+That's not just a temporary gap waiting on more research. It may be structural. Third-person science has a hard limit when the thing being studied is first-person experience itself.
 
 **Consciousness breaks the frame**
 
@@ -27,7 +27,7 @@ Once you admit that, other questions open.
 
 Why is there something rather than nothing? Why do the physical constants permit complexity and life with such precise calibration? What grounds moral reality? Why does anything actually matter rather than just feeling like it does? What is mathematical truth, if it exists nowhere in spacetime and still describes physical reality with unreasonable accuracy?
 
-These aren't gaps waiting for better instruments. They're outside the method's jurisdiction by design. Science describes what happens. It doesn't ground existence, generate meaning, or explain why experience exists at all.
+These aren't gaps waiting for better instruments. They're outside what the method can do. Science describes what happens. It doesn't ground existence, generate meaning, or explain why experience exists at all.
 
 **The mind is an instrument**
 
@@ -39,7 +39,7 @@ And the instrument isn't upgrading on its own. Biological evolution operates on 
 
 Colin McGinn called this mysterianism. We may be built in a way that can't understand our own experience at the required depth. Not because the answers don't exist. Because we're the wrong kind of minds to reach them.
 
-If that's right, and it may be, then the hard limit isn't technological or methodological. It's us.
+If that's right, and it may be, then the hard limit isn't technology or method. It's us.
 
 **Normal has no authority**
 
@@ -49,7 +49,7 @@ Normal is purely statistical. It describes what most people in a given populatio
 
 Modern success is a proxy for something people actually want but can't name cleanly. To have mattered. To have loved genuinely. To have done something worth doing. To face death without regret as the dominant feeling. None of those are measurable. So the world substitutes status, wealth, recognition, and accumulation, then calls it success.
 
-Right behavior has no universally proven foundation. Consequentialism, deontology, virtue ethics, divine command, these are serious frameworks held by serious thinkers and they don't converge on a single answer. What survives across almost every framework is significant: reducing unnecessary suffering, honoring the inner life of others as real as your own, some form of reciprocity. Their near-universality across traditions that share no common origin suggests they're tracking something real. But the ultimate justification remains contested.
+Right behavior has no universally proven foundation. Consequentialism, deontology, virtue ethics, divine command, these are serious frameworks held by serious thinkers and they don't converge on a single answer. What survives across almost all of them matters: reducing unnecessary suffering, honoring the inner life of others as real as your own, some form of reciprocity. Their near-universality across traditions that share no common origin suggests they're tracking something real. But the ultimate justification remains contested.
 
 Behavior itself doesn't work the way we think. Neuroscience is clear that conscious deliberation accounts for a small fraction of what drives action. Most of what we do is produced by unconscious pattern matching, emotional states running faster than awareness, social mirroring, biological drives dressed up in rational justification after the fact. The experience of choosing may be partly a retrospective narrative the mind constructs about something that was already happening.
 
@@ -61,7 +61,7 @@ No universal manual. No external verification for the deepest things. A self tha
 
 And yet you still have to live. Forward, daily, with actual decisions and actual consequences.
 
-The only honest starting point is also the only irreducible one: your own conscious experience. The single thing that can't be argued away. Whatever else is uncertain, experience is happening. That's the floor.
+The only honest starting point is your own conscious experience. The single thing that can't be argued away. Whatever else is uncertain, experience is happening. That's the floor.
 
 Everything else, the external world, other minds, God, meaning, causation, is built upward from that floor using inference, coherence, consistency, and what William James called the will to believe: the recognition that some commitments have to be made before they can be verified, because withholding commitment is itself a commitment with consequences.
 
@@ -75,15 +75,15 @@ Their consistent diagnosis is simple. Ordinary surface cognition isn't the deepe
 
 The response is practice. Silence. Attention without agenda. The slow discipline of watching yourself lie and catching the motivated reasoning, the emotional reframing, the certainty that turns out to be fear wearing a different coat.
 
-They don't agree on everything. But convergence across traditions that had no contact with each other is significant. Something is being tracked.
+They don't agree on everything. But convergence across traditions that had no contact with each other means something. Something is being tracked.
 
-What they agree on: the deepest realities show up in direct first-person experience, not in argument. Transformation of the perceiver changes what is perceived. And the destination isn't a louder, more certain self, it's a quieter one. Almost no self at all. Paradoxically, that's where the clearest seeing happens.
+They agree that the deepest realities show up in direct first-person experience, not in argument. Transformation of the perceiver changes what is perceived. And the destination isn't a louder, more certain self, it's a quieter one. Almost no self at all. Paradoxically, that's where the clearest seeing happens.
 
 **Build anyway**
 
 None of this makes building impossible. It makes the foundation honest.
 
-Some people build because they never enter these questions. They operate from near-total commitment to a physical, measurable, scalable frame. They pick a problem, commit completely, and execute with extraordinary intensity. The deep questions are functionally irrelevant to that operating system.
+Some people build at high output because they never enter these questions. They operate from near-total commitment to a physical, measurable, scalable frame. They pick a problem, commit completely, and execute with extraordinary intensity. The deep questions are functionally irrelevant to that operating system.
 
 That works. At that level of output it clearly works.
 
@@ -91,7 +91,7 @@ It also leaves an enormous gap.
 
 The people inside those systems feel the insufficiency. They're succeeding by conventional metrics, or trying to, and privately know something is missing but have no language for it. They sense that the frame they're working inside doesn't account for everything that's actually real. They can't ignore these questions, and the answers on offer from productivity culture, institutional religion, and mainstream philosophy don't reach far enough.
 
-There are many people like this. Almost nobody speaks to them from inside both worlds at once, taking the technical work seriously and taking the foundational questions seriously, without collapsing one into the other.
+A lot of people live there. Almost nobody speaks to them from inside both worlds at once, taking the technical work seriously and taking the foundational questions seriously, without collapsing one into the other.
 
 You don't get certainty. You don't get a manual. You don't get verification from outside yourself.
 
@@ -99,8 +99,6 @@ What you get is the discipline of watching yourself lie, catching the fabricatio
 
 Action requires a frame. The frame doesn't have to be metaphysically proven. It has to be honest enough that you can operate inside it without betraying what you actually know. You commit to it not because it's perfectly justified but because action is impossible without commitment and the cost of permanent suspension is its own kind of failure.
 
-The most important question isn't what to build.
-
-It's whether you're willing to build from where you actually stand, uncertain foundations and all, rather than waiting for ground that will never be as solid as you want it to be before you start.
+So the question isn't what to build. It's whether you're willing to build from where you actually stand, uncertain foundations and all, rather than waiting for ground that will never be as solid as you want it to be before you start.
 
 Nobody who built anything worth building waited for that.
