@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
-title: You Don't Get Certainty
+title: Experience Is the Starting Point
 date: 2026-04-29
 description: You don't get certainty. You get your own experience and the discipline to build from there.
 category: life
