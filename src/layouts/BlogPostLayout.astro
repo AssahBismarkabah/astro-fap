@@ -138,20 +138,6 @@ const safeFrontmatter = {
       .prose :global(h1) { font-size: 32px; }
       .prose :global(h2) { font-size: 24px; }
       .prose :global(h3) { font-size: 20px; }
-      .prose :global(p:has(> strong:only-child)) {
-        color: var(--heading-color);
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1.3;
-        margin-top: 2em;
-        margin-bottom: 0.7em;
-        padding-bottom: 0.4em;
-        border-bottom: 1px solid var(--border-light);
-      }
-      .prose :global(p:has(> strong:only-child) strong) {
-        color: inherit;
-        font-weight: inherit;
-      }
       .prose :global(strong) {
         font-weight: 600;
         color: var(--strong);

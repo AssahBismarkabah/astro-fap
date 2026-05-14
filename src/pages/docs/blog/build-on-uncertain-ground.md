@@ -17,7 +17,7 @@ Why does anything feel like something? Nobody knows. The gap isn't small. It's t
 
 That's not just a temporary gap waiting on more research. It may be structural. Third-person science has a hard limit when the thing being studied is first-person experience itself.
 
-**Consciousness breaks the frame**
+## Consciousness breaks the frame
 
 Consciousness matters beyond itself because of what it reveals.
 
@@ -29,7 +29,7 @@ Why is there something rather than nothing? Why do the physical constants permit
 
 These aren't gaps waiting for better instruments. They're outside what the method can do. Science describes what happens. It doesn't ground existence, generate meaning, or explain why experience exists at all.
 
-**The mind is an instrument**
+## The mind is an instrument
 
 Every instrument measures within its own bandwidth. A thermometer can't detect sound, not because sound doesn't exist, but because the instrument isn't built for it.
 
@@ -41,7 +41,7 @@ Colin McGinn called this mysterianism. We may be built in a way that can't under
 
 If that's right, and it may be, then the hard limit isn't technology or method. It's us.
 
-**Normal has no authority**
+## Normal has no authority
 
 Follow it through and it lands on ordinary life with full weight.
 
@@ -53,7 +53,7 @@ Right behavior has no universally proven foundation. Consequentialism, deontolog
 
 Behavior itself doesn't work the way we think. Neuroscience is clear that conscious deliberation accounts for a small fraction of what drives action. Most of what we do is produced by unconscious pattern matching, emotional states running faster than awareness, social mirroring, biological drives dressed up in rational justification after the fact. The experience of choosing may be partly a retrospective narrative the mind constructs about something that was already happening.
 
-**Start with experience**
+## Start with experience
 
 So where does this leave you.
 
@@ -67,7 +67,7 @@ Everything else, the external world, other minds, God, meaning, causation, is bu
 
 That isn't relativism. Pure subjectivism collapses immediately, because the claim that everything is subjective is offered as an objective truth. The tools for accessing what is real aren't uniformly available, reliable, or interpretable. That's different from saying nothing is real.
 
-**The serious traditions go inward**
+## The serious traditions go inward
 
 The contemplative and mystical traditions across cultures, largely ignored by mainstream Western intellectual life, have been working on exactly this territory for millennia.
 
@@ -79,7 +79,7 @@ They don't agree on everything. But convergence across traditions that had no co
 
 They agree that the deepest realities show up in direct first-person experience, not in argument. Transformation of the perceiver changes what is perceived. And the destination isn't a louder, more certain self, it's a quieter one. Almost no self at all. Paradoxically, that's where the clearest seeing happens.
 
-**Build anyway**
+## Build anyway
 
 None of this makes building impossible. It makes the foundation honest.
 
