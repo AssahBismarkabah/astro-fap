@@ -1,13 +1,13 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
-title: Not Every Architecture Question Needs a Spike
+title: Spikes Are for Technical Bets
 date: 2026-05-14
-description: Some Snif decisions needed measurements. One needed a clear phase constraint.
+description: Storage needed numbers. The reviewer needed a phase constraint.
 category: technical
 tags: ["architecture", "ai", "snif"]
 ---
 
-Not every architecture question needs a spike.
+Spikes are for technical bets.
 
 [Snif](https://github.com/AssahBismarkabah/Snif) had two architecture questions before the main implementation: where repository context should live, and how the reviewer should run.
 
@@ -19,7 +19,7 @@ The second question was the reviewer itself. Single agent call or multi-agent pi
 
 Every AI tool conversation turns into multi-agent now. Specialist subagents, orchestration layers, parallel reviewers. None of that decides whether the architecture fits.
 
-Both were architecture questions. Only one needed a spike.
+Both were architecture questions. Only one was a technical bet.
 
 ## the storage bet
 
