@@ -57,8 +57,8 @@ const socials = [
 
     <!-- Mobile theme toggle -->
     <button class="mobile-link mobile-theme-toggle" id="mobile-theme-toggle">
-      <span class="mobile-theme-label-dark">Light mode</span>
       <span class="mobile-theme-label-light">Dark mode</span>
+      <span class="mobile-theme-label-dark">Light mode</span>
     </button>
 
     <!-- Mobile subscribe form -->
@@ -127,12 +127,12 @@ const socials = [
   .theme-toggle .icon-moon {
     transition: opacity 0.2s ease;
   }
-  /* Dark mode (default): show sun icon (click to go light) */
-  .theme-toggle .icon-sun { display: block; }
-  .theme-toggle .icon-moon { display: none; }
-  /* Light mode: show moon icon (click to go dark) */
-  :global([data-theme="light"]) .theme-toggle .icon-sun { display: none; }
-  :global([data-theme="light"]) .theme-toggle .icon-moon { display: block; }
+  /* Light mode (default): show moon icon (click to go dark) */
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  /* Dark mode: show sun icon (click to go light) */
+  :global([data-theme="dark"]) .theme-toggle .icon-sun { display: block; }
+  :global([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
 
   /* Mobile theme toggle */
   .mobile-theme-toggle {
@@ -143,10 +143,10 @@ const socials = [
     padding: 0;
     text-align: left;
   }
-  .mobile-theme-label-dark { display: inline; }
-  .mobile-theme-label-light { display: none; }
-  :global([data-theme="light"]) .mobile-theme-label-dark { display: none; }
-  :global([data-theme="light"]) .mobile-theme-label-light { display: inline; }
+  .mobile-theme-label-light { display: inline; }
+  .mobile-theme-label-dark { display: none; }
+  :global([data-theme="dark"]) .mobile-theme-label-light { display: none; }
+  :global([data-theme="dark"]) .mobile-theme-label-dark { display: inline; }
 
   /* Subscribe toggle button (looks like a nav link) */
   .subscribe-toggle {
@@ -525,13 +525,13 @@ const socials = [
 
   // Theme toggle
   function toggleTheme() {
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    if (isLight) {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
       document.documentElement.removeAttribute('data-theme');
       localStorage.removeItem('theme');
     } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
     }
   }
 
