@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "diagram:agent-runtime": "diagrams/agent-runtime/export.sh",
     "astro": "astro"
   },
   "dependencies": {

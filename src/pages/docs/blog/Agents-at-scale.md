@@ -37,6 +37,8 @@ The missing layer is the runtime around the agent. Sometimes that runtime talks 
 
 That lifecycle layer turns "agent with shell access" into "safe worker on this repository." It knows how to clone the repo, choose the branch, read the task, start the right agent, expose the workspace, stream events, checkpoint progress, request approvals, collect logs, create the PR, and clean up the environment.
 
+![Agent runtime separate from sandbox compute](agents-at-scale/agent-runtime-control-plane.png)
+
 Without that layer, you don't have an autonomous development system. You have a VM, an agent binary, and an API key.
 
 ## what I saw testing this
