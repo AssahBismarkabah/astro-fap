@@ -1,6 +1,6 @@
 ---
 layout: ../../../layouts/BlogPostLayout.astro
-title: The Agent Control Plane Isn't a Chat App
+title: The Chat App Is the Last Thing That Matters
 date: 2026-09-01
 description: Teams, Slack, Discord, a custom GUI. People keep asking where agents should live. The control plane is a different thing, and it isn't a surface.
 category: technical
