@@ -1,0 +1,17 @@
+<mxGraphModel adaptiveColors="auto">
+<root>
+<mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="l5" value="L5 · independent verifier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe4b5;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="16" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="l4" value="L4 · executed test / video" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="96" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="l3" value="L3 · screenshot / diff" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="176" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="l2" value="L2 · logs + source links" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="256" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="l1" value="L1 · structured summary" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="336" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="l0" value="L0 · bot says done" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="80" y="416" width="240" height="48" as="geometry"/></mxCell>
+<mxCell id="e1" value="triage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="l0" target="l1"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e2" value="trace" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="l1" target="l2"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e3" value="review" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="l2" target="l3"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e4" value="prove" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="l3" target="l4"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="e5" value="gate" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="l4" target="l5"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root>
+</mxGraphModel>

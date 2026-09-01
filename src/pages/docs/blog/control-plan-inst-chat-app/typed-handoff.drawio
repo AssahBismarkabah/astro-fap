@@ -1,0 +1,14 @@
+<mxGraphModel adaptiveColors="auto">
+<root>
+<mxCell id="0"/>
+<mxCell id="1" parent="0"/>
+<mxCell id="producer" value="Producer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="20" y="130" width="100" height="60" as="geometry"/></mxCell>
+<mxCell id="chat" value="Team chat&#xa;everything said" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="180" y="50" width="220" height="56" as="geometry"/></mxCell>
+<mxCell id="record" value="Handoff record&#xa;task · contract · evidence" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe4b5;strokeColor=#000000;fontColor=#000000;fontSize=13;" vertex="1" parent="1"><mxGeometry x="180" y="210" width="220" height="56" as="geometry"/></mxCell>
+<mxCell id="receiver" value="Receiver" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=13;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="470" y="130" width="100" height="60" as="geometry"/></mxCell>
+<mxCell id="ep1" value="low friction" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;dashed=1;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="producer" target="chat"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="ep2" value="upfront effort" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="producer" target="record"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er1" value="must parse" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;dashed=1;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="chat" target="receiver"><mxGeometry relative="1" as="geometry"/></mxCell>
+<mxCell id="er2" value="acts on it" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="record" target="receiver"><mxGeometry relative="1" as="geometry"/></mxCell>
+</root>
+</mxGraphModel>

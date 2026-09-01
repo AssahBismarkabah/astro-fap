@@ -1,0 +1,22 @@
+@startuml
+!theme plain
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam state {
+  BackgroundColor White
+  BorderColor Black
+  FontColor Black
+}
+
+[*] --> PENDING : task received
+PENDING --> ALLOCATING : resources requested
+ALLOCATING --> RUNNING : agent started
+RUNNING --> BLOCKED : approval required
+BLOCKED --> RUNNING : approval granted
+RUNNING --> COMPLETED : task done
+RUNNING --> FAILED : error occurred
+BLOCKED --> CANCELLED : denied / timeout
+FAILED --> ALLOCATING : retry from checkpoint
+ALLOCATING --> FAILED : allocation failed
+
+@enduml
