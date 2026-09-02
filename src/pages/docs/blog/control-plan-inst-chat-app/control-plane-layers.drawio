@@ -10,7 +10,7 @@
  <mxCell id="e2" value="hand off task" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;endArrow=classic;fontColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="surface" target="control"><mxGeometry relative="1" as="geometry"/></mxCell>
  <mxCell id="e3" value="" style="html=1;strokeColor=#000000;strokeWidth=2;endArrow=classic;fontColor=#000000;" edge="1" parent="1" source="control" target="sandbox"><mxGeometry relative="1" as="geometry"/></mxCell>
  <mxCell id="e4" value="artifact + evidence" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor=#000000;dashed=1;endArrow=classic;fontColor=#000000;exitX=0.5;exitY=1;entryX=0.5;entryY=1;" edge="1" parent="1" source="sandbox" target="dev"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="570" y="316"/><mxPoint x="70" y="316"/></Array></mxGeometry></mxCell>
- <mxCell id="e3label" value="provision + run" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontColor=#000000;" vertex="1" parent="1"><mxGeometry x="430" y="175" width="60" height="18" as="geometry"/></mxCell>
+ <mxCell id="e3label" value="provision + run" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontColor=#000000;" vertex="1" parent="1"><mxGeometry x="430" y="196" width="60" height="18" as="geometry"/></mxCell>
  </root>
  </mxGraphModel>
  
