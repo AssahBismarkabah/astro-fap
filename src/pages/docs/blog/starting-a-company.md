@@ -37,4 +37,4 @@ The initial focus is Africa, but the company isn't named after one geography or 
 
 For now, the work is direct: collect difficult African data, make it usable, test whether it predicts anything, and keep only what survives.
 
-If this is the kind of work you want to help build, [email me](mailto:abahbismarkassah@gmail.com).
+If this is the kind of work you want to help build, [email me](mailto:abahbismarkassah@proton.me).
