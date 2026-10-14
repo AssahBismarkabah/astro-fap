@@ -2,7 +2,7 @@
 layout: ../../../layouts/BlogPostLayout.astro
 title: I Started a Quantitative Research Firm
 date: 2026-10-14
-description: Why I started Aveling Research and why its first research surface is African economic and market data.
+description: Why I started Aveling Research.
 category: technical
 tags: ["quantitative-finance", "africa", "ai", "systematic-trading"]
 ---
@@ -15,7 +15,7 @@ My background is in software engineering and AI engineering. Aveling grew out of
 
 Most of the ideas failed. Some looked promising before transaction costs. Others worked in one period and disappeared in the next. One study of dividend capture on the BRVM passed the full paper-validation process, although it still requires confirmation from a broker and a live micro-test before it can become operational. The failures mattered because they showed that the research process could reject attractive stories instead of finding a way to justify them.
 
-That work also clarified where Aveling should begin. The largest quantitative firms compete in markets where speed, colocation, capital, proprietary data, and execution infrastructure matter. They have spent decades building those advantages. Starting by competing against them on the same terms would make little sense.
+That work also clarified where Aveling should begin. The largest quantitative firms compete in markets where speed, colocation, capital, proprietary data, and execution infrastructure matter. They have spent decades building those advantages. Starting by competing     against them on the same terms would make little sense.
 
 ## where we begin
 
@@ -37,4 +37,4 @@ The initial focus is Africa, but the company isn't named after one geography or 
 
 For now, the work is direct: collect difficult African data, make it usable, test whether it predicts anything, and keep only what survives.
 
-If this is the kind of work you want to help build, email me at [abahbismarkassah@gmail.com](mailto:abahbismarkassah@gmail.com).
+If this is the kind of work you want to help build, [email me](mailto:abahbismarkassah@gmail.com).
