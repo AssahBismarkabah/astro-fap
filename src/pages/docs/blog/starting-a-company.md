@@ -13,9 +13,9 @@ It still feels strange to call it a company, but it is one. I started Aveling Re
 
 My background is in software engineering and AI engineering. Aveling grew out of applying that background to systematic trading research. I began testing trading ideas, building the data pipelines needed to evaluate them, and recording what survived realistic costs and out-of-sample testing.
 
-Most of the ideas failed. Some looked promising before transaction costs. Others worked in one period and disappeared in the next. One study of dividend capture on the BRVM passed the full paper-validation process, although it still requires confirmation from a broker and a live micro-test before it can become operational. The failures mattered because they showed that the research process could reject attractive stories instead of finding a way to justify them.
+Most of the ideas failed. Some looked promising before transaction costs. Others worked in one period and disappeared in the next. One study of dividend capture on the West African regional stock exchange, the BRVM, passed the full paper-validation process, although it still requires confirmation from a broker and a live micro-test before it can become operational. The failures mattered because they showed that the research process could reject attractive stories instead of finding a way to justify them.
 
-That work also clarified where Aveling should begin. The largest quantitative firms compete in markets where speed, colocation, capital, proprietary data, and execution infrastructure matter. They have spent decades building those advantages. Starting by competing     against them on the same terms would make little sense.
+That work also clarified where Aveling should begin. The largest quantitative firms compete in markets where speed, colocation, capital, proprietary data, and execution infrastructure matter. They have spent decades building those advantages. Starting by competing against them on the same terms would make little sense.
 
 ## where we begin
 
@@ -31,7 +31,7 @@ The company begins as a research firm, not a fund. Its first job is to build the
 
 ## the team
 
-I started the company, and we are currently a team of three. We will work mostly remotely, and I believe the three of us have the capacity to build the research system and carry the work through. We are building a firm where engineers and quantitative researchers can build collectors, audit datasets, model relationships, and reject their own results when the evidence doesn't hold.
+I started the company, and we are currently a team of three. We will work mostly remotely, and the three of us have the capacity to build the research system and carry the work through. We are building a firm where engineers and quantitative researchers can build collectors, audit datasets, model relationships, and reject their own results when the evidence doesn't hold.
 
 The initial focus is Africa, but the company isn't named after one geography or one strategy. The research can extend into other markets where the same methods provide an advantage. Competing in the large global markets remains possible, but it isn't the starting point.
 

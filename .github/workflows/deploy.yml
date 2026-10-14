@@ -5,6 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pages: write
@@ -17,7 +21,6 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
-        
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
